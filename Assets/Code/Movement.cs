@@ -5,52 +5,51 @@ using UnityEngine.InputSystem;
 public class Movement : MonoBehaviour
 {
     [SerializeField]
-    Rigidbody _rigidBody;
-    [SerializeField]
-    float _speed,
-          _acceleration,
-          _deceleration;
+    float speed = 10,
+          acceleration = 50,
+          deceleration = 80;
 
-    Vector2 _input;
-    Vector3 _currentVelocity,
-            _targetVelocity;
-
-    private void Awake()
-    {
-        _rigidBody ??= GetComponent<Rigidbody>();
-    }
-
-    private void FixedUpdate()
-    {
-        _currentVelocity = Vector3.MoveTowards(_currentVelocity,
-            _targetVelocity,
-            ((_currentVelocity.sqrMagnitude > _targetVelocity.sqrMagnitude) ? _deceleration : _acceleration) * Time.fixedDeltaTime);
-
-        _rigidBody.Move(transform.position + _currentVelocity * Time.fixedDeltaTime, Quaternion.LookRotation(_currentVelocity + transform.position));
-    }
+    Rigidbody rigidBody;
+    Vector2 input;
+    Vector3 currentVelocity,
+            targetVelocity;
 
     public float Speed
     {
-        get => _speed;
-        set => _speed = value;
+        get => speed;
+        set => speed = value;
     }
 
     public float Acceleration
     {
-        get => _acceleration;
-        set => _acceleration = value;
+        get => acceleration;
+        set => acceleration = value;
     }
 
     public float Deceleration
     {
-        get => _deceleration;
-        set => _deceleration = value;
+        get => deceleration;
+        set => deceleration = value;
+    }
+
+    private void Awake()
+    {
+        rigidBody = GetComponent<Rigidbody>();
+    }
+
+    private void FixedUpdate()
+    {
+        currentVelocity = Vector3.MoveTowards(currentVelocity,
+            targetVelocity,
+            ((currentVelocity.sqrMagnitude > targetVelocity.sqrMagnitude) ? deceleration : acceleration) * Time.fixedDeltaTime);
+
+        rigidBody.Move(transform.position + currentVelocity * Time.fixedDeltaTime, Quaternion.LookRotation(currentVelocity + transform.position));
     }
 
     public void OnMove(InputValue value)
     {
         Debug.Log("OnMove");
-        _input = value.Get<Vector2>();
-        _targetVelocity = new Vector3(_input.x, 0, _input.y) * _speed;
+        input = value.Get<Vector2>();
+        targetVelocity = new Vector3(input.x, 0, input.y) * speed;
     }
 }
