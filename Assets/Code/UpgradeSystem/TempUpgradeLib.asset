@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeLibrary
   upgrades:
   - {fileID: 11400000, guid: a07f7adce95866b42ac0b40bc1e54b0d, type: 2}
+  - {fileID: 11400000, guid: 589a16029c033054fafc4d5f95ba520d, type: 2}

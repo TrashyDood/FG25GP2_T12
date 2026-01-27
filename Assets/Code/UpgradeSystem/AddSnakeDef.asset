@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1157cebca8a92694cb14bdb4c3d1d46b, type: 3}
-  m_Name: New Upgrade Definition
+  m_Name: AddSnakeDef
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeDefinition
-  upgradeName: AddMouth
-  upgradeId: AddMouth
+  upgradeName: AddSnake
+  upgradeId: AddSnake
   icon: {fileID: 0}
   effects:
-  - {fileID: 11400000, guid: d55b626e9f2afd74fb4ed469c63f4bfd, type: 2}
+  - {fileID: 11400000, guid: 04292bc08f172e740945e277fec66124, type: 2}
