@@ -639,7 +639,7 @@ PrefabInstance:
       objectReference: {fileID: 350512311}
     - target: {fileID: 4118488945847303479, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: size.y
-      value: 7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4118488945847303479, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: cubeMesh

@@ -47,12 +47,14 @@ public class VoxelBodyTesting : MonoBehaviour
             shadowCastingMode = ShadowCastingMode.Off
         };
 
-        AddCube(new());
-        AddCube(new(-1, 0, 0));
+        AddCube(new(4, 0, 4));
     }
 
     private void Update()
     {
+        if (Input.GetMouseButtonDown(0) && GetSlotFromCursor(Camera.main, Input.mousePosition, out Vector3Int slot))
+            AddCube(slot);
+
         // Cube matrices
         for (int i = 0; i < cubeMatrices.Count; ++i)
             cubeMatrices[i] = Matrix4x4.TRS(GetWorldPos(activeCubes[i].coords), Quaternion.identity, SlotSize);
@@ -109,15 +111,66 @@ public class VoxelBodyTesting : MonoBehaviour
         return IsValid(coords) ? bodyCubes[index] : null;
     }
 
+    public IEnumerable<Vector3Int> Slots()
+    {
+        for (int i = 0; i < slots.Count; i++)
+            yield return slots[i];
+    }
+
+    public IEnumerable<BodyCube> ActiveCubes()
+    {
+        for (int i = 0; i < activeCubes.Count; i++)
+            yield return activeCubes[i];
+    }
+
+    public Vector3 GetWorldPos(Vector3Int coords) =>
+        new Vector3(coords.x * slotScale.x * transform.localScale.x,
+            coords.y * slotScale.y * transform.localScale.y,
+            coords.z * slotScale.z * transform.localScale.z) +
+        transform.position -
+        new Vector3(size.x * 0.5f, 0, size.z * 0.5f);
+
+    public Bounds GetWorldBounds(Vector3Int coords) =>
+        new(GetWorldPos(coords), SlotSize);
+
+    public bool GetCubeFromRay(Ray ray, out BodyCube cube)
+    {
+        for (int i = 0; i < activeCubes.Count; i++)
+        {
+            cube = activeCubes[i];
+            if (GetWorldBounds(cube.coords).IntersectRay(ray))
+                return true;
+        }
+
+        cube = null;
+        return false;
+    }
+
+    public bool GetSlotFromRay(Ray ray, out Vector3Int slot)
+    {
+        for (int i = 0; i < slots.Count; i++)
+        {
+            slot = slots[i];
+            if (GetWorldBounds(slot).IntersectRay(ray))
+                return true;
+        }
+
+        slot = default;
+        return false;
+    }
+
+    public bool GetCubeFromCursor(Camera camera, Vector2 cursorPos, out BodyCube cube) =>
+        GetCubeFromRay(camera.ScreenPointToRay(cursorPos), out cube);
+
+    public bool GetSlotFromCursor(Camera camera, Vector2 cursorPos, out Vector3Int slot) =>
+        GetSlotFromRay(camera.ScreenPointToRay(cursorPos), out slot);
+
     int GetIndex(Vector3Int coords) =>
-        coords.x + coords.y * size.x + coords.z * size.x * size.y;
+    coords.x + coords.y * size.x + coords.z * size.x * size.y;
 
     bool IsValid(Vector3Int coords) =>
         coords.x >= 0 && coords.x < size.x && coords.y >= 0 && coords.y < size.y && coords.z >= 0 && coords.z < size.z;
 
-    /// <summary>
-    /// Finds all empty spaces that are adjacent to a cube.
-    /// </summary>
     void FindSlots()
     {
         HashSet<Vector3Int> visited = new HashSet<Vector3Int>();
@@ -147,11 +200,6 @@ public class VoxelBodyTesting : MonoBehaviour
             }
         }
     }
-
-    Vector3 GetWorldPos(Vector3Int coords) =>
-        new Vector3(coords.x * slotScale.x * transform.localScale.x,
-            coords.y * slotScale.y * transform.localScale.y,
-            coords.z * slotScale.z * transform.localScale.z) + transform.position;
 }
 
 public class BodyCube
