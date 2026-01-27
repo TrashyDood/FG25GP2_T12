@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2849224849309128210}
+  - component: {fileID: 4426129337759524916}
   - component: {fileID: 5315425019157074050}
   m_Layer: 0
-  m_Name: Enemy Manager
+  m_Name: Game Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,6 +33,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4426129337759524916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7585911998284658465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61ebb9cf40e7d634093a29973c76953f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  currentState: 0
 --- !u!114 &5315425019157074050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
   enemyPool:
-    _template: {fileID: 0}
+    _template: {fileID: 5368941952833580897, guid: f0476f4dec525d640840a3455291a0c7, type: 3}
     parent: {fileID: 0}
   spawnCenter: {fileID: 0}
   config:

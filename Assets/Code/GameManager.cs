@@ -2,28 +2,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    public static GameManager Instance { get; private set; }
 
-    #region Singelton
     private void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            throw new System.Exception("2 Singletons of type [GamesManager exist]");
-        }
-        instance = this;
-    }
-    #endregion
+        if (Instance != this)
+            Destroy(Instance);
 
-    public enum GameState
-    {
-        Playing,
-        Paused,
-        Upgrading,
-        Dead,
-        Victory,
-        Menu
-    } 
+        Instance = this;
+    }
+
     public GameState currentState;
     public GameState GetCurrentState => currentState;
 
@@ -51,8 +39,19 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+
     public void SwitchState(GameState aState)
     {
         currentState = aState;
     }
+}
+
+public enum GameState
+{
+    Playing,
+    Paused,
+    Upgrading,
+    Dead,
+    Victory,
+    Menu
 }

@@ -45,6 +45,39 @@ public abstract class ObjectPool<T>
     protected abstract void OnPooled(T obj);
 }
 
+public abstract class PoolableComponent<T> : MonoBehaviour, IPoolable<T>
+where T : PoolableComponent<T>
+{
+    T derived;
+    ObjectPool<T> pool;
+    bool isPooled;
+
+    public bool IsPooled => pool != null && isPooled;
+    public T Derived => derived;
+
+    public PoolableComponent() =>
+        derived = (T)this;
+    
+    public virtual void OnPooled()
+    {
+        isPooled = true;
+        gameObject.SetActive(false);
+    }
+
+    public virtual void OnFetched(ObjectPool<T> pool)
+    {
+        this.pool = pool;
+        isPooled = false;
+        gameObject.SetActive(true);
+    }
+
+    public bool ReturnToPool() => pool.PoolObject(derived);
+}
+
+[Serializable]
+public class PoolableComponent :
+    PoolableComponent<PoolableComponent> { }
+
 /// <summary>
 /// Defines an object pool specifically for a given object type that derives from PoolableComponent.
 /// </summary>
@@ -55,42 +88,48 @@ where T : PoolableComponent<T>
 {
     protected override T CreateObject(T template) =>
         GameObject.Instantiate(template);
-    
+
     protected override void OnFetched(T obj) =>
         obj.gameObject.SetActive(true);
-    
+
     protected override void OnPooled(T obj) =>
     obj.gameObject.SetActive(false);
 }
 
-public abstract class PoolableComponent<T> : MonoBehaviour, IPoolable<T>
-where T : PoolableComponent<T>
+[Serializable]
+public class ObjectPoolLibrary<TIdentifier, TObject, TPool>
+    where TObject : IPoolable<TObject>
+    where TPool : ObjectPool<TObject>, new()
 {
-    T _derived;
-    ObjectPool<T> _pool;
-    bool _isPooled;
+    [SerializeField]
+    List<Pool> pools = new();
+    [SerializeField]
+    TIdentifier identifier1;
 
-    public bool IsPooled => _pool != null && _isPooled;
-    public T Derived => _derived;
+    Dictionary<TIdentifier, int> indices = new();
 
-    public PoolableComponent() =>
-        _derived = (T)this;
-    
-    public virtual void OnPooled()
+    public T FetchObject<T>(TIdentifier identifier) where T : class, IPoolable<TObject>
     {
-        _isPooled = true;
-        gameObject.SetActive(false);
+        if (!indices.TryGetValue(identifier, out var index))
+            return pools[index].pool.FetchObject() as T;
+
+        indices.Add(identifier, index = pools.Count);
+        pools.Add(new());
+
+        return pools[indices[identifier]].pool.FetchObject() as T;
     }
 
-    public virtual void OnFetched(ObjectPool<T> pool)
+    [Serializable]
+    struct Pool
     {
-        _pool = pool;
-        _isPooled = false;
-        gameObject.SetActive(true);
+        public TIdentifier identifier;
+        public TPool pool;
     }
-
-    public bool ReturnToPool() => _pool.PoolObject(_derived);
 }
+
+[Serializable]
+public class ComponentPoolLibrary<TIdentifier> :
+    ObjectPoolLibrary<TIdentifier, PoolableComponent, ComponentPool<PoolableComponent>> { }
 
 public interface IPoolable<TObject>
     where TObject : IPoolable<TObject>

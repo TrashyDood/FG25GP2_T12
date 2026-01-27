@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    [SerializeField] private float attackSpeed;
+    [Tooltip("Measured in seconds between attacks.")]
+    [SerializeField]
+    private float attackSpeed = 1;
     private float attackTimer;
 
-    [SerializeField] private float attackRange;
-    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField]
+    private float attackRange;
+    [SerializeField]
+    private Projectile projectilePrefab;
 
     public GameObject[] allEnemies;
     public GameObject nearestEnemy;
@@ -45,16 +49,15 @@ public class PlayerShoot : MonoBehaviour
     }
     private void ShootClosestEnemy()
     {
-        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        Projectile projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
 
         Vector3 closestEnemy = nearestEnemy.transform.position;
         closestEnemy.y = 0f;
-        Vector3 direction = (closestEnemy - transform.position).normalized;
+        Vector3 direction = (closestEnemy - transform.position);
 
-        projectile.GetComponent<Projectile>().Initialize(direction, 4);
+        projectile.Initialize(direction, 8);
 
         closestDistance = float.MaxValue;
         print("closest distance to enemy is: " + nearestEnemy);
-
     }
 }

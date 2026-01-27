@@ -6,8 +6,18 @@ public class Enemy : PoolableComponent<Enemy>
     Transform target;
     [SerializeField]
     float speed = 5;
+    [SerializeField]
+    float health;
 
-    float timer;
+    public float Health
+    {
+        get => health;
+        set
+        {
+            OnHealthChanged(value);
+            health = value;
+        }
+    }
 
     private void Start()
     {
@@ -16,20 +26,20 @@ public class Enemy : PoolableComponent<Enemy>
 
     private void FixedUpdate()
     {
-        if (timer <= 0)
+        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.fixedDeltaTime);
+    }
+
+    void OnHealthChanged(float newHealth)
+    {
+        if (Mathf.Round(health) < 1)
         {
             ReturnToPool();
-            timer = 5;
+            Debug.Log("Enemy killed!");
         }
-        else
-            timer -= Time.fixedDeltaTime;
-
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.fixedDeltaTime);
     }
 
     public override void OnFetched(ObjectPool<Enemy> pool)
     {
         base.OnFetched(pool);
-        timer = 5;
     }
 }

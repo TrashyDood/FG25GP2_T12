@@ -2,38 +2,38 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] private float projectileSpeed;
+    [SerializeField]
+    LayerMask targetLayer;
 
-    Vector3 velocity = new();
-    private Rigidbody rb;
+    Vector3 direction;
+    float speed,
+        damage;
 
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
     void Update()
     {
-        UpdateVelocity();
+        transform.position += direction * speed * Time.deltaTime;
     }
-    public void Initialize(Vector3 Velocity, float Speed)
+
+    private void FixedUpdate()
     {
-        transform.forward = Velocity;
-        velocity = Velocity.normalized * Speed;
+        if (Physics.Raycast(transform.position, transform.position + direction, out RaycastHit hitInfo, speed, targetLayer))
+            OnHit(hitInfo);
     }
-    private void UpdateVelocity()
+
+    public void Initialize(Vector3 direction, float speed, float damage = 10)
     {
-        transform.position += projectileSpeed * Time.deltaTime * velocity;
+        this.direction = direction;
+        this.speed = speed;
+        this.damage = damage;
     }
-    private void OnTriggerEnter(Collider other)
+
+    void OnHit(RaycastHit hitInfo)
     {
-        Enemy enemy = other.gameObject.GetComponent<Enemy>();
+        Enemy enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
+
         if (enemy != null)
-        {
-            //Destroy(enemy.gameObject);
-            // When destroying an enemy, it still targets that removed enemy,
-            // maybe do a list for all spawned enemies
-            // and remove that enemy from the list so it forgets that enemy
-            Destroy(gameObject);
-        }
+            enemy.Health -= damage;
+
+        Destroy(gameObject);
     }
 }
