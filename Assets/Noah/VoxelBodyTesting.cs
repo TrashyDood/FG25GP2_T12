@@ -8,7 +8,7 @@ public class VoxelBodyTesting : MonoBehaviour
     Vector3Int size;
     [SerializeField]
     Vector3 slotScale = Vector3.one;
-    
+
     [Header("Rendering")]
     [SerializeField]
     Material cubeMaterial;
@@ -28,13 +28,6 @@ public class VoxelBodyTesting : MonoBehaviour
 
     RenderParams cuberRenderParams,
         slotRenderParams;
-    
-    public Vector3 this[int x, int y, int z] =>
-        new Vector3(x, y, z) + transform.position;
-    public Vector3 this[Vector3Int coords] =>
-        new Vector3(coords.x * slotScale.x * transform.localRotation.x,
-            coords.y * slotScale.y * transform.localRotation.x,
-            coords.z * slotScale.z * transform.localRotation.x) + transform.position;
 
     public bool RenderSlots { get => renderSlots; set => renderSlots = value; }
     public Vector3 SlotSize => new Vector3(slotScale.x * transform.localScale.x, slotScale.y * transform.localScale.y, slotScale.z * transform.localScale.z);
@@ -47,61 +40,59 @@ public class VoxelBodyTesting : MonoBehaviour
             worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000),
             shadowCastingMode = ShadowCastingMode.On
         };
-        
+
         slotRenderParams = new RenderParams(slotMaterial)
         {
             worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000),
             shadowCastingMode = ShadowCastingMode.Off
         };
 
-        AddCube(0, 0, 0);
-        AddCube(1, 0, 0);
+        AddCube(new());
+        AddCube(new(1, 0, 0));
     }
 
     private void Update()
     {
         // Cube matrices
         for (int i = 0; i < cubeMatrices.Count; ++i)
-            cubeMatrices[i] = Matrix4x4.TRS(this[activeCubes[i].coord], Quaternion.identity, SlotSize);
+            cubeMatrices[i] = Matrix4x4.TRS(GetWorldPos(activeCubes[i].coords), Quaternion.identity, SlotSize);
 
         // Render cubes
         for (int i = 0; i < cubeMatrices.Count; i += 1023)
             Graphics.RenderMeshInstanced(cuberRenderParams, cubeMesh, 0, cubeMatrices, Mathf.Min(1023, activeCubes.Count - i), i);
-        
+
         if (renderSlots)
         {
             // Slot Matrices
             for (int i = 0; i < slotMatrices.Count; i++)
-                slotMatrices[i] = Matrix4x4.TRS(this[slots[i]], Quaternion.identity, Vector3.one);
-            
+                slotMatrices[i] = Matrix4x4.TRS(GetWorldPos(slots[i]), Quaternion.identity, Vector3.one);
+
             // Render slots
             for (int i = 0; i < slotMatrices.Count; i += 1023)
                 Graphics.RenderMeshInstanced(slotRenderParams, slotMesh, 0, slotMatrices, Mathf.Min(1023, slotMatrices.Count - i), i);
         }
     }
-    
-    public void AddCube(int x, int y, int z)
-    {
-        if (!IsValid(x, y, z)) return;
 
-        int index = GetIndex(x, y, z);
+    public void AddCube(Vector3Int coords)
+    {
+        if (!IsValid(coords)) return;
+
+        int index = GetIndex(coords);
         if (bodyCubes[index] != null)
             return;
 
         cubeMatrices.Add(new());
         activeCubes.Add(bodyCubes[index] = new()
         {
-            coord = new(x, y, z),
+            coords = coords
         });
-        
+
         FindSlots();
     }
-    
-    public void AddCube(Vector3Int coords) => AddCube(coords.x, coords.y, coords.z);
 
-    public void RemoveCube(int x, int y, int z)
+    public void RemoveCube(Vector3Int coords)
     {
-        int gridIndex = GetIndex(x, y, z);
+        int gridIndex = GetIndex(coords);
         if (bodyCubes[gridIndex] == null)
             return;
 
@@ -112,17 +103,17 @@ public class VoxelBodyTesting : MonoBehaviour
         bodyCubes[gridIndex] = null;
     }
 
-    public BodyCube GetCube(int x, int y, int z)
+    public BodyCube GetCube(Vector3Int coords)
     {
-        int index = GetIndex(x, y, z);
-        return IsValid(x, y, z) ? bodyCubes[index] : null;
+        int index = GetIndex(coords);
+        return IsValid(coords) ? bodyCubes[index] : null;
     }
-    
-    int GetIndex(int x, int y, int z) =>
-        x + y * size.x + z * size.x * size.y;
 
-    bool IsValid(int x, int y, int z) =>
-        x >= 0 && x < size.x && y >= 0 && y < size.y && z >= 0 && z < size.z;
+    int GetIndex(Vector3Int coords) =>
+        coords.x + coords.y * size.x + coords.z * size.x * size.y;
+
+    bool IsValid(Vector3Int coords) =>
+        coords.x >= 0 && coords.x < size.x && coords.y >= 0 && coords.y < size.y && coords.z >= 0 && coords.z < size.z;
 
     /// <summary>
     /// Finds all empty spaces that are adjacent to a cube.
@@ -145,22 +136,27 @@ public class VoxelBodyTesting : MonoBehaviour
         {
             foreach (var dir in directions)
             {
-                Vector3Int coord = cube.coord + dir;
+                Vector3Int coords = cube.coords + dir;
 
-                if (!visited.Contains(coord) && IsValid(coord.x, coord.y, coord.z) && GetCube(coord.x, coord.y, coord.z) == null)
+                if (!visited.Contains(coords) && IsValid(coords) && GetCube(coords) == null)
                 {
-                    slots.Add(cube.coord + dir);
+                    slots.Add(cube.coords + dir);
                     slotMatrices.Add(new());
-                    visited.Add(coord);
+                    visited.Add(coords);
                 }
             }
         }
     }
+
+    Vector3 GetWorldPos(Vector3Int coords) =>
+        new Vector3(coords.x * slotScale.x * transform.localScale.x,
+            coords.y * slotScale.y * transform.localScale.y,
+            coords.z * slotScale.z * transform.localScale.z) + transform.position;
 }
 
 public class BodyCube
 {
-    public Vector3Int coord;
+    public Vector3Int coords;
 
     public BodyCube()
     {
