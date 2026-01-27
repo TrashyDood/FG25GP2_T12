@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6825332668043674253}
   - component: {fileID: 7319833572454886761}
   - component: {fileID: 4118488945847303479}
+  - component: {fileID: 8655100144952709001}
   - component: {fileID: 6454924862363815314}
   - component: {fileID: 3117290854059341669}
   m_Layer: 0
@@ -109,6 +110,25 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: 50a3259b74b0c954bb70715ff0cbc1f8, type: 2}
   mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   size: {x: 7, y: 1, z: 7}
+  maxDistance: 0
+  camera: {fileID: 0}
+--- !u!114 &8655100144952709001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3001057493141643324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d62b1f0a140ce4d4ebc9eb875a360d2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerShoot
+  attackSpeed: 1
+  attackRange: 10
+  projectilePrefab: {fileID: 8864721375597374351, guid: e7043bb5bcf2d434bb6674efb247be5b, type: 3}
+  allEnemies: []
+  nearestEnemy: {fileID: 9057473989697554662, guid: e7043bb5bcf2d434bb6674efb247be5b, type: 3}
 --- !u!114 &6454924862363815314
 MonoBehaviour:
   m_ObjectHideFlags: 0

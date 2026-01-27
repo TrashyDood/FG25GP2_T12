@@ -459,33 +459,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
---- !u!1 &1092331836 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3001057493141643324, guid: b68d2b976c85a184b87590630a600616, type: 3}
-  m_PrefabInstance: {fileID: 4462133793604444454}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1092331839 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2123195880003866622, guid: b68d2b976c85a184b87590630a600616, type: 3}
   m_PrefabInstance: {fileID: 4462133793604444454}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1092331843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1092331836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d62b1f0a140ce4d4ebc9eb875a360d2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerShoot
-  attackSpeed: 1
-  attackRange: 10
-  projectilePrefab: {fileID: 8864721375597374351, guid: e7043bb5bcf2d434bb6674efb247be5b, type: 3}
-  allEnemies: []
-  nearestEnemy: {fileID: 9057473989697554662, guid: e7043bb5bcf2d434bb6674efb247be5b, type: 3}
 --- !u!1 &1629078634
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,13 +629,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4118488945847303479, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 350512311}
+    - target: {fileID: 4118488945847303479, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: size.y
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4118488945847303479, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: cubeMesh
+      value: 
+      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 4118488945847303479, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: slotMesh
+      value: 
+      objectReference: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 4118488945847303479, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: maxDistance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4118488945847303479, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: cubeMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 50a3259b74b0c954bb70715ff0cbc1f8, type: 2}
+    - target: {fileID: 4118488945847303479, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: slotMaterial
+      value: 
+      objectReference: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3001057493141643324, guid: b68d2b976c85a184b87590630a600616, type: 3}
-      insertIndex: 4
-      addedObject: {fileID: 1092331843}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b68d2b976c85a184b87590630a600616, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

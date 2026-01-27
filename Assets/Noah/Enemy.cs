@@ -34,7 +34,6 @@ public class Enemy : PoolableComponent<Enemy>
         if (Mathf.Round(health) < 1)
         {
             ReturnToPool();
-            Debug.Log("Enemy killed!");
         }
     }
 

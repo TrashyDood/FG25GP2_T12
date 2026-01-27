@@ -58,6 +58,5 @@ public class PlayerShoot : MonoBehaviour
         projectile.Initialize(direction, 8);
 
         closestDistance = float.MaxValue;
-        print("closest distance to enemy is: " + nearestEnemy);
     }
 }

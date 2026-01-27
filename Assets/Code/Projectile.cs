@@ -31,9 +31,9 @@ public class Projectile : MonoBehaviour
     {
         Enemy enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
 
+        Destroy(gameObject);
+
         if (enemy != null)
             enemy.Health -= damage;
-
-        Destroy(gameObject);
     }
 }
