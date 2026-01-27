@@ -463,11 +463,53 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+--- !u!114 &819984467 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4426129337759524916, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+  m_PrefabInstance: {fileID: 819984466}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61ebb9cf40e7d634093a29973c76953f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
 --- !u!4 &1092331839 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2123195880003866622, guid: b68d2b976c85a184b87590630a600616, type: 3}
   m_PrefabInstance: {fileID: 4462133793604444454}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1107292718
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1107292719}
+  m_Layer: 0
+  m_Name: WeaponLibrary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1107292719
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107292718}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.28571, y: -0.9, z: -1.28571}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1629078634
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,6 +623,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2026706734
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2026706735}
+  m_Layer: 0
+  m_Name: UpgradeLibrary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2026706735
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026706734}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.28571, y: -0.9, z: -1.28571}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4462133793604444454
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -665,6 +738,34 @@ PrefabInstance:
       propertyPath: slotMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 8b44773059fde0d4791e148bd2d8df64, type: 2}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 819984467}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnterUpgradingState
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -679,3 +780,5 @@ SceneRoots:
   - {fileID: 89427389}
   - {fileID: 4462133793604444454}
   - {fileID: 1629078638}
+  - {fileID: 2026706735}
+  - {fileID: 1107292719}
