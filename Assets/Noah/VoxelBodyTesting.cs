@@ -48,7 +48,7 @@ public class VoxelBodyTesting : MonoBehaviour
         };
 
         AddCube(new());
-        AddCube(new(1, 0, 0));
+        AddCube(new(-1, 0, 0));
     }
 
     private void Update()
@@ -65,7 +65,7 @@ public class VoxelBodyTesting : MonoBehaviour
         {
             // Slot Matrices
             for (int i = 0; i < slotMatrices.Count; i++)
-                slotMatrices[i] = Matrix4x4.TRS(GetWorldPos(slots[i]), Quaternion.identity, Vector3.one);
+                slotMatrices[i] = Matrix4x4.TRS(GetWorldPos(slots[i]), Quaternion.identity, SlotSize * 0.25f);
 
             // Render slots
             for (int i = 0; i < slotMatrices.Count; i += 1023)
