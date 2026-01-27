@@ -7,7 +7,8 @@ public class Enemy : PoolableComponent<Enemy>
     [SerializeField]
     float speed = 5;
     [SerializeField]
-    float health;
+    float maxHealth = 20,
+        health = 20;
 
     public float Health
     {
@@ -31,7 +32,7 @@ public class Enemy : PoolableComponent<Enemy>
 
     void OnHealthChanged(float newHealth)
     {
-        if (Mathf.Round(health) < 1)
+        if (Mathf.Round(newHealth) < 1)
         {
             ReturnToPool();
         }

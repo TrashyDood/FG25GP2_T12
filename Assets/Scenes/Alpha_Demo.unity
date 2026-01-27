@@ -450,6 +450,10 @@ PrefabInstance:
       propertyPath: globalObjectPool.pools.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnCenter
+      value: 
+      objectReference: {fileID: 1092331839}
     - target: {fileID: 7585911998284658465, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: m_Name
       value: Game Manager
@@ -650,13 +654,17 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4118488945847303479, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: renderSlots
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4118488945847303479, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: cubeMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 50a3259b74b0c954bb70715ff0cbc1f8, type: 2}
     - target: {fileID: 4118488945847303479, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: slotMaterial
       value: 
-      objectReference: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 2100000, guid: 8b44773059fde0d4791e148bd2d8df64, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -23,7 +23,6 @@ public class EnemyManager : MonoBehaviour
             Destroy(Instance);
 
         Instance = this;
-
         enemyPool.parent = transform;
     }
 
