@@ -7,12 +7,17 @@ public class XPManager : MonoBehaviour
     [SerializeField]
     AnimationCurve _XPReqScaling;
     [SerializeField]
+    float pickupRange = 5;
+    [SerializeField]
+    LayerMask pickupLayer;
+    [SerializeField]
     UnityEvent<int, int> _onXPGained,
         _onLevelsGained;
 
     public event Action<int, int> OnXPGainedEvent,
         OnLevelsGainedEvent;
 
+    [SerializeField]
     int _currentXP,
         _currentLevel,
         _currentXPReq;
@@ -25,7 +30,19 @@ public class XPManager : MonoBehaviour
 
     public int CurrentLevel => _currentLevel;
 
-    public void AddXP(int toAdd)
+    private void FixedUpdate()
+    {
+        Collider[] pickups = Physics.OverlapSphere(transform.position, pickupRange, pickupLayer);
+
+        if (pickups != null)
+            foreach (var pickup in pickups)
+            {
+                AddXP();
+                Destroy(pickup.gameObject);
+            }
+    }
+
+    public void AddXP(int toAdd = 1)
     {
         int prevLevel = _currentLevel;
         int prevXP = _currentXP;

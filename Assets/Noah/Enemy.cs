@@ -9,6 +9,8 @@ public class Enemy : PoolableComponent<Enemy>
     [SerializeField]
     float maxHealth = 20,
         health = 20;
+    [SerializeField]
+    GameObject[] dropOnDeath;
 
     public float Health
     {
@@ -35,6 +37,8 @@ public class Enemy : PoolableComponent<Enemy>
         if (Mathf.Round(newHealth) < 1)
         {
             ReturnToPool();
+            foreach (var item in dropOnDeath)
+                Instantiate(item, transform.position, Quaternion.identity);
         }
     }
 

@@ -55,7 +55,7 @@ public class PlayerShoot : MonoBehaviour
         closestEnemy.y = 0f;
         Vector3 direction = (closestEnemy - transform.position);
 
-        projectile.Initialize(direction, 8);
+        projectile.Initialize(direction, 24);
 
         closestDistance = float.MaxValue;
     }
