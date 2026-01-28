@@ -2,80 +2,115 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    [SerializeField]
+    RectTransform levelUpScreen;
 
-    #region Singelton
+    public static GameManager Instance { get; private set; }
+    public Player Player { get; private set; }
+
     private void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            throw new System.Exception("2 Singletons of type [GamesManager exist]");
-        }
-        instance = this;
-    }
-    #endregion
+        if (Instance != this)
+            Destroy(Instance);
 
-    public enum GameState
-    {
-        Playing,
-        Paused,
-        Upgrading,
-        Dead,
-        Victory,
-        Menu
+        Player = GameObject.FindFirstObjectByType<Player>();
+        Instance = this;
     }
+
+    private void Start()
+    {
+        SwitchState(GameState.Playing);
+    }
+
     public GameState currentState;
     public GameState GetCurrentState => currentState;
 
-    public bool GamePaused;
-
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        switch (currentState)
         {
-            if (currentState == GameState.Playing)
-                SwitchState(GameState.Paused);
-            else if (currentState == GameState.Paused)
-                SwitchState(GameState.Playing);
+            case GameState.Playing:
+
+                break;
+            case GameState.Paused:
+
+                break;
+            case GameState.Upgrading:
+                Player.Body.RunEditMode(() => SwitchState(GameState.Playing));
+                break;
+            case GameState.Dead:
+
+                break;
+            case GameState.Victory:
+                
+                break;
+            case GameState.Menu:
+
+                break;
         }
     }
 
+    public void SwitchState(int newState) =>
+        SwitchState((GameState)newState);
+
     public void SwitchState(GameState newState)
     {
+        switch (currentState)
+        {
+            case GameState.Playing:
+
+                break;
+            case GameState.Paused:
+
+                break;
+            case GameState.Upgrading:
+                Time.timeScale = 1;
+                levelUpScreen?.gameObject.SetActive(false);
+                break;
+            case GameState.Dead:
+
+                break;
+            case GameState.Victory:
+
+                break;
+            case GameState.Menu:
+
+                break;
+        }
+
         currentState = newState;
 
         switch (currentState)
         {
             case GameState.Playing:
-                SetPausedGame(false);
-                break;
 
+                break;
             case GameState.Paused:
-                SetPausedGame(true);
-                break;
 
+                break;
             case GameState.Upgrading:
-                SetPausedGame(true);
+                Time.timeScale = 0;
+                levelUpScreen?.gameObject.SetActive(true);
                 break;
-
-            case GameState.Menu:
             case GameState.Dead:
+
+                break;
             case GameState.Victory:
-                SetPausedGame(true);
+
+                break;
+            case GameState.Menu:
+
                 break;
         }
     }
+}
 
-
-    public void SetPausedGame(bool paused)
-    {
-        GamePaused = paused;
-
-        Time.timeScale = GamePaused ? 0 : 1;
-    }
-
-    public void EnterUpgradingState()
-    {
-        SwitchState(GameState.Upgrading);
-    }
+public enum GameState
+{
+    Playing = 0,
+    Paused = 1,
+    Upgrading = 2,
+    Dead = 3,
+    Victory = 4,
+    Menu = 5
 }
