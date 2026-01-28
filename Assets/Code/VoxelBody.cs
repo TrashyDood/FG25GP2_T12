@@ -64,12 +64,14 @@ public class VoxelBody : MonoBehaviour
             Graphics.RenderMeshInstanced(cuberRenderParams, cubeMesh, 0, cubeMatrices, Mathf.Min(1023, activeCubes.Count - i), i);
     }
 
-    public void RunEditMode(Action onSlotFilledCallback)
+    public Vector3 RunEditMode(Action onSlotFilledCallback)
     {
         if (Input.GetMouseButtonDown(0) && GetSlotFromCursor(Camera.main, Input.mousePosition, out Vector3Int slot))
         {
             onSlotFilledCallback();
             AddCube(slot);
+
+            return slot;
         }
 
         // Slot Matrices
@@ -79,6 +81,8 @@ public class VoxelBody : MonoBehaviour
         // Render slots
         for (int i = 0; i < slotMatrices.Count; i += 1023)
             Graphics.RenderMeshInstanced(slotRenderParams, slotMesh, 0, slotMatrices, Mathf.Min(1023, slotMatrices.Count - i), i);
+
+        return default;
     }
 
     public void AddCube(Vector3Int coords)
