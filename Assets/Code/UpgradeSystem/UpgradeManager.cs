@@ -229,9 +229,52 @@ public class UpgradeManager : MonoBehaviour
         return text;
     }
 
+    /*
     private void OnChoiceClicked(ChoiceCard card)
     {
         Debug.Log($"Choice selected: {card.payload}");
         choicesRoot.SetActive(false);
+    }
+    */
+    private void OnChoiceClicked(ChoiceCard card)
+    {
+        if (card.payload is UpgradeDefinition upgrade)
+        {
+            foreach (UpgradeEffect effect in upgrade.effects)
+            {
+                if (effect is AddWeaponEffect addWeapon)
+                {
+                    GameObject prefabToBuild = addWeapon.weapon.prefab;
+
+                    //BuildManager.Instance.EnterBuildMode(prefabToBuild);
+                    break;
+                }
+            }
+        }
+
+        choicesRoot.SetActive(false);
+    }
+
+
+
+    public void GetUpgrade(UpgradeDefinition upgrade)
+    {
+        if(upgrade == null)
+        {
+            //FixedChoice
+        }
+        else
+        {
+            foreach (UpgradeEffect effect in upgrade.effects)
+            {
+                if (effect is AddWeaponEffect addWeapon)
+                {
+                    GameObject prefab = addWeapon.weapon.prefab;
+
+                    //EnterBuildMode(prefab);
+                    return;
+                }
+            }
+        }
     }
 }
