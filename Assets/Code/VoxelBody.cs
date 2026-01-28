@@ -82,7 +82,7 @@ public class VoxelBody : MonoBehaviour
         for (int i = 0; i < slotMatrices.Count; i += 1023)
             Graphics.RenderMeshInstanced(slotRenderParams, slotMesh, 0, slotMatrices, Mathf.Min(1023, slotMatrices.Count - i), i);
 
-        return default;
+        return -Vector3Int.one;
     }
 
     public void AddCube(Vector3Int coords)
@@ -176,7 +176,7 @@ public class VoxelBody : MonoBehaviour
         GetSlotFromRay(camera.ScreenPointToRay(cursorPos), out slot);
 
     int GetIndex(Vector3Int coords) =>
-    coords.x + coords.y * size.x + coords.z * size.x * size.y;
+        coords.x + coords.y * size.x + coords.z * size.x * size.y;
 
     bool IsValid(Vector3Int coords) =>
         coords.x >= 0 && coords.x < size.x && coords.y >= 0 && coords.y < size.y && coords.z >= 0 && coords.z < size.z;
