@@ -138,7 +138,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   target: {fileID: 0}
   speed: 5
+  maxHealth: 20
   health: 20
+  dropOnDeath:
+  - {fileID: 4721473660522759184, guid: 17d20f0fa7504704abe027b322e73355, type: 3}
 --- !u!135 &-4537988457186732601
 SphereCollider:
   m_ObjectHideFlags: 0
