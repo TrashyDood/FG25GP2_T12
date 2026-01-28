@@ -6,16 +6,30 @@ public class Player : MonoBehaviour
     private float currentHealth;
     private float maxHealth = 100;
 
-    [SerializeField] Slider healthBar;
+    [SerializeField]
+    FillbarUI healthBar;
+
+    public VoxelBody Body { get; private set; }
+
+    public float Health
+    {
+        get => currentHealth;
+        set => SetHealth(value);
+    }
+
+    private void Awake()
+    {
+        Body = GetComponent<VoxelBody>();
+    }
 
     private void Start()
     {
-        currentHealth = maxHealth;
-        healthBar.maxValue = maxHealth;
+        Health = maxHealth;
     }
-    public void TakeDamage(float damageAmount)
+
+    public void SetHealth(float newValue)
     {
-        currentHealth -= damageAmount;
-        healthBar.value = currentHealth;
+        currentHealth = newValue;
+        healthBar.FillAmount = currentHealth / maxHealth;
     }
 }

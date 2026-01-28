@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class VoxelBodyTesting : MonoBehaviour
+public class VoxelBody : MonoBehaviour
 {
     [SerializeField]
     Vector3Int size;
@@ -26,9 +27,11 @@ public class VoxelBodyTesting : MonoBehaviour
     List<Matrix4x4> cubeMatrices = new(),
         slotMatrices = new();
 
+    bool editMode = false;
     RenderParams cuberRenderParams,
         slotRenderParams;
 
+    public bool EditMode { get => editMode; set => editMode = value; }
     public bool RenderSlots { get => renderSlots; set => renderSlots = value; }
     public Vector3 SlotSize => new Vector3(slotScale.x * transform.localScale.x, slotScale.y * transform.localScale.y, slotScale.z * transform.localScale.z);
 
@@ -52,9 +55,6 @@ public class VoxelBodyTesting : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && GetSlotFromCursor(Camera.main, Input.mousePosition, out Vector3Int slot))
-            AddCube(slot);
-
         // Cube matrices
         for (int i = 0; i < cubeMatrices.Count; ++i)
             cubeMatrices[i] = Matrix4x4.TRS(GetWorldPos(activeCubes[i].coords), Quaternion.identity, SlotSize);
@@ -62,17 +62,23 @@ public class VoxelBodyTesting : MonoBehaviour
         // Render cubes
         for (int i = 0; i < cubeMatrices.Count; i += 1023)
             Graphics.RenderMeshInstanced(cuberRenderParams, cubeMesh, 0, cubeMatrices, Mathf.Min(1023, activeCubes.Count - i), i);
+    }
 
-        if (renderSlots)
+    public void RunEditMode(Action onSlotFilledCallback)
+    {
+        if (Input.GetMouseButtonDown(0) && GetSlotFromCursor(Camera.main, Input.mousePosition, out Vector3Int slot))
         {
-            // Slot Matrices
-            for (int i = 0; i < slotMatrices.Count; i++)
-                slotMatrices[i] = Matrix4x4.TRS(GetWorldPos(slots[i]), Quaternion.identity, SlotSize * 0.25f);
-
-            // Render slots
-            for (int i = 0; i < slotMatrices.Count; i += 1023)
-                Graphics.RenderMeshInstanced(slotRenderParams, slotMesh, 0, slotMatrices, Mathf.Min(1023, slotMatrices.Count - i), i);
+            onSlotFilledCallback();
+            AddCube(slot);
         }
+
+        // Slot Matrices
+        for (int i = 0; i < slotMatrices.Count; i++)
+            slotMatrices[i] = Matrix4x4.TRS(GetWorldPos(slots[i]), Quaternion.identity, SlotSize * 0.25f);
+
+        // Render slots
+        for (int i = 0; i < slotMatrices.Count; i += 1023)
+            Graphics.RenderMeshInstanced(slotRenderParams, slotMesh, 0, slotMatrices, Mathf.Min(1023, slotMatrices.Count - i), i);
     }
 
     public void AddCube(Vector3Int coords)

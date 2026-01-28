@@ -56,7 +56,7 @@ public class XPManager : MonoBehaviour
         {
             _currentLevel++;
             _currentXP -= _currentXPReq;
-            _currentXPReq = Mathf.CeilToInt(_currentLevel);
+            _currentXPReq = Mathf.CeilToInt(_XPReqScaling.Evaluate(_currentLevel));
         }
         
         _onLevelsGained.Invoke(prevLevel, _currentLevel);
