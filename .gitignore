@@ -49,6 +49,12 @@ ExportedObj/
 *.opendb
 *.VC.db
 
+# Custom // Noah
+*.idea
+*.vs
+*.vsconfig
+
+
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
