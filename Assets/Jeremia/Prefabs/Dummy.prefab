@@ -70,7 +70,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 27b5944ba8cfd5e4dad930de3e01ad44, type: 2}
+  - {fileID: 2100000, guid: 926a6daf500a17c41867ec1c358dce23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewEnemyMovement
   stop: 0
   target: {fileID: 0}
-  moveSpeed: 3
+  moveSpeed: 1.5
 --- !u!54 &2518146278351948034
 Rigidbody:
   m_ObjectHideFlags: 0

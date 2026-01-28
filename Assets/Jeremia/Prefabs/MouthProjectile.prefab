@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2888768611010114581}
   - component: {fileID: 5073804902129243896}
   - component: {fileID: 4375306589305095031}
-  - component: {fileID: 5848616070881844949}
   - component: {fileID: 1677142509368116370}
   - component: {fileID: 7392413844373487131}
+  - component: {fileID: -5612445821010011685}
   m_Layer: 0
   m_Name: MouthProjectile
   m_TagString: PDamage
@@ -70,7 +70,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 27b5944ba8cfd5e4dad930de3e01ad44, type: 2}
+  - {fileID: 2100000, guid: 3ceba353687719a4d98ac5b87934b923, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,6 +92,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!135 &4375306589305095031
 SphereCollider:
@@ -114,20 +115,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5848616070881844949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 692079061938818847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daedc1b787b8ccf499e763225d348f5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectileMovement
-  projectileSpeed: 8
-  projectileDirection: {x: 0, y: 0, z: 0}
 --- !u!54 &1677142509368116370
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -169,3 +156,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewPDamage
   damagePerFrame: 100000
   destroyOnCollision: 1
+--- !u!114 &-5612445821010011685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692079061938818847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4d24b19a09f8045b6d67ff9da3fe91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileMovement
+  projectileSpeed: 10
+  projectileDirection: {x: 0, y: 0, z: 0}

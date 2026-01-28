@@ -62,7 +62,10 @@ MonoBehaviour:
   gridSize: 7
   massCount: 1
   legCount: 1
-  placeablebodyParts: []
+  placeablebodyParts:
+  - {fileID: 3664785736014188380, guid: a3e798f524d43bc4e8684d88a359743a, type: 3}
+  - {fileID: 3664785736014188380, guid: e3090515120803b43920e2f5c1b5b361, type: 3}
+  - {fileID: 3664785736014188380, guid: 062dc0110bbbbc94c9bbfe51341e120d, type: 3}
   placingBody: 0
 --- !u!64 &8262807244408910702
 MeshCollider:

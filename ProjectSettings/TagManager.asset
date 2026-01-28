@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
+  - Mass
+  - XP
+  - PlacePoint
+  - PDamage
   layers:
   - Default
   - TransparentFX
@@ -14,8 +18,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Mass
+  - Weapon
   - Enemy
   - 
   - 

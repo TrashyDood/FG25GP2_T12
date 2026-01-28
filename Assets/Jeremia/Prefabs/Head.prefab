@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3789977869786043031}
   - component: {fileID: 88749690361388732}
   - component: {fileID: 8549332306292638918}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,6 +89,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &8549332306292638918
 CapsuleCollider:
@@ -125,7 +126,7 @@ GameObject:
   - component: {fileID: 4293862402896932524}
   - component: {fileID: 3191230354290252101}
   - component: {fileID: 7104832650076343191}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,6 +203,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &7104832650076343191
 CapsuleCollider:
@@ -238,7 +240,7 @@ GameObject:
   - component: {fileID: 6481410542522157562}
   - component: {fileID: 567663842511365413}
   - component: {fileID: 1856311833252640157}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,6 +320,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &1856311833252640157
 BoxCollider:
@@ -351,7 +354,7 @@ GameObject:
   - component: {fileID: 3292988128383803423}
   - component: {fileID: 8355696077340129687}
   - component: {fileID: 1802399657465213773}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Character_Core_PlaceHolder_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +409,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ef20c614f598a83469863dadb3aa1ba4, type: 2}
+  - {fileID: 2100000, guid: 33dd41f89fd961b4092dd5a30ecdfe03, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -428,4 +431,5 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}

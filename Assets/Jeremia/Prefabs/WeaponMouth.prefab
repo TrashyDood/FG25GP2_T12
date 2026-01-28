@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7516911823801817540}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 2576175967455921706}
   - component: {fileID: 907183501476858891}
   - component: {fileID: 3435196303216475551}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Capsule (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4a35b8dce6b404c4f89fe7ade75436a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 4029278113655236545}
   - component: {fileID: 6693500693819310746}
   - component: {fileID: 4007452978805931869}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Capsule (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4a35b8dce6b404c4f89fe7ade75436a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 1381720363596139580}
   - component: {fileID: 1023054352686186137}
   - component: {fileID: 1784857478584851171}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Capsule (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4a35b8dce6b404c4f89fe7ade75436a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -384,7 +384,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3769509957704864129}
   - component: {fileID: 2557745060737620141}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WeaponMouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: 6497628862044163773}
   - component: {fileID: 7648529136068075164}
   - component: {fileID: 8844952775926201955}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Capsule (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,7 +497,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4a35b8dce6b404c4f89fe7ade75436a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 2881300531678834864}
   - component: {fileID: 5177939817117614693}
   - component: {fileID: 3414265524111164619}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -611,7 +611,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4a35b8dce6b404c4f89fe7ade75436a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -671,7 +671,7 @@ GameObject:
   - component: {fileID: 7575666793363836655}
   - component: {fileID: 8913039902658313261}
   - component: {fileID: 7133684944188057147}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: WeaponMouth
   m_TagString: Mass
   m_Icon: {fileID: 0}
@@ -806,7 +806,7 @@ GameObject:
   - component: {fileID: 9104289497751410822}
   - component: {fileID: 5834666167974276843}
   - component: {fileID: 6629604113046632510}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Capsule (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -861,7 +861,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4a35b8dce6b404c4f89fe7ade75436a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -917,7 +917,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 917510484227030252}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Mouth_placeholder_rig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -950,7 +950,7 @@ GameObject:
   m_Component:
   - component: {fileID: 291293593164569326}
   - component: {fileID: 7224761488670063679}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Character_Mout_Placeholder_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1046,7 +1046,7 @@ GameObject:
   - component: {fileID: 7901077663192349991}
   - component: {fileID: 4231150271712253532}
   - component: {fileID: 8606162710489383916}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1101,7 +1101,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ef20c614f598a83469863dadb3aa1ba4, type: 2}
+  - {fileID: 2100000, guid: 33dd41f89fd961b4092dd5a30ecdfe03, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1160,7 +1160,7 @@ GameObject:
   - component: {fileID: 1920495230918621273}
   - component: {fileID: 6116618792884555176}
   - component: {fileID: 2708532028167711196}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1215,7 +1215,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a98838282d9ecb8448dd32eaa5cefdf2, type: 2}
+  - {fileID: 2100000, guid: 888df2f2e5498b54ea6723e0717df5a9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1271,7 +1271,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5514141005764031214}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Jaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}

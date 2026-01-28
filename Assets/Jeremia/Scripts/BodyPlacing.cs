@@ -34,7 +34,8 @@ public class BodyPlacing : MonoBehaviour
         {
             ghostBlock.SetActive(false);
             return;
-        }    
+        }
+        Debug.Log("HEJ");
         Vector3 mousePos = gameCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
 
         GameObject closestPoint = null;

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 607161322811149823}
   - component: {fileID: 7575666793363836655}
   - component: {fileID: 8913039902658313261}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Mass
   m_TagString: Mass
   m_Icon: {fileID: 0}
@@ -90,6 +90,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &8913039902658313261
 BoxCollider:
@@ -123,9 +124,9 @@ GameObject:
   - component: {fileID: 293935673502686973}
   - component: {fileID: 4865316948719289580}
   - component: {fileID: 6504179543060069991}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Character_Block_Placeholder_model.001
-  m_TagString: Untagged
+  m_TagString: Mass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -178,7 +179,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ef20c614f598a83469863dadb3aa1ba4, type: 2}
+  - {fileID: 2100000, guid: 33dd41f89fd961b4092dd5a30ecdfe03, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -200,4 +201,5 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
