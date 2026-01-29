@@ -8,6 +8,8 @@ public class Enemy : PoolableComponent<Enemy>
     [SerializeField]
     EnemyData data;
 
+    Material material;
+    MeshRenderer meshRenderer;
     float health;
 
     public float Health
@@ -18,6 +20,10 @@ public class Enemy : PoolableComponent<Enemy>
             OnHealthChanged(value);
             health = value;
         }
+    }
+    private void Awake()
+    {
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
     }
 
     private void Start()
@@ -48,6 +54,8 @@ public class Enemy : PoolableComponent<Enemy>
     public void SetData(EnemyData data)
     {
         health = data.maxHealth;
+        meshRenderer.material = data.material;
+        this.data = data;
     }
 }
 
@@ -55,7 +63,9 @@ public class Enemy : PoolableComponent<Enemy>
 public class EnemyData
 {
     public GameObject[] dropOnDeath;
-    public float maxHealth, speed;
+    public Mesh model;
+    public Material material;
+    public float maxHealth, speed, damage, damageRange, attackSpeed, size;
 
-    // max health, damage, range o andra attributer
+    // attackSpeed kan vara istället att spelaren har i-frames
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -10,6 +11,8 @@ public class EnemyManager : MonoBehaviour
     Transform spawnCenter;
     [SerializeField]
     EnemySpawnConfig config;
+    [SerializeField]
+    EnemyData[] enemyData;
 
     float spawnIntervalTimer;
     bool isSpawning;
@@ -50,11 +53,18 @@ public class EnemyManager : MonoBehaviour
 
     Enemy SpawnEnemy(Vector3 position)
     {
-        Enemy enemy = enemyPool.FetchEnemy();
+        Enemy enemy = enemyPool.FetchEnemy(DetermineData());
         enemy.transform.position = position;
 
         return enemy;
     }
+    EnemyData DetermineData()
+    {
+        int index = UnityEngine.Random.Range(0, enemyData.Length);
+
+        return enemyData[index];
+    }
+
 
     IEnumerator SpawnEnemies(float duration, int count)
     {
