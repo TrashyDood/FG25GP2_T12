@@ -8,6 +8,8 @@ public class Movement : MonoBehaviour
     float speed = 10,
           acceleration = 50,
           deceleration = 80;
+    [SerializeField]
+    PlayerInput playerInput;
 
     Rigidbody rigidBody;
     Vector2 input;
@@ -34,7 +36,8 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
-        rigidBody = GetComponent<Rigidbody>();
+        rigidBody ??= GetComponent<Rigidbody>();
+        playerInput ??= GetComponent<PlayerInput>();
     }
 
     private void FixedUpdate()
