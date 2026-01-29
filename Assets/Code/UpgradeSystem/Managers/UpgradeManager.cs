@@ -21,7 +21,6 @@ public class UpgradeManager : MonoBehaviour
     public List<UpgradeDefinition> upgradePool = new List<UpgradeDefinition>();
 
 
-
     private void Start()
     {
         foreach(UpgradeDefinition upgrade in upgradeLibrary.upgrades)
@@ -37,8 +36,6 @@ public class UpgradeManager : MonoBehaviour
             ShowChoices(GetChoices());
         }
     }
-
-
 
     public class ChoiceBundle
     {
@@ -257,21 +254,20 @@ public class UpgradeManager : MonoBehaviour
         choicesRoot.SetActive(false);
     }
     */
+
     private void OnChoiceClicked(ChoiceCard card)
     {
-        if (card.payload is UpgradeDefinition upgrade)
-        {
-            voxelBody.GetUpgrade(upgrade);
-        }
-        else
-        {
-            voxelBody.GetUpgrade(null); // fixed choice
-        }
+        //if (card.payload is UpgradeDefinition upgrade)
+        //{
+        //    voxelBody.GetUpgrade(upgrade);
+        //}
+        //else
+        //{
+        //    voxelBody.GetUpgrade(null); // fixed choice
+        //}
 
         choicesRoot.SetActive(false);
     }
-
-
 
     public void GetUpgrade(UpgradeDefinition upgrade)
     {
@@ -295,6 +291,4 @@ public class UpgradeManager : MonoBehaviour
         }
         */
     }
-
-
 }
