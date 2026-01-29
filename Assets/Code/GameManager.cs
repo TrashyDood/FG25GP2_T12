@@ -8,7 +8,8 @@ using UnityEngine.InputSystem.LowLevel;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    RectTransform levelUpScreen;
+    RectTransform buildingScreen,
+        upgradeScreen;
     [SerializeField]
     StateManager stateManager;
 
@@ -33,25 +34,42 @@ public class GameManager : MonoBehaviour
                 onEnterCallback = (state) =>
                 {
                     Time.timeScale = 0;
-                    levelUpScreen.gameObject.SetActive(true);
+                    upgradeScreen.gameObject.SetActive(true);
                 },
                 onExitCallback = (state) =>
                 {
                     Time.timeScale = 1;
-                    levelUpScreen.gameObject.SetActive(false);
+                    upgradeScreen.gameObject.SetActive(false);
                 },
                 onEvaluateCallback = (deltaTime) =>
                 {
-                    Debug.Log("On upgradring");
+                    
+                }
+            },
+            new()
+            {
+                onEnterCallback = (state) =>
+                {
+                    Time.timeScale = 0;
+                    buildingScreen.gameObject.SetActive(true);
+                },
+                onExitCallback = (state) =>
+                {
+                    Time.timeScale = 1;
+                    buildingScreen.gameObject.SetActive(false);
+                },
+                onEvaluateCallback = (deltaTime) =>
+                {
                     Player.Body.RunEditMode(() => { stateManager.SetState(GameState.Playing); });
                 }
             },
             new(),
             new(),
-            new(),
+            new()
         };
+
         stateManager = new(states);
-        StateManager.SetState(0);
+        StateManager.SetState(GameState.Playing);
     }
 
     private void Update()
@@ -68,9 +86,10 @@ public enum GameState
     Playing = 0,
     Paused = 1,
     Upgrading = 2,
-    Dead = 3,
-    Victory = 4,
-    Menu = 5
+    Building = 3,
+    Dead = 4,
+    Victory = 5,
+    Menu = 6
 }
 
 [Serializable]

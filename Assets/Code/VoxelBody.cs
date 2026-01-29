@@ -21,8 +21,8 @@ public class VoxelBody : MonoBehaviour
     [SerializeField]
     bool renderSlots;
 
-    BodyCube[] bodyCubes;
-    List<BodyCube> activeCubes = new();
+    BodyPart[] bodyCubes;
+    List<BodyPart> activeCubes = new();
     List<Vector3Int> slots = new();
     List<Matrix4x4> cubeMatrices = new(),
         slotMatrices = new();
@@ -37,7 +37,7 @@ public class VoxelBody : MonoBehaviour
 
     void Start()
     {
-        bodyCubes = new BodyCube[size.x * size.y * size.z];
+        bodyCubes = new BodyPart[size.x * size.y * size.z];
         cuberRenderParams = new RenderParams(cubeMaterial)
         {
             worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000),
@@ -64,7 +64,7 @@ public class VoxelBody : MonoBehaviour
             Graphics.RenderMeshInstanced(cuberRenderParams, cubeMesh, 0, cubeMatrices, Mathf.Min(1023, activeCubes.Count - i), i);
     }
 
-    public Vector3 RunEditMode(Action onSlotFilledCallback)
+    public Vector3 RunEditMode(Action onSlotFilledCallback, GameObject appendage = null)
     {
         if (Input.GetMouseButtonDown(0) && GetSlotFromCursor(Camera.main, Input.mousePosition, out Vector3Int slot))
         {
@@ -115,7 +115,7 @@ public class VoxelBody : MonoBehaviour
         bodyCubes[gridIndex] = null;
     }
 
-    public BodyCube GetCube(Vector3Int coords)
+    public BodyPart GetCube(Vector3Int coords)
     {
         int index = GetIndex(coords);
         return IsValid(coords) ? bodyCubes[index] : null;
@@ -127,7 +127,7 @@ public class VoxelBody : MonoBehaviour
             yield return slots[i];
     }
 
-    public IEnumerable<BodyCube> ActiveCubes()
+    public IEnumerable<BodyPart> ActiveCubes()
     {
         for (int i = 0; i < activeCubes.Count; i++)
             yield return activeCubes[i];
@@ -143,7 +143,7 @@ public class VoxelBody : MonoBehaviour
     public Bounds GetWorldBounds(Vector3Int coords) =>
         new(GetWorldPos(coords), SlotSize);
 
-    public bool GetCubeFromRay(Ray ray, out BodyCube cube)
+    public bool GetCubeFromRay(Ray ray, out BodyPart cube)
     {
         for (int i = 0; i < activeCubes.Count; i++)
         {
@@ -169,7 +169,7 @@ public class VoxelBody : MonoBehaviour
         return false;
     }
 
-    public bool GetCubeFromCursor(Camera camera, Vector2 cursorPos, out BodyCube cube) =>
+    public bool GetCubeFromCursor(Camera camera, Vector2 cursorPos, out BodyPart cube) =>
         GetCubeFromRay(camera.ScreenPointToRay(cursorPos), out cube);
 
     public bool GetSlotFromCursor(Camera camera, Vector2 cursorPos, out Vector3Int slot) =>
@@ -212,11 +212,11 @@ public class VoxelBody : MonoBehaviour
     }
 }
 
-public class BodyCube
+public class BodyPart
 {
     public Vector3Int coords;
 
-    public BodyCube()
+    public BodyPart()
     {
 
     }
