@@ -15,4 +15,6 @@ MonoBehaviour:
   upgradeName: 
   upgradeId: 
   icon: {fileID: 0}
-  effects: []
+  effects:
+  - {fileID: 0}
+  - {fileID: 0}
