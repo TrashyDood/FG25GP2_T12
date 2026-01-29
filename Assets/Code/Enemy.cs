@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Enemy : PoolableComponent<Enemy>
@@ -5,12 +6,9 @@ public class Enemy : PoolableComponent<Enemy>
     [SerializeField]
     Transform target;
     [SerializeField]
-    float speed = 5;
-    [SerializeField]
-    float maxHealth = 20,
-        health = 20;
-    [SerializeField]
-    GameObject[] dropOnDeath;
+    EnemyData data;
+
+    float health;
 
     public float Health
     {
@@ -29,7 +27,7 @@ public class Enemy : PoolableComponent<Enemy>
 
     private void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.fixedDeltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, target.position, data.speed * Time.fixedDeltaTime);
     }
 
     void OnHealthChanged(float newHealth)
@@ -37,7 +35,7 @@ public class Enemy : PoolableComponent<Enemy>
         if (Mathf.Round(newHealth) < 1)
         {
             ReturnToPool();
-            foreach (var item in dropOnDeath)
+            foreach (var item in data.dropOnDeath)
                 Instantiate(item, transform.position, Quaternion.identity);
         }
     }
@@ -46,4 +44,18 @@ public class Enemy : PoolableComponent<Enemy>
     {
         base.OnFetched(pool);
     }
+
+    public void SetData(EnemyData data)
+    {
+        health = data.maxHealth;
+    }
+}
+
+[Serializable]
+public class EnemyData
+{
+    public GameObject[] dropOnDeath;
+    public float maxHealth, speed;
+
+    // max health, damage, range o andra attributer
 }

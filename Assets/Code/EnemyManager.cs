@@ -50,7 +50,7 @@ public class EnemyManager : MonoBehaviour
 
     Enemy SpawnEnemy(Vector3 position)
     {
-        Enemy enemy = enemyPool.FetchObject();
+        Enemy enemy = enemyPool.FetchEnemy();
         enemy.transform.position = position;
 
         return enemy;
@@ -75,6 +75,14 @@ public class EnemyManager : MonoBehaviour
 public class EnemyPool : ComponentPool<Enemy>
 {
     public Transform parent;
+
+    public Enemy FetchEnemy(EnemyData data = null)
+    {
+        Enemy enemy = FetchObject();
+        enemy.SetData(data);
+
+        return enemy;
+    }
 
     protected override void OnFetched(Enemy obj)
     {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -33,7 +34,7 @@ public class ProcBodyTesting : MonoBehaviour
         Matrix4x4[] matrices = new Matrix4x4[body.segments.Length];
 
         for (int i = 0; i < matrices.Length; i++)
-            matrices[i] = body.Matrix(body.segments[i]);
+            matrices[i] = body.segments[i].Matrix;
 
         Graphics.DrawMeshInstanced(mesh, 0, material, matrices);
     }
@@ -44,15 +45,11 @@ public class ProcBody
 {
     [Header("Info")]
     public int centerIndex;
-    public SegmentInfo[] segments;
-
-    [Header("Config")]
-    public bool constrainDistance = true;
-    public bool constrainAngle = true;
+    public Segment[] segments;
 
     Func<int, float> massProfile;
 
-    public SegmentInfo Center => segments[centerIndex];
+    public Segment Center => segments[centerIndex];
 
     public Func<int, float> MassProfile
     {
@@ -65,59 +62,73 @@ public class ProcBody
 
     public void Evaluate(Vector3 newPosition)
     {
-        if (segments[0].position != newPosition)
-        {
-            segments[0].position = newPosition;
-            segments[0].direction = segments[0].position - newPosition;
-        }
+        if (segments[0].Data.position != newPosition)
+            segments[0].Data = new(newPosition, newPosition - segments[0].Data.position);
 
-        for (int i = centerIndex + 1; i < segments.Length; i++)
-            segments[i] = segments[i].Constrain(segments[i - 1]);
+        for (int i = 1; i < segments.Length; i++)
+            segments[i].Evaluate(segments[i - 1]);
+    }
+}
+
+[Serializable]
+public class Segment
+{
+    [SerializeField]
+    SegmentData data;
+    [SerializeField]
+    float distance = 1,
+        maxAngle = 90,
+        radius = 1,
+        smoothing = 0;
+
+    public Matrix4x4 Matrix => Matrix4x4.TRS(data.position, Quaternion.LookRotation(data.position + data.direction), Vector3.one * radius);
+    public SegmentData Data { get => data; set => data = value; }
+
+    public virtual void Evaluate(Segment parent)
+    {
+        data = data.ConstrainChain(parent.data, true, distance, true, maxAngle);
+    }
+}
+
+[Serializable]
+public struct SegmentData
+{
+    public Vector3 position,
+        direction;
+    public float angle;
+
+    public SegmentData(Vector3 position = new(), Vector3 direction = new(), float angle = 0)
+    {
+        this.position = position;
+        this.direction = direction;
+        this.angle = angle;
     }
 
-    public Matrix4x4 Matrix(SegmentInfo segment) =>
-        Matrix4x4.TRS(segment.position, Quaternion.LookRotation(segment.position + segment.direction), Vector3.one);
-
-    [Serializable]
-    public struct SegmentInfo
+    public SegmentData ConstrainChain(SegmentData parent, bool constrainDistance = true, float distance = 1, bool constrainAngle = true, float maxAngle = 90)
     {
-        public Vector3 position;
-        public Vector3 direction;
-        public float angle;
+        Vector3 newPosition = position;
+        Vector3 newDirection = position - parent.position;
+        float newAngle = angle;
 
-        public SegmentInfo(Vector3 position = new(), Vector3 direction = new(), float angle = 0)
+        // Calculate new direction if parent is far away.
+        if (newDirection.sqrMagnitude < 0.0001f)
+            newDirection = direction;
+
+        // Constrain angle
+        if (constrainAngle && maxAngle > 0.001f && maxAngle < 179.999f)
         {
-            this.position = position;
-            this.direction = direction;
-            this.angle = angle;
+            newAngle = Vector3.Angle(parent.direction, newDirection);
+            if (newAngle > maxAngle)
+                newDirection = Vector3.Slerp(parent.direction, newDirection, maxAngle / newAngle);
         }
 
-        public SegmentInfo Constrain(in SegmentInfo parent, in bool constrainDistance = true, in float distance = 1, in bool constrainAngle = true, in float maxAngle = 90)
+        // Constrain distance
+        if (constrainDistance)
         {
-            Vector3 newPosition = position;
-            Vector3 newDirection = position - parent.position;
-            float newAngle = angle;
-
-            // Calculate new direction if parent is far away.
-            if (newDirection.sqrMagnitude < 0.0001f)
-                newDirection = direction;
-
-            // Constrain angle
-            if (constrainAngle && maxAngle > 0.001f && maxAngle < 179.999f)
-            {
-                newAngle = Vector3.Angle(parent.direction, newDirection);
-                if (newAngle > maxAngle)
-                    newDirection = Vector3.Slerp(parent.direction, newDirection, maxAngle / newAngle);
-            }
-
-            // Constrain distance
-            if (constrainDistance)
-            {
-                newDirection.Normalize();
-                newPosition = parent.position + newDirection * distance;
-            }
-
-            return new(newPosition, newDirection, newAngle);
+            newDirection.Normalize();
+            newPosition = parent.position + newDirection * distance;
         }
+
+        return new(newPosition, newDirection, newAngle);
     }
 }
