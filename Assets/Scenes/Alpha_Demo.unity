@@ -882,6 +882,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1217655476}
     - target: {fileID: 4426129337759524916, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: buildingScreen
+      value: 
+      objectReference: {fileID: 802882596}
+    - target: {fileID: 4426129337759524916, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: genericStates.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -1169,7 +1173,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1217655476
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2294,12 +2298,20 @@ PrefabInstance:
       value: 1048576
       objectReference: {fileID: 0}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _XPReqScaling.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _XPReqScaling.m_Curve.Array.data[1].time
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _XPReqScaling.m_Curve.Array.data[0].value
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _XPReqScaling.m_Curve.Array.data[1].value
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.size
