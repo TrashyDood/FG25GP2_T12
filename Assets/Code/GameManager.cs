@@ -23,12 +23,7 @@ public class GameManager : MonoBehaviour
 
         Player = GameObject.FindFirstObjectByType<Player>();
         Instance = this;
-        stateManager.Initialize(genericStates);
-    }
-
-    public void SetState(GameState newState)
-    {
-        
+        stateManager = new(genericStates);
     }
 }
 
@@ -68,8 +63,11 @@ public class StateManager
 
     public event Action<State> OnStateChanged;
 
-    public void Initialize(params State[] states) =>
+    public StateManager(IEnumerable<State> states)
+    {
         AddStates(states);
+        SetState(0);
+    }
 
     public State CurrentState
     {
@@ -85,7 +83,7 @@ public class StateManager
         }
     }
 
-    public void AddStates(ICollection<State> states)
+    public void AddStates(IEnumerable<State> states)
     {
         foreach (var state in states)
             AddState(state);
