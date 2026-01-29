@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class UpgradeDefinition : ScriptableObject
 {
     public string upgradeName;
+    public string upgradeId;
     public Sprite icon;
 
     // List of effects that will be applied to the player
