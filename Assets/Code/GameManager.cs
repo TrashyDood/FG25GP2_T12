@@ -8,9 +8,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     RectTransform levelUpScreen;
     [SerializeField]
-    StateManager<GenericState> stateManager;
+    EventState[] genericStates;
 
-    public StateManager<GenericState> StateManager => stateManager;
+    StateManager stateManager;
+
+    public StateManager StateManager => stateManager;
     public static GameManager Instance { get; private set; }
     public Player Player { get; private set; }
 
@@ -21,12 +23,7 @@ public class GameManager : MonoBehaviour
 
         Player = GameObject.FindFirstObjectByType<Player>();
         Instance = this;
-        stateManager.Initialize();
-    }
-
-    public void SetState(GameState newState)
-    {
-        
+        stateManager = new(genericStates);
     }
 }
 
@@ -41,7 +38,7 @@ public enum GameState
 }
 
 [Serializable]
-public class GenericState : State
+public class EventState : State
 {
     [SerializeField]
     UnityEvent<State> onEnter, onExit;
@@ -53,23 +50,26 @@ public class GenericState : State
 }
 
 [Serializable]
-public class StateManager<TState> where TState : State
+public class StateManager
 {
     [SerializeField]
-    UnityEvent<TState> onStateChanged;
-    [SerializeField]
-    List<TState> states = new();
+    UnityEvent<State> onStateChanged;
     [SerializeField]
     int currentIndex = -1;
 
-    TState currentState;
+    List<State> states = new();
+
+    State currentState;
 
     public event Action<State> OnStateChanged;
 
-    public void Initialize() =>
+    public StateManager(IEnumerable<State> states)
+    {
+        AddStates(states);
         SetState(0);
+    }
 
-    public TState CurrentState
+    public State CurrentState
     {
         get => currentState;
         set
@@ -83,13 +83,23 @@ public class StateManager<TState> where TState : State
         }
     }
 
-    public int AddState<T>() where T : TState, new()
+    public void AddStates(IEnumerable<State> states)
     {
-        T newState = new T();
-        newState.Initialize();
+        foreach (var state in states)
+            AddState(state);
+    }
 
+    public int AddState(State newState)
+    {
+        newState.Initialize();
         states.Add(newState);
         return states.Count - 1;
+    }
+
+    public int AddState<T>() where T : State, new()
+    {
+        T newState = new T();
+        return AddState(newState);
     }
 
     public void SetState(int stateIndex)
@@ -100,6 +110,9 @@ public class StateManager<TState> where TState : State
 
     public void SetState<TEnum>(TEnum newState) where TEnum : Enum =>
         CurrentState = states[Convert.ToInt32(newState)];
+
+    public State GetState<TEnum>(TEnum state) where TEnum : Enum =>
+        states[Convert.ToInt32(state)] ?? null;
 
     public void Evaluate()
     {
