@@ -10,6 +10,8 @@ public class UpgradeManager : MonoBehaviour
 {
     private int choiceCount = 3;
 
+    public VoxelBody voxelBody;
+
     public UpgradeLibrary upgradeLibrary;
     public object fixedChoice;
     public string fixedChoiceName = "Fixed Choice";
@@ -235,7 +237,7 @@ public class UpgradeManager : MonoBehaviour
         Debug.Log($"Choice selected: {card.payload}");
         choicesRoot.SetActive(false);
     }
-    */
+    
     private void OnChoiceClicked(ChoiceCard card)
     {
         if (card.payload is UpgradeDefinition upgrade)
@@ -254,11 +256,26 @@ public class UpgradeManager : MonoBehaviour
 
         choicesRoot.SetActive(false);
     }
+    */
+    private void OnChoiceClicked(ChoiceCard card)
+    {
+        if (card.payload is UpgradeDefinition upgrade)
+        {
+            voxelBody.GetUpgrade(upgrade);
+        }
+        else
+        {
+            voxelBody.GetUpgrade(null); // fixed choice
+        }
+
+        choicesRoot.SetActive(false);
+    }
 
 
 
     public void GetUpgrade(UpgradeDefinition upgrade)
     {
+        /*
         if(upgrade == null)
         {
             //FixedChoice
@@ -276,5 +293,8 @@ public class UpgradeManager : MonoBehaviour
                 }
             }
         }
+        */
     }
+
+
 }
