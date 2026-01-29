@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem.LowLevel;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
     RectTransform levelUpScreen;
     [SerializeField]
-    EventState[] genericStates;
-
     StateManager stateManager;
 
     public StateManager StateManager => stateManager;
@@ -21,10 +21,46 @@ public class GameManager : MonoBehaviour
         if (Instance != this)
             Destroy(Instance);
 
-        Player = GameObject.FindFirstObjectByType<Player>();
+        Player = FindFirstObjectByType<Player>();
         Instance = this;
-        stateManager = new(genericStates);
+
+        CallbackState[] states = new CallbackState[]
+        {
+            new(),
+            new(),
+            new()
+            {
+                onEnterCallback = (state) =>
+                {
+                    Time.timeScale = 0;
+                    levelUpScreen.gameObject.SetActive(true);
+                },
+                onExitCallback = (state) =>
+                {
+                    Time.timeScale = 1;
+                    levelUpScreen.gameObject.SetActive(false);
+                },
+                onEvaluateCallback = (deltaTime) =>
+                {
+                    Debug.Log("On upgradring");
+                    Player.Body.RunEditMode(() => { stateManager.SetState(GameState.Playing); });
+                }
+            },
+            new(),
+            new(),
+            new(),
+        };
+        stateManager = new(states);
+        StateManager.SetState(0);
     }
+
+    private void Update()
+    {
+        stateManager.Evaluate(Time.fixedDeltaTime);
+    }
+
+    public void SetState(int state) =>
+        stateManager.SetState(state);
 }
 
 public enum GameState
@@ -38,15 +74,41 @@ public enum GameState
 }
 
 [Serializable]
-public class EventState : State
+public class CallbackState : State
 {
     [SerializeField]
-    UnityEvent<State> onEnter, onExit;
+    UnityEvent<State> onEnter,
+        onExit;
 
-    public override void Evaluate() { }
+    public Action<float> onEvaluateCallback;
+    public Action<State> onEnterCallback,
+        onExitCallback;
 
-    public override void OnEnter(State prevState) => onEnter.Invoke(prevState);
-    public override void OnExit(State newState) => onExit.Invoke(newState);
+    public override void OnEnter(State prevState)
+    {
+        onEnter?.Invoke(prevState);
+        onEnterCallback?.Invoke(prevState);
+    }
+
+    public override void OnExit(State newState)
+    {
+        onExit?.Invoke(newState);
+        onExitCallback?.Invoke(newState);
+    }
+
+    public override void Evaluate(float deltaTime)
+    {
+        onEvaluateCallback?.Invoke(deltaTime);
+    }
+}
+
+[Serializable]
+public abstract class State
+{
+    public virtual void Initialize() { }
+    public abstract void OnEnter(State prevState);
+    public abstract void OnExit(State newState);
+    public virtual void Evaluate(float deltaTime) { }
 }
 
 [Serializable]
@@ -58,15 +120,14 @@ public class StateManager
     int currentIndex = -1;
 
     List<State> states = new();
-
     State currentState;
 
     public event Action<State> OnStateChanged;
 
-    public StateManager(IEnumerable<State> states)
+    public StateManager(IEnumerable<State> states = null)
     {
-        AddStates(states);
-        SetState(0);
+        if (states != null)
+            this.states = states.ToList();
     }
 
     public State CurrentState
@@ -77,7 +138,7 @@ public class StateManager
             currentState?.OnExit(value);
             value?.OnEnter(currentState);
             OnStateChanged?.Invoke(value);
-            onStateChanged.Invoke(value);
+            onStateChanged?.Invoke(value);
 
             currentState = value;
         }
@@ -89,18 +150,20 @@ public class StateManager
             AddState(state);
     }
 
-    public int AddState(State newState)
+    public void AddState(State state, int index = -1)
     {
-        newState.Initialize();
-        states.Add(newState);
-        return states.Count - 1;
+        state.Initialize();
+
+        if (index < 0)
+            states.Add(state);
+        else if (index >= states.Count)
+            states.Insert(index, state);
+        else
+            states[index] = state;
     }
 
-    public int AddState<T>() where T : State, new()
-    {
-        T newState = new T();
-        return AddState(newState);
-    }
+    public void AddState<TEnum>(TEnum index, State state) where TEnum : Enum =>
+        AddState(state, Convert.ToInt32(index));
 
     public void SetState(int stateIndex)
     {
@@ -114,18 +177,8 @@ public class StateManager
     public State GetState<TEnum>(TEnum state) where TEnum : Enum =>
         states[Convert.ToInt32(state)] ?? null;
 
-    public void Evaluate()
+    public void Evaluate(float deltaTime)
     {
-        if (currentState != null)
-            currentState.Evaluate();
+        currentState.Evaluate(deltaTime);
     }
-}
-
-[Serializable]
-public abstract class State
-{
-    public virtual void Initialize() { }
-    public abstract void OnEnter(State prevState);
-    public abstract void OnExit(State newState);
-    public virtual void Evaluate() { }
 }
