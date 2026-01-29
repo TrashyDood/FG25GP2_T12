@@ -589,7 +589,11 @@ PrefabInstance:
       objectReference: {fileID: 1217655476}
     - target: {fileID: 4426129337759524916, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: genericStates.Array.size
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426129337759524916, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: stateManager.currentIndex
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4426129337759524916, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: stateManager.states.Array.size
@@ -598,6 +602,14 @@ PrefabInstance:
     - target: {fileID: 4426129337759524916, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: globalObjectPool.pools.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426129337759524916, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: stateManager.onStateChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426129337759524916, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: stateManager.onStateChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: spawnCenter
@@ -1356,7 +1368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SwitchState
+      value: SetState
       objectReference: {fileID: 0}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
