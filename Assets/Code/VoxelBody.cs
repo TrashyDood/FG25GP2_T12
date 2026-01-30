@@ -335,7 +335,6 @@ public class VoxelBody : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && GetSlotFromCursor(Camera.main, Input.mousePosition, out Vector3Int slot))
             {
                 AddCube(slot);
-                isRunning = false;
             }
 
             // Slot Matrices

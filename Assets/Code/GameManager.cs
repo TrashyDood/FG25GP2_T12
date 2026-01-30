@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
                 onEnterCallback = (state) =>
                 {
                     Time.timeScale = 0;
-                    
                 },
                 onExitCallback = (state) =>
                 {
