@@ -38,7 +38,7 @@ public class Body : MonoBehaviour
         return new Vector3Int(x, y, z);
     }
 
-    public void AddPart(Vector3 pos, PartData info)
+    public void AddPart(Vector3 pos, PartData data)
     {
         Vector3Int coord = GetGridPos(pos);
     }
