@@ -68,10 +68,8 @@ public class VoxelBody : MonoBehaviour
             Graphics.RenderMeshInstanced(cuberRenderParams, cubeMesh, 0, cubeMatrices, Mathf.Min(1023, activeCubes.Count - i), i);
     }
 
-    public void EnterEditMode(Action onSlotFilledCallback, UpgradeDefinition upgrade = null)
-    {
-        StartCoroutine(RunEditMode(onSlotFilledCallback, upgrade));
-    }
+    public void EnterEditMode(Action onSlotFilledCallback, UpgradeDefinition upgrade = null) =>
+        StartCoroutine(EditModeCR(onSlotFilledCallback, upgrade));
 
     public void AddCube(Vector3Int coords)
     {
@@ -329,14 +327,15 @@ public class VoxelBody : MonoBehaviour
         }
     }
 
-    IEnumerator RunEditMode(Action onSlotFilledCallback, UpgradeDefinition upgrade = null)
+    IEnumerator EditModeCR(Action onSlotFilledCallback, UpgradeDefinition upgrade = null)
     {
-        while (true)
+        bool isRunning = true;
+        while (isRunning)
         {
             if (Input.GetMouseButtonDown(0) && GetSlotFromCursor(Camera.main, Input.mousePosition, out Vector3Int slot))
             {
                 AddCube(slot);
-                onSlotFilledCallback();
+                isRunning = false;
             }
 
             // Slot Matrices
@@ -349,6 +348,8 @@ public class VoxelBody : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
+
+        onSlotFilledCallback();
     }
 }
 
