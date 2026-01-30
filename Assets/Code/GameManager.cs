@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
                 onEnterCallback = (state) =>
                 {
                     Time.timeScale = 0;
-                    Player.Body.EnterEditMode(() => { stateManager.SetState(GameState.Playing); });
+                    
                 },
                 onExitCallback = (state) =>
                 {
