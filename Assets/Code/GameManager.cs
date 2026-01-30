@@ -34,11 +34,13 @@ public class GameManager : MonoBehaviour
                 onEnterCallback = (state) =>
                 {
                     Time.timeScale = 0;
-                    
+                    buildingScreen.gameObject.SetActive(true);
+                    Player.Body.EnterEditMode(() => { stateManager.SetState(GameState.Playing); });
                 },
                 onExitCallback = (state) =>
                 {
                     Time.timeScale = 1;
+                    buildingScreen.gameObject.SetActive(false);
                 }
             },
             new(), // Dead
