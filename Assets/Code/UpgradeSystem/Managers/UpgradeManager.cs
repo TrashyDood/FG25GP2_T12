@@ -11,8 +11,9 @@ public class UpgradeManager : MonoBehaviour
     private int choiceCount = 3;
 
     public VoxelBody voxelBody;
-
+    public Player player;
     public UpgradeLibrary upgradeLibrary;
+
     public object fixedChoice;
     public string fixedChoiceName = "Fixed Choice";
     public string fixedChoiceDescription = "";
@@ -35,6 +36,8 @@ public class UpgradeManager : MonoBehaviour
         {
             EnterUpgradeState();
         }
+
+        ((CallbackState)GameManager.Instance.StateManager.GetState(GameState.Upgrading)).onEnterCallback += (s) => { EnterUpgradeState(); };
     }
 
     public class ChoiceBundle
@@ -265,6 +268,8 @@ public class UpgradeManager : MonoBehaviour
         //{
         //    voxelBody.GetUpgrade(null); // fixed choice
         //}
+
+        player.Body.EnterEditMode(() => { GameManager.Instance.StateManager.SetState(GameState.Playing); });
 
         choicesRoot.SetActive(false);
     }
