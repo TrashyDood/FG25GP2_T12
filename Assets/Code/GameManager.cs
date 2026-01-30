@@ -27,28 +27,23 @@ public class GameManager : MonoBehaviour
 
         CallbackState[] states = new CallbackState[]
         {
-            new(),
-            new(),
-            new()
+            new(), // Playing
+            new(), // Paused
+            new() // Upgrading
             {
                 onEnterCallback = (state) =>
                 {
                     Time.timeScale = 0;
-                    buildingScreen.gameObject.SetActive(true);
+                    
                 },
                 onExitCallback = (state) =>
                 {
                     Time.timeScale = 1;
-                    buildingScreen.gameObject.SetActive(false);
-                },
-                onEvaluateCallback = (deltaTime) =>
-                {
-                    Player.Body.RunEditMode(() => { stateManager.SetState(GameState.Playing); });
                 }
             },
-            new(),
-            new(),
-            new()
+            new(), // Dead
+            new(), // Victory
+            new() // Menu
         };
 
         stateManager = new(states);
@@ -68,7 +63,7 @@ public enum GameState
 {
     Playing,
     Paused,
-    Building,
+    Upgrading,
     Dead,
     Victory,
     Menu
