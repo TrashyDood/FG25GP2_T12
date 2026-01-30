@@ -30,13 +30,16 @@ public class VoxelBody : MonoBehaviour
     bool editMode = false;
     RenderParams cuberRenderParams,
         slotRenderParams;
+    MeshCollider meshCollider;
 
     public bool EditMode { get => editMode; set => editMode = value; }
     public bool RenderSlots { get => renderSlots; set => renderSlots = value; }
     public Vector3 SlotSize => new Vector3(slotScale.x * transform.localScale.x, slotScale.y * transform.localScale.y, slotScale.z * transform.localScale.z);
 
-    void Start()
+    private void Awake()
     {
+        meshCollider = GetComponent<MeshCollider>();
+
         bodyCubes = new BodyPart[size.x * size.y * size.z];
         cuberRenderParams = new RenderParams(cubeMaterial)
         {
@@ -100,6 +103,13 @@ public class VoxelBody : MonoBehaviour
         });
 
         FindSlots();
+
+        if (meshCollider != null)
+        {
+            meshCollider.convex = true;
+            meshCollider.sharedMesh = null;
+            meshCollider.sharedMesh = GenerateOptimizedMesh();
+        }
     }
 
     public void RemoveCube(Vector3Int coords)
@@ -174,6 +184,129 @@ public class VoxelBody : MonoBehaviour
 
     public bool GetSlotFromCursor(Camera camera, Vector2 cursorPos, out Vector3Int slot) =>
         GetSlotFromRay(camera.ScreenPointToRay(cursorPos), out slot);
+
+    public Mesh GenerateOptimizedMesh()
+    {
+        List<Vector3> vertices = new List<Vector3>();
+        List<int> triangles = new List<int>();
+        List<Vector3> normals = new List<Vector3>();
+        List<Vector2> uvs = new List<Vector2>();
+
+        Vector3Int[] directions = new Vector3Int[]
+        {
+        new Vector3Int(1, 0, 0),  // Right
+        new Vector3Int(-1, 0, 0), // Left
+        new Vector3Int(0, 1, 0),  // Up
+        new Vector3Int(0, -1, 0), // Down
+        new Vector3Int(0, 0, 1),  // Forward
+        new Vector3Int(0, 0, -1)  // Back
+        };
+
+        foreach (var cube in activeCubes)
+        {
+            Vector3 position = GetWorldPos(cube.coords);
+
+            // Check each face direction
+            for (int dir = 0; dir < 6; dir++)
+            {
+                Vector3Int neighborCoords = cube.coords + directions[dir];
+
+                // Only add face if no neighbor in this direction
+                if (GetCube(neighborCoords) == null)
+                {
+                    AddCubeFace(vertices, triangles, normals, uvs, position, dir);
+                }
+            }
+        }
+
+        Mesh mesh = new Mesh();
+        mesh.indexFormat = vertices.Count > 65535 ? IndexFormat.UInt32 : IndexFormat.UInt16;
+        mesh.SetVertices(vertices);
+        mesh.SetTriangles(triangles, 0);
+        mesh.SetNormals(normals);
+        mesh.SetUVs(0, uvs);
+        mesh.RecalculateBounds();
+
+        return mesh;
+    }
+
+    void AddCubeFace(List<Vector3> vertices, List<int> triangles, List<Vector3> normals, List<Vector2> uvs, Vector3 position, int faceIndex)
+    {
+        Vector3 halfSize = SlotSize * 0.5f;
+        int vertexIndex = vertices.Count;
+
+        // Define vertices for each face
+        Vector3[] faceVertices = new Vector3[4];
+        Vector3 normal = Vector3.zero;
+
+        switch (faceIndex)
+        {
+            case 0: // Right (+X)
+                faceVertices[0] = new Vector3(halfSize.x, -halfSize.y, -halfSize.z);
+                faceVertices[1] = new Vector3(halfSize.x, halfSize.y, -halfSize.z);
+                faceVertices[2] = new Vector3(halfSize.x, halfSize.y, halfSize.z);
+                faceVertices[3] = new Vector3(halfSize.x, -halfSize.y, halfSize.z);
+                normal = Vector3.right;
+                break;
+            case 1: // Left (-X)
+                faceVertices[0] = new Vector3(-halfSize.x, -halfSize.y, halfSize.z);
+                faceVertices[1] = new Vector3(-halfSize.x, halfSize.y, halfSize.z);
+                faceVertices[2] = new Vector3(-halfSize.x, halfSize.y, -halfSize.z);
+                faceVertices[3] = new Vector3(-halfSize.x, -halfSize.y, -halfSize.z);
+                normal = Vector3.left;
+                break;
+            case 2: // Up (+Y)
+                faceVertices[0] = new Vector3(-halfSize.x, halfSize.y, -halfSize.z);
+                faceVertices[1] = new Vector3(-halfSize.x, halfSize.y, halfSize.z);
+                faceVertices[2] = new Vector3(halfSize.x, halfSize.y, halfSize.z);
+                faceVertices[3] = new Vector3(halfSize.x, halfSize.y, -halfSize.z);
+                normal = Vector3.up;
+                break;
+            case 3: // Down (-Y)
+                faceVertices[0] = new Vector3(-halfSize.x, -halfSize.y, halfSize.z);
+                faceVertices[1] = new Vector3(-halfSize.x, -halfSize.y, -halfSize.z);
+                faceVertices[2] = new Vector3(halfSize.x, -halfSize.y, -halfSize.z);
+                faceVertices[3] = new Vector3(halfSize.x, -halfSize.y, halfSize.z);
+                normal = Vector3.down;
+                break;
+            case 4: // Forward (+Z)
+                faceVertices[0] = new Vector3(-halfSize.x, -halfSize.y, halfSize.z);
+                faceVertices[1] = new Vector3(halfSize.x, -halfSize.y, halfSize.z);
+                faceVertices[2] = new Vector3(halfSize.x, halfSize.y, halfSize.z);
+                faceVertices[3] = new Vector3(-halfSize.x, halfSize.y, halfSize.z);
+                normal = Vector3.forward;
+                break;
+            case 5: // Back (-Z)
+                faceVertices[0] = new Vector3(halfSize.x, -halfSize.y, -halfSize.z);
+                faceVertices[1] = new Vector3(-halfSize.x, -halfSize.y, -halfSize.z);
+                faceVertices[2] = new Vector3(-halfSize.x, halfSize.y, -halfSize.z);
+                faceVertices[3] = new Vector3(halfSize.x, halfSize.y, -halfSize.z);
+                normal = Vector3.back;
+                break;
+        }
+
+        // Add vertices
+        for (int i = 0; i < 4; i++)
+        {
+            vertices.Add(position + faceVertices[i]);
+            normals.Add(normal);
+        }
+
+        // Add UVs
+        uvs.Add(new Vector2(0, 0));
+        uvs.Add(new Vector2(0, 1));
+        uvs.Add(new Vector2(1, 1));
+        uvs.Add(new Vector2(1, 0));
+
+        // Add triangles (two triangles per face)
+        triangles.Add(vertexIndex);
+        triangles.Add(vertexIndex + 1);
+        triangles.Add(vertexIndex + 2);
+
+        triangles.Add(vertexIndex);
+        triangles.Add(vertexIndex + 2);
+        triangles.Add(vertexIndex + 3);
+    }
 
     int GetIndex(Vector3Int coords) =>
         coords.x + coords.y * size.x + coords.z * size.x * size.y;
