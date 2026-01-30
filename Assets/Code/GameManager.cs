@@ -34,23 +34,6 @@ public class GameManager : MonoBehaviour
                 onEnterCallback = (state) =>
                 {
                     Time.timeScale = 0;
-                    upgradeScreen.gameObject.SetActive(true);
-                },
-                onExitCallback = (state) =>
-                {
-                    Time.timeScale = 1;
-                    upgradeScreen.gameObject.SetActive(false);
-                },
-                onEvaluateCallback = (deltaTime) =>
-                {
-                    
-                }
-            },
-            new()
-            {
-                onEnterCallback = (state) =>
-                {
-                    Time.timeScale = 0;
                     buildingScreen.gameObject.SetActive(true);
                 },
                 onExitCallback = (state) =>
@@ -83,13 +66,12 @@ public class GameManager : MonoBehaviour
 
 public enum GameState
 {
-    Playing = 0,
-    Paused = 1,
-    Upgrading = 2,
-    Building = 3,
-    Dead = 4,
-    Victory = 5,
-    Menu = 6
+    Playing,
+    Paused,
+    Building,
+    Dead,
+    Victory,
+    Menu
 }
 
 [Serializable]
