@@ -33,7 +33,7 @@ public class UpgradeManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            ShowChoices(GetChoices());
+            EnterUpgradeState();
         }
     }
 
@@ -290,5 +290,10 @@ public class UpgradeManager : MonoBehaviour
             }
         }
         */
+    }
+
+    public void EnterUpgradeState()
+    {
+        ShowChoices(GetChoices());
     }
 }
