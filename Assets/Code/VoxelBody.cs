@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -67,25 +68,9 @@ public class VoxelBody : MonoBehaviour
             Graphics.RenderMeshInstanced(cuberRenderParams, cubeMesh, 0, cubeMatrices, Mathf.Min(1023, activeCubes.Count - i), i);
     }
 
-    public Vector3 RunEditMode(Action onSlotFilledCallback, GameObject appendage = null)
+    public void EnterEditMode(Action onSlotFilledCallback, UpgradeDefinition upgrade = null)
     {
-        if (Input.GetMouseButtonDown(0) && GetSlotFromCursor(Camera.main, Input.mousePosition, out Vector3Int slot))
-        {
-            onSlotFilledCallback();
-            AddCube(slot);
-
-            return slot;
-        }
-
-        // Slot Matrices
-        for (int i = 0; i < slotMatrices.Count; i++)
-            slotMatrices[i] = Matrix4x4.TRS(GetWorldPos(slots[i]), Quaternion.identity, SlotSize * 0.25f);
-
-        // Render slots
-        for (int i = 0; i < slotMatrices.Count; i += 1023)
-            Graphics.RenderMeshInstanced(slotRenderParams, slotMesh, 0, slotMatrices, Mathf.Min(1023, slotMatrices.Count - i), i);
-
-        return -Vector3Int.one;
+        StartCoroutine(RunEditMode(onSlotFilledCallback, upgrade));
     }
 
     public void AddCube(Vector3Int coords)
@@ -341,6 +326,28 @@ public class VoxelBody : MonoBehaviour
                     visited.Add(coords);
                 }
             }
+        }
+    }
+
+    IEnumerator RunEditMode(Action onSlotFilledCallback, UpgradeDefinition upgrade = null)
+    {
+        while (true)
+        {
+            if (Input.GetMouseButtonDown(0) && GetSlotFromCursor(Camera.main, Input.mousePosition, out Vector3Int slot))
+            {
+                AddCube(slot);
+                onSlotFilledCallback();
+            }
+
+            // Slot Matrices
+            for (int i = 0; i < slotMatrices.Count; i++)
+                slotMatrices[i] = Matrix4x4.TRS(GetWorldPos(slots[i]), Quaternion.identity, SlotSize * 0.25f);
+
+            // Render slots
+            for (int i = 0; i < slotMatrices.Count; i += 1023)
+                Graphics.RenderMeshInstanced(slotRenderParams, slotMesh, 0, slotMatrices, Mathf.Min(1023, slotMatrices.Count - i), i);
+
+            yield return new WaitForEndOfFrame();
         }
     }
 }

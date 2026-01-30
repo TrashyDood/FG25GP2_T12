@@ -11,7 +11,7 @@ public class Body : MonoBehaviour
     [SerializeField]
     UnityEvent onPartAdded, onPartRemoved;
 
-    Dictionary<Vector3Int, Part> parts = new();
+    Dictionary<Vector3Int, BodyPart> parts = new();
 
     public Vector3 SlotSize => new Vector3(slotScale.x * transform.localScale.x, slotScale.y * transform.localScale.y, slotScale.z * transform.localScale.z);
 
@@ -38,16 +38,11 @@ public class Body : MonoBehaviour
         return new Vector3Int(x, y, z);
     }
 
-    public void AddPart(Vector3 pos, PartData data)
-    {
-        Vector3Int coord = GetGridPos(pos);
-    }
-
-    public Part RemovePart(Vector3 pos)
+    public BodyPart RemovePart(Vector3 pos)
     {
         Vector3Int coord = GetGridPos(pos);
 
-        if (!parts.TryGetValue(coord, out Part part))
+        if (!parts.TryGetValue(coord, out BodyPart part))
             return null;
 
 
@@ -59,24 +54,4 @@ public class Body : MonoBehaviour
         coord.x == Mathf.Clamp(coord.x, 0, size.x) &&
         coord.y == Mathf.Clamp(coord.y, 0, size.y) &&
         coord.z == Mathf.Clamp(coord.z, 0, size.z);
-
-    public class Part
-    {
-        
-    }
-
-    public struct PartData
-    {
-        
-    }
-
-    public enum Orientation
-    {
-        NORTH,
-        EAST,
-        UP,
-        SOUTH,
-        WEST,
-        DOWN
-    }
 }
