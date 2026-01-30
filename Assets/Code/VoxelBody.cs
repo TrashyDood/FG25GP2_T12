@@ -329,14 +329,10 @@ public class VoxelBody : MonoBehaviour
 
     IEnumerator EditModeCR(Action onSlotFilledCallback, UpgradeDefinition upgrade = null)
     {
-        bool isRunning = true;
-        while (isRunning)
-        {
-            if (Input.GetMouseButtonDown(0) && GetSlotFromCursor(Camera.main, Input.mousePosition, out Vector3Int slot))
-            {
-                AddCube(slot);
-            }
+        Vector3Int slot;
 
+        while (!(Input.GetMouseButtonDown(0) && GetSlotFromCursor(Camera.main, Input.mousePosition, out slot)))
+        {
             // Slot Matrices
             for (int i = 0; i < slotMatrices.Count; i++)
                 slotMatrices[i] = Matrix4x4.TRS(GetWorldPos(slots[i]), Quaternion.identity, SlotSize * 0.25f);
@@ -345,9 +341,10 @@ public class VoxelBody : MonoBehaviour
             for (int i = 0; i < slotMatrices.Count; i += 1023)
                 Graphics.RenderMeshInstanced(slotRenderParams, slotMesh, 0, slotMatrices, Mathf.Min(1023, slotMatrices.Count - i), i);
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
+        Debug.Log("build!");
         onSlotFilledCallback();
     }
 }

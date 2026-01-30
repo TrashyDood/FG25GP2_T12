@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
 
         stateManager = new(states);
         StateManager.SetState(GameState.Playing);
+
+        states[2].onEnterCallback += (s) => Player.Body.EnterEditMode(() => { stateManager.SetState(GameState.Playing); });
     }
 
     private void Update()
