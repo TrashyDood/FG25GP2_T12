@@ -31,14 +31,8 @@ public class GameManager : MonoBehaviour
             new(), // Paused
             new() // Upgrading
             {
-                onEnterCallback = (state) =>
-                {
-                    Time.timeScale = 0;
-                },
-                onExitCallback = (state) =>
-                {
-                    Time.timeScale = 1;
-                }
+                onEnterCallback = (state) => { Time.timeScale = 1; },
+                onExitCallback = (state) => { Time.timeScale = 1; }
             },
             new(), // Dead
             new(), // Victory
@@ -47,14 +41,10 @@ public class GameManager : MonoBehaviour
 
         stateManager = new(states);
         StateManager.SetState(GameState.Playing);
-
-        states[2].onEnterCallback += (s) => Player.Body.EnterEditMode(() => { stateManager.SetState(GameState.Playing); });
     }
 
-    private void Update()
-    {
+    private void Update() =>
         stateManager.Evaluate(Time.fixedDeltaTime);
-    }
 
     public void SetState(int state) =>
         stateManager.SetState(state);
@@ -93,10 +83,8 @@ public class CallbackState : State
         onExitCallback?.Invoke(newState);
     }
 
-    public override void Evaluate(float deltaTime)
-    {
+    public override void Evaluate(float deltaTime) =>
         onEvaluateCallback?.Invoke(deltaTime);
-    }
 }
 
 [Serializable]
@@ -172,7 +160,7 @@ public class StateManager
         CurrentState = states[Convert.ToInt32(newState)];
 
     public State GetState<TEnum>(TEnum state) where TEnum : Enum =>
-        states[Convert.ToInt32(state)] ?? null;
+        states[Convert.ToInt32(state)];
 
     public void Evaluate(float deltaTime)
     {

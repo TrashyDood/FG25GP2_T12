@@ -23,24 +23,19 @@ public class VoxelBody : MonoBehaviour
     bool renderSlots;
 
     BodyPart[] bodyCubes;
-    List<BodyPart> activeCubes = new();
+    List<BodyPart> parts = new();
     List<Vector3Int> slots = new();
     List<Matrix4x4> cubeMatrices = new(),
         slotMatrices = new();
 
-    bool editMode = false;
     RenderParams cuberRenderParams,
         slotRenderParams;
-    MeshCollider meshCollider;
 
-    public bool EditMode { get => editMode; set => editMode = value; }
     public bool RenderSlots { get => renderSlots; set => renderSlots = value; }
     public Vector3 SlotSize => new Vector3(slotScale.x * transform.localScale.x, slotScale.y * transform.localScale.y, slotScale.z * transform.localScale.z);
 
     private void Awake()
     {
-        meshCollider = GetComponent<MeshCollider>();
-
         bodyCubes = new BodyPart[size.x * size.y * size.z];
         cuberRenderParams = new RenderParams(cubeMaterial)
         {
@@ -61,11 +56,11 @@ public class VoxelBody : MonoBehaviour
     {
         // Cube matrices
         for (int i = 0; i < cubeMatrices.Count; ++i)
-            cubeMatrices[i] = Matrix4x4.TRS(GetWorldPos(activeCubes[i].coords), Quaternion.identity, SlotSize);
+            cubeMatrices[i] = Matrix4x4.TRS(GetWorldPos(parts[i].coords), Quaternion.identity, SlotSize);
 
         // Render cubes
         for (int i = 0; i < cubeMatrices.Count; i += 1023)
-            Graphics.RenderMeshInstanced(cuberRenderParams, cubeMesh, 0, cubeMatrices, Mathf.Min(1023, activeCubes.Count - i), i);
+            Graphics.RenderMeshInstanced(cuberRenderParams, cubeMesh, 0, cubeMatrices, Mathf.Min(1023, parts.Count - i), i);
     }
 
     public void EnterEditMode(Action onSlotFilledCallback, UpgradeDefinition upgrade = null) =>
@@ -80,50 +75,18 @@ public class VoxelBody : MonoBehaviour
             return;
 
         cubeMatrices.Add(new());
-        activeCubes.Add(bodyCubes[index] = new()
+        parts.Add(bodyCubes[index] = new()
         {
             coords = coords
         });
 
         FindSlots();
-
-        if (meshCollider != null)
-        {
-            meshCollider.convex = true;
-            meshCollider.sharedMesh = null;
-            meshCollider.sharedMesh = GenerateOptimizedMesh();
-        }
-    }
-
-    public void RemoveCube(Vector3Int coords)
-    {
-        int gridIndex = GetIndex(coords);
-        if (bodyCubes[gridIndex] == null)
-            return;
-
-        int listIndex = activeCubes.IndexOf(bodyCubes[gridIndex]);
-
-        activeCubes.RemoveAt(listIndex);
-        cubeMatrices.RemoveAt(listIndex);
-        bodyCubes[gridIndex] = null;
     }
 
     public BodyPart GetCube(Vector3Int coords)
     {
         int index = GetIndex(coords);
         return IsValid(coords) ? bodyCubes[index] : null;
-    }
-
-    public IEnumerable<Vector3Int> Slots()
-    {
-        for (int i = 0; i < slots.Count; i++)
-            yield return slots[i];
-    }
-
-    public IEnumerable<BodyPart> ActiveCubes()
-    {
-        for (int i = 0; i < activeCubes.Count; i++)
-            yield return activeCubes[i];
     }
 
     public Vector3 GetWorldPos(Vector3Int coords) =>
@@ -136,24 +99,11 @@ public class VoxelBody : MonoBehaviour
     public Bounds GetWorldBounds(Vector3Int coords) =>
         new(GetWorldPos(coords), SlotSize);
 
-    public bool GetCubeFromRay(Ray ray, out BodyPart cube)
-    {
-        for (int i = 0; i < activeCubes.Count; i++)
-        {
-            cube = activeCubes[i];
-            if (GetWorldBounds(cube.coords).IntersectRay(ray))
-                return true;
-        }
-
-        cube = null;
-        return false;
-    }
-
     public bool GetSlotFromRay(Ray ray, out Vector3Int slot)
     {
-        for (int i = 0; i < slots.Count; i++)
+        foreach (var s in slots)
         {
-            slot = slots[i];
+            slot = s;
             if (GetWorldBounds(slot).IntersectRay(ray))
                 return true;
         }
@@ -162,134 +112,8 @@ public class VoxelBody : MonoBehaviour
         return false;
     }
 
-    public bool GetCubeFromCursor(Camera camera, Vector2 cursorPos, out BodyPart cube) =>
-        GetCubeFromRay(camera.ScreenPointToRay(cursorPos), out cube);
-
     public bool GetSlotFromCursor(Camera camera, Vector2 cursorPos, out Vector3Int slot) =>
         GetSlotFromRay(camera.ScreenPointToRay(cursorPos), out slot);
-
-    public Mesh GenerateOptimizedMesh()
-    {
-        List<Vector3> vertices = new List<Vector3>();
-        List<int> triangles = new List<int>();
-        List<Vector3> normals = new List<Vector3>();
-        List<Vector2> uvs = new List<Vector2>();
-
-        Vector3Int[] directions = new Vector3Int[]
-        {
-        new Vector3Int(1, 0, 0),  // Right
-        new Vector3Int(-1, 0, 0), // Left
-        new Vector3Int(0, 1, 0),  // Up
-        new Vector3Int(0, -1, 0), // Down
-        new Vector3Int(0, 0, 1),  // Forward
-        new Vector3Int(0, 0, -1)  // Back
-        };
-
-        foreach (var cube in activeCubes)
-        {
-            Vector3 position = GetWorldPos(cube.coords);
-
-            // Check each face direction
-            for (int dir = 0; dir < 6; dir++)
-            {
-                Vector3Int neighborCoords = cube.coords + directions[dir];
-
-                // Only add face if no neighbor in this direction
-                if (GetCube(neighborCoords) == null)
-                {
-                    AddCubeFace(vertices, triangles, normals, uvs, position, dir);
-                }
-            }
-        }
-
-        Mesh mesh = new Mesh();
-        mesh.indexFormat = vertices.Count > 65535 ? IndexFormat.UInt32 : IndexFormat.UInt16;
-        mesh.SetVertices(vertices);
-        mesh.SetTriangles(triangles, 0);
-        mesh.SetNormals(normals);
-        mesh.SetUVs(0, uvs);
-        mesh.RecalculateBounds();
-
-        return mesh;
-    }
-
-    void AddCubeFace(List<Vector3> vertices, List<int> triangles, List<Vector3> normals, List<Vector2> uvs, Vector3 position, int faceIndex)
-    {
-        Vector3 halfSize = SlotSize * 0.5f;
-        int vertexIndex = vertices.Count;
-
-        // Define vertices for each face
-        Vector3[] faceVertices = new Vector3[4];
-        Vector3 normal = Vector3.zero;
-
-        switch (faceIndex)
-        {
-            case 0: // Right (+X)
-                faceVertices[0] = new Vector3(halfSize.x, -halfSize.y, -halfSize.z);
-                faceVertices[1] = new Vector3(halfSize.x, halfSize.y, -halfSize.z);
-                faceVertices[2] = new Vector3(halfSize.x, halfSize.y, halfSize.z);
-                faceVertices[3] = new Vector3(halfSize.x, -halfSize.y, halfSize.z);
-                normal = Vector3.right;
-                break;
-            case 1: // Left (-X)
-                faceVertices[0] = new Vector3(-halfSize.x, -halfSize.y, halfSize.z);
-                faceVertices[1] = new Vector3(-halfSize.x, halfSize.y, halfSize.z);
-                faceVertices[2] = new Vector3(-halfSize.x, halfSize.y, -halfSize.z);
-                faceVertices[3] = new Vector3(-halfSize.x, -halfSize.y, -halfSize.z);
-                normal = Vector3.left;
-                break;
-            case 2: // Up (+Y)
-                faceVertices[0] = new Vector3(-halfSize.x, halfSize.y, -halfSize.z);
-                faceVertices[1] = new Vector3(-halfSize.x, halfSize.y, halfSize.z);
-                faceVertices[2] = new Vector3(halfSize.x, halfSize.y, halfSize.z);
-                faceVertices[3] = new Vector3(halfSize.x, halfSize.y, -halfSize.z);
-                normal = Vector3.up;
-                break;
-            case 3: // Down (-Y)
-                faceVertices[0] = new Vector3(-halfSize.x, -halfSize.y, halfSize.z);
-                faceVertices[1] = new Vector3(-halfSize.x, -halfSize.y, -halfSize.z);
-                faceVertices[2] = new Vector3(halfSize.x, -halfSize.y, -halfSize.z);
-                faceVertices[3] = new Vector3(halfSize.x, -halfSize.y, halfSize.z);
-                normal = Vector3.down;
-                break;
-            case 4: // Forward (+Z)
-                faceVertices[0] = new Vector3(-halfSize.x, -halfSize.y, halfSize.z);
-                faceVertices[1] = new Vector3(halfSize.x, -halfSize.y, halfSize.z);
-                faceVertices[2] = new Vector3(halfSize.x, halfSize.y, halfSize.z);
-                faceVertices[3] = new Vector3(-halfSize.x, halfSize.y, halfSize.z);
-                normal = Vector3.forward;
-                break;
-            case 5: // Back (-Z)
-                faceVertices[0] = new Vector3(halfSize.x, -halfSize.y, -halfSize.z);
-                faceVertices[1] = new Vector3(-halfSize.x, -halfSize.y, -halfSize.z);
-                faceVertices[2] = new Vector3(-halfSize.x, halfSize.y, -halfSize.z);
-                faceVertices[3] = new Vector3(halfSize.x, halfSize.y, -halfSize.z);
-                normal = Vector3.back;
-                break;
-        }
-
-        // Add vertices
-        for (int i = 0; i < 4; i++)
-        {
-            vertices.Add(position + faceVertices[i]);
-            normals.Add(normal);
-        }
-
-        // Add UVs
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-
-        // Add triangles (two triangles per face)
-        triangles.Add(vertexIndex);
-        triangles.Add(vertexIndex + 1);
-        triangles.Add(vertexIndex + 2);
-
-        triangles.Add(vertexIndex);
-        triangles.Add(vertexIndex + 2);
-        triangles.Add(vertexIndex + 3);
-    }
 
     int GetIndex(Vector3Int coords) =>
         coords.x + coords.y * size.x + coords.z * size.x * size.y;
@@ -311,15 +135,15 @@ public class VoxelBody : MonoBehaviour
         slots.Clear();
         slotMatrices.Clear();
 
-        foreach (var cube in activeCubes)
+        foreach (var part in parts)
         {
             foreach (var dir in directions)
             {
-                Vector3Int coords = cube.coords + dir;
+                Vector3Int coords = part.coords + dir;
 
                 if (!visited.Contains(coords) && IsValid(coords) && GetCube(coords) == null)
                 {
-                    slots.Add(cube.coords + dir);
+                    slots.Add(part.coords + dir);
                     slotMatrices.Add(new());
                     visited.Add(coords);
                 }
@@ -329,9 +153,9 @@ public class VoxelBody : MonoBehaviour
 
     IEnumerator EditModeCR(Action onSlotFilledCallback, UpgradeDefinition upgrade = null)
     {
-        Vector3Int slot;
+        Vector3Int coord;
 
-        while (!(Input.GetMouseButtonDown(0) && GetSlotFromCursor(Camera.main, Input.mousePosition, out slot)))
+        while (!(Input.GetMouseButtonDown(0) && GetSlotFromCursor(Camera.main, Input.mousePosition, out coord)))
         {
             // Slot Matrices
             for (int i = 0; i < slotMatrices.Count; i++)
@@ -344,7 +168,13 @@ public class VoxelBody : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("build!");
+        if (upgrade == null)
+            AddCube(coord);
+        else // Add Bodypart
+        {
+
+        }
+
         onSlotFilledCallback();
     }
 }

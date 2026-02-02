@@ -4,19 +4,30 @@ using UnityEngine;
 public class SnakeBite : ShootingBehaviour
 {
     public float maxRange = 15f;
+    public float attackSpeed;
+    private float attackTimer;
+    [SerializeField]
+    float forwardOffset;
+    [SerializeField]
+    float capsuleRadius;
+    [SerializeField]
+    LayerMask enemyLayer;
 
     public override void Shoot(WeaponInstance weapon, Transform firePoint)
     {
-        // Play animation for snake?
+        Vector3 start = firePoint.transform.position + firePoint.forward * forwardOffset;
+        Vector3 end = start * maxRange;
 
-        // Create the "Bullet"
-        // Maybe just instantiate a hitbox
+        Collider[] enemyColliders = Physics.OverlapCapsule(start, end, capsuleRadius, enemyLayer);
 
-
-
-
-
+        foreach (Collider enemyHit in enemyColliders)
+        {
+            if (enemyHit.TryGetComponent(out Enemy enemy))
+            {
+                //Deal damage
+                //play snake animation (lunging or something)
+                Debug.Log("Something is in my OverlapCapsule");
+            }
+        }
     }
-
-
 }
