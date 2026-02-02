@@ -10,7 +10,8 @@ public class WeaponDefinition : ScriptableObject
 
     public WeaponStats baseStats;
 
-    public GameObject prefab;
+    public GameObject weaponPrefab;
+    public GameObject projectilePrefab;
 
     public ShootingBehaviour shootingBehaviour;
 }
