@@ -5,6 +5,8 @@ using UnityEngine.Events;
 public class XPManager : MonoBehaviour
 {
     [SerializeField]
+    FillbarUI xpBar;
+    [SerializeField]
     AnimationCurve _XPReqScaling;
     [SerializeField]
     float pickupRange = 5;
@@ -61,5 +63,9 @@ public class XPManager : MonoBehaviour
         
         _onLevelsGained.Invoke(prevLevel, _currentLevel);
         OnLevelsGainedEvent?.Invoke(prevLevel, _currentLevel);
+    }
+    public void UpdateHUD()
+    {
+        xpBar.FillAmount = (float)_currentXP / _currentXPReq;
     }
 }
