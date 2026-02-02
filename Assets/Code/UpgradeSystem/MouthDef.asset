@@ -19,5 +19,5 @@ MonoBehaviour:
     damage: 1
     fireRate: 1
     range: 1
-  prefab: {fileID: 0}
+  weaponPrefab: {fileID: 8964071370543500817, guid: fea2b914ce038784480441254d77fe8b, type: 3}
   shootingBehaviour: {fileID: 0}

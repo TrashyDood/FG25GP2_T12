@@ -7,9 +7,12 @@ public class Projectile : MonoBehaviour
 
     Ray ray;
     Vector3 direction;
+
     float speed,
         damage,
         width = 0.1f;
+
+    int pierceRemaining;
 
     private void Awake()
     {
@@ -34,20 +37,37 @@ public class Projectile : MonoBehaviour
         Gizmos.DrawRay(ray);
     }
 
-    public void Initialize(Vector3 direction, float speed, float damage = 10)
+    public void Initialize(Vector3 direction, float speed, float damage = 10, int pierceCount = 1)
     {
         this.direction = direction.normalized;
         this.speed = speed;
         this.damage = damage;
+        this.pierceRemaining = pierceCount;
     }
 
     void OnHit(RaycastHit hitInfo)
     {
-        Enemy enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
-
-        Destroy(gameObject);
+        Enemy enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();     
 
         if (enemy != null)
+        {
             enemy.Health -= damage;
+
+            pierceRemaining--;
+
+            if (pierceRemaining <= 0)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            // Maybe needed?
+            transform.position = hitInfo.point + direction * 0.05f;
+
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

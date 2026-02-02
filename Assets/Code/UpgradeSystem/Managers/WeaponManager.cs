@@ -9,7 +9,7 @@ public class WeaponManager : MonoBehaviour
     private PlayerBuild playerBuild;
     private List<WeaponInstance> activeWeapons;
 
-    public string startingWeaponId = "Gun1";
+    public string startingWeaponId = "Quill";
 
     private void Awake()
     {
@@ -38,7 +38,7 @@ public class WeaponManager : MonoBehaviour
             return;
         }
 
-        GameObject weaponGO = Instantiate(def.prefab, playerTransform);
+        GameObject weaponGO = Instantiate(def.weaponPrefab, playerTransform);
         Transform firePoint = weaponGO.transform.Find("FirePoint");
 
         WeaponInstance instance = new WeaponInstance
