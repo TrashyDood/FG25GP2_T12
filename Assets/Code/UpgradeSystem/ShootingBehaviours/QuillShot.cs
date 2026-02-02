@@ -24,5 +24,7 @@ public class QuillShot : ShootingBehaviour
             weapon.currentStats.damage,  
             basePierceCount
         );
+
+        Debug.Log("SHOT QUILL");
     }
 }

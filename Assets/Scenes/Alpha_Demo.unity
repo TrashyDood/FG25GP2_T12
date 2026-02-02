@@ -1234,6 +1234,57 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2123195880003866622, guid: b68d2b976c85a184b87590630a600616, type: 3}
   m_PrefabInstance: {fileID: 4462133793604444454}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1146514508
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1146514510}
+  - component: {fileID: 1146514509}
+  m_Layer: 0
+  m_Name: UpgradeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1146514509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146514508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a900fd84fd2fb2f4492113f99d5b300a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeManager
+  voxelBody: {fileID: 1783693067}
+  player: {fileID: 1783693065}
+  upgradeLibrary: {fileID: 11400000, guid: d2da6f244d43e8949873a116eb3cb38d, type: 2}
+  fixedChoiceName: Fixed Choice
+  fixedChoiceDescription: 
+  fixedChoiceIcon: {fileID: 0}
+  upgradePool: []
+--- !u!4 &1146514510
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146514508}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.92499, y: -0.9, z: -9.01376}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1217655475
 GameObject:
   m_ObjectHideFlags: 0
@@ -1946,6 +1997,43 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &1783693065 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -2582018424560963497, guid: b68d2b976c85a184b87590630a600616, type: 3}
+  m_PrefabInstance: {fileID: 4462133793604444454}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783693056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2aacd1ad4dcc4349bd235e965b96d22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+--- !u!114 &1783693066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783693056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3527af7b5a1dba14298d3a35debae1a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
+  weaponLibrary: {fileID: 11400000, guid: 89ad90d6d5a664c4cbe4a02bdab09110, type: 2}
+  playerTransform: {fileID: 1092331839}
+  startingWeaponId: Quill
+--- !u!114 &1783693067 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4118488945847303479, guid: b68d2b976c85a184b87590630a600616, type: 3}
+  m_PrefabInstance: {fileID: 4462133793604444454}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783693056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec1cc8928a8d60540a446f59d1079b2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VoxelBodyTesting
 --- !u!1 &1929786811
 GameObject:
   m_ObjectHideFlags: 0
@@ -2448,6 +2536,10 @@ PrefabInstance:
       propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 8655100144952709001, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2455,6 +2547,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3001057493141643324, guid: b68d2b976c85a184b87590630a600616, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1783693064}
+    - targetCorrespondingSourceObject: {fileID: 3001057493141643324, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1783693066}
   m_SourcePrefab: {fileID: 100100000, guid: b68d2b976c85a184b87590630a600616, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -2467,3 +2562,4 @@ SceneRoots:
   - {fileID: 4462133793604444454}
   - {fileID: 1629078638}
   - {fileID: 1929786815}
+  - {fileID: 1146514510}
