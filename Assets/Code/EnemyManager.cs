@@ -65,7 +65,6 @@ public class EnemyManager : MonoBehaviour
         return enemyData[index];
     }
 
-
     IEnumerator SpawnEnemies(float duration, int count)
     {
         isSpawning = true;

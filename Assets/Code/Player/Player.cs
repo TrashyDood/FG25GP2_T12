@@ -26,7 +26,14 @@ public class Player : MonoBehaviour
     {
         Health = maxHealth;
     }
-
+    private void Update()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            currentHealth -= 20;
+            SetHealth(currentHealth);
+        }
+    }
     public void SetHealth(float newValue)
     {
         currentHealth = newValue;
