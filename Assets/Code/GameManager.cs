@@ -43,11 +43,14 @@ public class GameManager : MonoBehaviour
         StateManager.SetState(GameState.Playing);
     }
 
-    private void Update() =>
+    private void FixedUpdate() =>
         stateManager.Evaluate(Time.fixedDeltaTime);
 
     public void SetState(int state) =>
         stateManager.SetState(state);
+
+    public CallbackState GetCBState(GameState state) =>
+        (CallbackState)stateManager.GetState(state);
 }
 
 public enum GameState

@@ -17,8 +17,8 @@ public class AddShieldEffect : AddWeaponEffect
         {
             // Add Shield component to the weaponObject
             Shield shieldComp = shieldInstance.weaponObject.AddComponent<Shield>();
-            shieldComp.maxHP = shieldHP;
-            shieldComp.currentHP = shieldHP;
+            shieldComp.maxHp = shieldHP;
+            shieldComp.currentHp = shieldHP;
         }
     }
 }
