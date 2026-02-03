@@ -13,5 +13,5 @@ public class WeaponInstance
     public float cooldownTimer;
 
     public Transform firePoint;
-    public GameObject weaponObject;
+    public BodyPart weaponObject;
 }

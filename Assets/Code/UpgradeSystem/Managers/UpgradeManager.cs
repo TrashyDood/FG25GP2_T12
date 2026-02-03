@@ -265,7 +265,7 @@ public class UpgradeManager : MonoBehaviour
         choicesRoot.SetActive(false);
     }
 
-    public GameObject GetPrefab(UpgradeDefinition upgrade)
+    public BodyPart GetPrefab(UpgradeDefinition upgrade)
     {
         if (upgrade == null) return null;
         
@@ -273,7 +273,7 @@ public class UpgradeManager : MonoBehaviour
         {
             if (effect is AddWeaponEffect addWeapon)
             {
-                GameObject prefab = addWeapon.weapon.weaponPrefab;
+                BodyPart prefab = addWeapon.weapon.weaponPrefab;
                 return prefab;
             }
         }

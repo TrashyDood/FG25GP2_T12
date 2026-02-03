@@ -9,6 +9,7 @@ public class QuillShot : ShootingBehaviour
 
     public override void Shoot(WeaponInstance weapon, Transform firePoint)
     {
+        //Debug.Log();
         GameObject proj = Instantiate(
             projectilePrefab,
             firePoint.position,

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 // ScriptableObject describing a weapon template
 [CreateAssetMenu(fileName = "WeaponDefinition", menuName = "Weapons/Weapon Definition")]
@@ -10,7 +11,7 @@ public class WeaponDefinition : ScriptableObject
 
     public WeaponStats baseStats;
 
-    public GameObject weaponPrefab;
+    public BodyPart weaponPrefab;
     //public GameObject projectilePrefab;
 
     public ShootingBehaviour shootingBehaviour;

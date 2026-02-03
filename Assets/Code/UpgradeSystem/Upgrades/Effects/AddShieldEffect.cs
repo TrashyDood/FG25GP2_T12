@@ -16,9 +16,9 @@ public class AddShieldEffect : AddWeaponEffect
         if (shieldInstance != null)
         {
             // Add Shield component to the weaponObject
-            Shield shieldComp = shieldInstance.weaponObject.AddComponent<Shield>();
-            shieldComp.maxHp = shieldHP;
-            shieldComp.currentHp = shieldHP;
+            //Shield shieldComp = shieldInstance.weaponObject.AddComponent<Shield>();
+            //shieldComp.maxHp = shieldHP;
+            //shieldComp.currentHp = shieldHP;
         }
     }
 }

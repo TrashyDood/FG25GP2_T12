@@ -38,7 +38,7 @@ public class WeaponManager : MonoBehaviour
             return;
         }
 
-        GameObject weaponGO = Instantiate(def.weaponPrefab, playerTransform);
+        BodyPart weaponGO = Instantiate(def.weaponPrefab, playerTransform);
         Transform firePoint = weaponGO.transform.Find("FirePoint");
 
         WeaponInstance instance = new WeaponInstance
