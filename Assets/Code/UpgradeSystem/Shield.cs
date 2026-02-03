@@ -4,8 +4,8 @@ using System.Collections;
 public class Shield : MonoBehaviour
 {
     [Header("Shield Stats")]
-    public int maxHP = 100;
-    public int currentHP;
+    public int maxHp = 100;
+    public int currentHp;
     public float regenDelay = 5f;
     public float regenRate = 10f;
     public float blockAngle = 90f; 
@@ -16,7 +16,7 @@ public class Shield : MonoBehaviour
 
     private void Awake()
     {
-        currentHP = maxHP;
+        currentHp = maxHp;
         playerTransform = transform.parent;
     }
 
@@ -33,10 +33,10 @@ public class Shield : MonoBehaviour
         if (!IsBlocking(hitDirection))
             return;
 
-        currentHP -= dmg;
-        if (currentHP <= 0)
+        currentHp -= dmg;
+        if (currentHp <= 0)
         {
-            currentHP = 0;
+            currentHp = 0;
             DeactivateShield();
             StartCoroutine(StartRegen());
         }
@@ -60,15 +60,15 @@ public class Shield : MonoBehaviour
         yield return new WaitForSeconds(regenDelay);
         isRegenerating = false;
         gameObject.SetActive(true);
-        currentHP = 0;
+        currentHp = 0;
     }
 
     private void Regenerate()
     {
-        currentHP += Mathf.CeilToInt(regenRate * Time.deltaTime);
-        if (currentHP >= maxHP)
+        currentHp += Mathf.CeilToInt(regenRate * Time.deltaTime);
+        if (currentHp >= maxHp)
         {
-            currentHP = maxHP;
+            currentHp = maxHp;
             isRegenerating = false;
         }
     }
