@@ -21,13 +21,14 @@ public class Projectile : MonoBehaviour
 
     void FixedUpdate()
     {
+        ray = new(transform.position, direction * speed * Time.fixedDeltaTime);
+
         if (Physics.SphereCast(ray, width, out RaycastHit hitInfo, speed * Time.fixedDeltaTime, targetLayer))
         {
             OnHit(hitInfo);
             return;
         }
 
-        ray = new(transform.position, direction * speed * Time.fixedDeltaTime);
         transform.position += direction * speed * Time.fixedDeltaTime;
     }
 

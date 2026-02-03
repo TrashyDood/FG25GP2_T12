@@ -2391,7 +2391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeManager
   voxelBody: {fileID: 4462133793604444456}
   player: {fileID: 4462133793604444455}
-  upgradeLibrary: {fileID: 0}
+  upgradeLibrary: {fileID: 11400000, guid: d2da6f244d43e8949873a116eb3cb38d, type: 2}
   fixedChoiceName: Fixed Choice
   fixedChoiceDescription: 
   fixedChoiceIcon: {fileID: 0}

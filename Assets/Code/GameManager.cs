@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
             new(), // Paused
             new() // Upgrading
             {
-                onEnterCallback = (state) => { Time.timeScale = 1; },
+                onEnterCallback = (state) => { Time.timeScale = 0; },
                 onExitCallback = (state) => { Time.timeScale = 1; }
             },
             new(), // Dead
