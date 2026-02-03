@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 2123195880003866622}
   - component: {fileID: 6825332668043674253}
   - component: {fileID: 7319833572454886761}
-  - component: {fileID: 4118488945847303479}
   - component: {fileID: 8655100144952709001}
   - component: {fileID: 6454924862363815314}
   - component: {fileID: -2582018424560963497}
+  - component: {fileID: 6435731811321519823}
+  - component: {fileID: 6137757396994045687}
   - component: {fileID: 3117290854059341669}
   m_Layer: 15
   m_Name: Player
@@ -57,7 +58,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -65,8 +66,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 1
+      time: 25
+      value: 25
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -79,10 +80,22 @@ MonoBehaviour:
   pickupRange: 5
   pickupLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1048576
   _onXPGained:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6825332668043674253}
+        m_TargetAssemblyTypeName: XPManager, Assembly-CSharp
+        m_MethodName: UpdateHUD
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _onLevelGained:
     m_PersistentCalls:
       m_Calls:
@@ -98,9 +111,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: SetState
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _currentXP: 0
-  _currentLevel: 0
-  _currentXPReq: 0
+  _currentLevel: 1
+  _currentXPReq: 2
 --- !u!114 &7319833572454886761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,25 +142,6 @@ MonoBehaviour:
   acceleration: 50
   deceleration: 80
   playerInput: {fileID: 0}
---- !u!114 &4118488945847303479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3001057493141643324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec1cc8928a8d60540a446f59d1079b2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VoxelBodyTesting
-  size: {x: 7, y: 1, z: 7}
-  slotScale: {x: 1, y: 1, z: 1}
-  cubeMaterial: {fileID: 0}
-  slotMaterial: {fileID: 0}
-  cubeMesh: {fileID: 0}
-  slotMesh: {fileID: 0}
-  renderSlots: 0
 --- !u!114 &8655100144952709001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +202,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   healthBar: {fileID: 0}
+--- !u!114 &6435731811321519823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3001057493141643324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78955d08711d82a4a967ca3a879ec536, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Body
+  size: {x: 1, y: 1, z: 1}
+  partMask:
+    serializedVersion: 2
+    m_Bits: 0
+  defaultPart: {fileID: 4788076387273759160, guid: 6087e36347ef52c4ab142177b810b844, type: 3}
+--- !u!64 &6137757396994045687
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3001057493141643324}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!54 &3117290854059341669
 Rigidbody:
   m_ObjectHideFlags: 0

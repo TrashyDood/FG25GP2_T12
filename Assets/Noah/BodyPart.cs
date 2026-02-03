@@ -6,9 +6,12 @@ public class BodyPart : MonoBehaviour
 {
     [SerializeField]
     bool stackable;
+    [SerializeField]
+    Vector3Int size = Vector3Int.one;
 
     public Body Body { get; private set; }
     public Vector3Int Coords { get; private set; }
+    public Vector3Int Size { get; private set; }
     public BoxCollider Collider { get; private set; }
 
     private void Awake()
@@ -20,12 +23,11 @@ public class BodyPart : MonoBehaviour
     {
         Body = body;
         Coords = coords;
-
-        transform.parent = body.transform;
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
-        
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(transform.position, size);
     }
 }
