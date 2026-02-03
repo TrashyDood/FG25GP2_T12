@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 6454924862363815314}
   - component: {fileID: -2582018424560963497}
   - component: {fileID: 6435731811321519823}
-  - component: {fileID: 6137757396994045687}
   - component: {fileID: 3117290854059341669}
   m_Layer: 15
   m_Name: Player
@@ -214,33 +213,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78955d08711d82a4a967ca3a879ec536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Body
-  size: {x: 1, y: 1, z: 1}
-  partMask:
+  size: {x: 7, y: 1, z: 7}
+  bodypartLayer:
     serializedVersion: 2
     m_Bits: 0
   defaultPart: {fileID: 4788076387273759160, guid: 6087e36347ef52c4ab142177b810b844, type: 3}
---- !u!64 &6137757396994045687
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3001057493141643324}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  slotMaterial: {fileID: 2100000, guid: 8b44773059fde0d4791e148bd2d8df64, type: 2}
+  slotMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &3117290854059341669
 Rigidbody:
   m_ObjectHideFlags: 0

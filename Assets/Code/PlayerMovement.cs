@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
             targetVelocity,
             ((currentVelocity.sqrMagnitude > targetVelocity.sqrMagnitude) ? deceleration : acceleration) * Time.fixedDeltaTime);
 
-        rigidBody.Move(transform.position + currentVelocity * Time.fixedDeltaTime, Quaternion.LookRotation(currentVelocity + transform.position));
+        rigidBody.Move(transform.position + currentVelocity * Time.fixedDeltaTime, Quaternion.identity);
     }
 
     public void OnMove(InputValue value)
