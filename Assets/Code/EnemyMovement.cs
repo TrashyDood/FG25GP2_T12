@@ -1,20 +1,25 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Enemy), typeof(Rigidbody))]
 public class EnemyMovement : MonoBehaviour
 {
-    [Header("Movement")]
-    public GameObject target;
-    public float moveSpeed;
+    Rigidbody rb;
+    Enemy enemy;
 
-    private Rigidbody rb;
-    private void Start()
+    public Enemy Enemy => enemy;
+    public Rigidbody Rigidbody => rb;
+    public EnemyData Data => enemy?.Data;
+    public Transform Target => enemy?.Target;
+
+    private void Awake()
     {
+        enemy = GetComponent<Enemy>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
     }
+
     private void FixedUpdate()
     {
-        rb.MovePosition(Vector3.MoveTowards(rb.position, target.transform.position, moveSpeed * Time.deltaTime));
-        transform.LookAt(target.transform.position);    
+        rb.MovePosition(Vector3.MoveTowards(rb.position, Target.transform.position, enemy.Data.speed * Time.deltaTime));
     }
 }

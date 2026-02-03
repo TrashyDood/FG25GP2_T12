@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db0a63d92c6725348a2d9eecae8b2576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::XPManager
+  xpBar: {fileID: 0}
   _XPReqScaling:
     serializedVersion: 2
     m_Curve:
@@ -82,9 +83,21 @@ MonoBehaviour:
   _onXPGained:
     m_PersistentCalls:
       m_Calls: []
-  _onLevelsGained:
+  _onLevelGained:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6825332668043674253}
+        m_TargetAssemblyTypeName: XPManager, Assembly-CSharp
+        m_MethodName: UpdateHUD
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _currentXP: 0
   _currentLevel: 0
   _currentXPReq: 0
@@ -103,6 +116,7 @@ MonoBehaviour:
   speed: 10
   acceleration: 50
   deceleration: 80
+  playerInput: {fileID: 0}
 --- !u!114 &4118488945847303479
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -983,7 +983,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[1].dropOnDeath.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: 'enemyData.Array.data[0].dropOnDeath.Array.data[0]'
@@ -991,6 +991,10 @@ PrefabInstance:
       objectReference: {fileID: 4721473660522759184, guid: 17d20f0fa7504704abe027b322e73355, type: 3}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: 'enemyData.Array.data[1].dropOnDeath.Array.data[0]'
+      value: 
+      objectReference: {fileID: 4721473660522759184, guid: 17d20f0fa7504704abe027b322e73355, type: 3}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: 'enemyData.Array.data[1].dropOnDeath.Array.data[1]'
       value: 
       objectReference: {fileID: 4721473660522759184, guid: 17d20f0fa7504704abe027b322e73355, type: 3}
     - target: {fileID: 7585911998284658465, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
@@ -2389,7 +2393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a900fd84fd2fb2f4492113f99d5b300a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeManager
-  voxelBody: {fileID: 4462133793604444456}
+  voxelBody: {fileID: 0}
   player: {fileID: 4462133793604444455}
   upgradeLibrary: {fileID: 11400000, guid: d2da6f244d43e8949873a116eb3cb38d, type: 2}
   fixedChoiceName: Fixed Choice
@@ -2657,6 +2661,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelGained.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -2669,6 +2677,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1783693071}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelGained.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 3
       objectReference: {fileID: 0}
@@ -2676,6 +2688,10 @@ PrefabInstance:
       propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelGained.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 819984469}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _onXPGained.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -2691,6 +2707,18 @@ PrefabInstance:
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _onXPGained.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpdateHUD
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelGained.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelGained.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelGained.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetState
       objectReference: {fileID: 0}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -2713,6 +2741,14 @@ PrefabInstance:
       value: XPManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelGained.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelGained.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: GameManager, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -2733,6 +2769,10 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _onLevelGained.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
@@ -2740,13 +2780,17 @@ PrefabInstance:
       propertyPath: _onLevelsGained.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4118488945847303479, guid: b68d2b976c85a184b87590630a600616, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3001057493141643324, guid: b68d2b976c85a184b87590630a600616, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1783693064}
+    - targetCorrespondingSourceObject: {fileID: 3001057493141643324, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4462133793604444461}
   m_SourcePrefab: {fileID: 100100000, guid: b68d2b976c85a184b87590630a600616, type: 3}
 --- !u!114 &4462133793604444455 stripped
 MonoBehaviour:
@@ -2759,17 +2803,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2aacd1ad4dcc4349bd235e965b96d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
---- !u!114 &4462133793604444456 stripped
+--- !u!114 &4462133793604444461
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4118488945847303479, guid: b68d2b976c85a184b87590630a600616, type: 3}
-  m_PrefabInstance: {fileID: 4462133793604444454}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1783693056}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec1cc8928a8d60540a446f59d1079b2a, type: 3}
+  m_Script: {fileID: 11500000, guid: 78955d08711d82a4a967ca3a879ec536, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VoxelBodyTesting
+  m_EditorClassIdentifier: Assembly-CSharp::Body
+  size: {x: 0, y: 0, z: 0}
+  partMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

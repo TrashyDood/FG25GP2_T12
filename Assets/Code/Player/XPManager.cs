@@ -14,7 +14,7 @@ public class XPManager : MonoBehaviour
     LayerMask pickupLayer;
     [SerializeField]
     UnityEvent<int, int> _onXPGained,
-        _onLevelsGained;
+        _onLevelGained;
 
     public event Action<int, int> OnXPGainedEvent,
         OnLevelsGainedEvent;
@@ -59,11 +59,12 @@ public class XPManager : MonoBehaviour
             _currentLevel++;
             _currentXP -= _currentXPReq;
             _currentXPReq = Mathf.CeilToInt(_XPReqScaling.Evaluate(_currentLevel));
+
+            _onLevelGained.Invoke(prevLevel, _currentLevel);
+            OnLevelsGainedEvent?.Invoke(prevLevel, _currentLevel);
         }
-        
-        _onLevelsGained.Invoke(prevLevel, _currentLevel);
-        OnLevelsGainedEvent?.Invoke(prevLevel, _currentLevel);
     }
+
     public void UpdateHUD()
     {
         xpBar.FillAmount = (float)_currentXP / _currentXPReq;

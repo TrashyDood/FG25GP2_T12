@@ -22,8 +22,8 @@ public class VoxelBody : MonoBehaviour
     [SerializeField]
     bool renderSlots;
 
-    BodyPart[] bodyParts;
-    List<BodyPart> parts = new();
+    Part[] bodyParts;
+    List<Part> parts = new();
     List<Vector3Int> slots = new();
     List<Matrix4x4> cubeMatrices = new(),
         slotMatrices = new();
@@ -36,7 +36,7 @@ public class VoxelBody : MonoBehaviour
 
     private void Awake()
     {
-        bodyParts = new BodyPart[size.x * size.y * size.z];
+        bodyParts = new Part[size.x * size.y * size.z];
         cuberRenderParams = new RenderParams(cubeMaterial)
         {
             worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000),
@@ -83,14 +83,14 @@ public class VoxelBody : MonoBehaviour
         FindSlots();
     }
 
-    public void AddPart(Vector3Int coords, BodyPart part = null)
+    public void AddPart(Vector3Int coords, Part part = null)
     {
         if (!IsValid(coords)) return;
 
         int index = GetIndex(coords);
     }
 
-    public BodyPart GetCube(Vector3Int coords)
+    public Part GetCube(Vector3Int coords)
     {
         int index = GetIndex(coords);
         return IsValid(coords) ? bodyParts[index] : null;
@@ -179,9 +179,9 @@ public class VoxelBody : MonoBehaviour
 
         onSlotFilledCallback();
     }
-}
 
-public class BodyPart
-{
-    public Vector3Int coords;
+    public class Part
+    {
+        public Vector3Int coords;
+    }
 }

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyMovement))]
 public class Enemy : PoolableComponent<Enemy>
 {
     [SerializeField]
@@ -8,9 +9,12 @@ public class Enemy : PoolableComponent<Enemy>
     [SerializeField]
     EnemyData data;
 
+    EnemyMovement movement;
     Material material;
     MeshRenderer meshRenderer;
     float health;
+
+    public EnemyMovement Movement => movement;
 
     public float Health
     {
@@ -21,19 +25,36 @@ public class Enemy : PoolableComponent<Enemy>
             health = value;
         }
     }
+
+    public EnemyData Data
+    {
+        get => data;
+        set
+        {
+            OnDataChanged(value);
+            data = value;
+        }
+    }
+
+    public Transform Target
+    {
+        get => target;
+        set
+        {
+            OnTargetChanged(value);
+            target = value;
+        }
+    }
+
     private void Awake()
     {
         meshRenderer = GetComponentInChildren<MeshRenderer>();
+        movement = GetComponent<EnemyMovement>();
     }
 
     private void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player")?.transform;
-    }
-
-    private void FixedUpdate()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, data.speed * Time.fixedDeltaTime);
     }
 
     void OnHealthChanged(float newHealth)
@@ -42,20 +63,19 @@ public class Enemy : PoolableComponent<Enemy>
         {
             ReturnToPool();
             foreach (var item in data.dropOnDeath)
-                Instantiate(item, transform.position, Quaternion.identity);
+                Instantiate(item, transform.position + Utils.RandomVector3(1, 0, 1, -1, 0, -1), Quaternion.identity);
         }
     }
 
-    public override void OnFetched(ObjectPool<Enemy> pool)
+    void OnDataChanged(EnemyData newData)
     {
-        base.OnFetched(pool);
+        health = newData.maxHealth;
+        meshRenderer.material = newData.material;
     }
 
-    public void SetData(EnemyData data)
+    void OnTargetChanged(Transform newTarget)
     {
-        health = data.maxHealth;
-        meshRenderer.material = data.material;
-        this.data = data;
+
     }
 }
 
