@@ -22,7 +22,7 @@ public class VoxelBody : MonoBehaviour
     [SerializeField]
     bool renderSlots;
 
-    BodyPart[] bodyCubes;
+    BodyPart[] bodyParts;
     List<BodyPart> parts = new();
     List<Vector3Int> slots = new();
     List<Matrix4x4> cubeMatrices = new(),
@@ -36,7 +36,7 @@ public class VoxelBody : MonoBehaviour
 
     private void Awake()
     {
-        bodyCubes = new BodyPart[size.x * size.y * size.z];
+        bodyParts = new BodyPart[size.x * size.y * size.z];
         cuberRenderParams = new RenderParams(cubeMaterial)
         {
             worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000),
@@ -71,11 +71,11 @@ public class VoxelBody : MonoBehaviour
         if (!IsValid(coords)) return;
 
         int index = GetIndex(coords);
-        if (bodyCubes[index] != null)
+        if (bodyParts[index] != null)
             return;
 
         cubeMatrices.Add(new());
-        parts.Add(bodyCubes[index] = new()
+        parts.Add(bodyParts[index] = new()
         {
             coords = coords
         });
@@ -86,7 +86,7 @@ public class VoxelBody : MonoBehaviour
     public BodyPart GetCube(Vector3Int coords)
     {
         int index = GetIndex(coords);
-        return IsValid(coords) ? bodyCubes[index] : null;
+        return IsValid(coords) ? bodyParts[index] : null;
     }
 
     public Vector3 GetWorldPos(Vector3Int coords) =>
@@ -172,7 +172,7 @@ public class VoxelBody : MonoBehaviour
             AddCube(coord);
         else // Add Bodypart
         {
-
+            
         }
 
         onSlotFilledCallback();

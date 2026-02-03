@@ -1497,7 +1497,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 163.6
+      value: 570
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1517,15 +1517,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8004698657344673448, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: <FillAmount>k__BackingField
-      value: 0
+      value: 0.342
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004698657344673448, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
+      propertyPath: fillAreas.Array.data[1].speed
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8004698657344673448, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: fillAreas.Array.data[0].fillAmount
-      value: 0.2928619
+      value: 0.342
       objectReference: {fileID: 0}
     - target: {fileID: 8004698657344673448, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: fillAreas.Array.data[1].fillAmount
-      value: 0.6986413
+      value: 0.342
       objectReference: {fileID: 0}
     - target: {fileID: 8989047962272941767, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_Color.b
@@ -1884,7 +1888,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 177
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1903,12 +1907,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8004698657344673448, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
+      propertyPath: fillAreas.Array.data[1].speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004698657344673448, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: fillAreas.Array.data[0].fillAmount
-      value: 0.9041865
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8004698657344673448, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: fillAreas.Array.data[1].fillAmount
-      value: 0.89449644
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8989047962272941767, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_FillAmount

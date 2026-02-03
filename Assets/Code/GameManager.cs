@@ -104,7 +104,7 @@ public class StateManager
     [SerializeField]
     int currentIndex = -1;
 
-    List<State> states = new();
+    List<State> states;
     State currentState;
 
     public event Action<State> OnStateChanged;
@@ -114,6 +114,8 @@ public class StateManager
         if (states != null)
             this.states = states.ToList();
     }
+
+    public StateManager() => states = new();
 
     public State CurrentState
     {
