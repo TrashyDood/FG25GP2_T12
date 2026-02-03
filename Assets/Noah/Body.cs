@@ -10,6 +10,8 @@ public class Body : MonoBehaviour
     Vector3Int size;
     [SerializeField]
     LayerMask partMask;
+    [SerializeField]
+    BodyPart defaultPart;
 
     BodyPart[,,] body;
     List<BodyPart> parts;
@@ -22,16 +24,21 @@ public class Body : MonoBehaviour
         
     }
 
-    public void AddPart(Vector3Int coords)
+    public void AddPart(Vector3Int coords, BodyPart part)
     {
 
     }
 
-    public void EnterEditMode(Action returnCallback) =>
-        StartCoroutine(EditModeCR(returnCallback));
+    public Vector3 ToWorldPos(Vector3Int coords) => default;
+    public Vector3Int ToCoords(Vector3 pos) => default;
 
-    IEnumerator EditModeCR(Action returnCallback)
+    public void EnterEditMode(Action returnCallback, BodyPart part = null) =>
+        StartCoroutine(EditModeCR(returnCallback, part));
+
+    IEnumerator EditModeCR(Action returnCallback, BodyPart part)
     {
+        part ??= defaultPart;
+
         while (!Input.GetMouseButtonDown(0))
         {
 
