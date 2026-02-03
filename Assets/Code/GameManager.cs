@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
             new() // Menu
         };
 
+        //var state = (CallbackState)GameManager.Instance.StateManager.GetState(GameState.Playing);
+
         stateManager = new(states);
         StateManager.SetState(GameState.Playing);
     }
