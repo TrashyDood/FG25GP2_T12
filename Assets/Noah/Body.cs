@@ -40,7 +40,7 @@ public class Body : MonoBehaviour
 
     private void Awake()
     {
-        CentralPart = AddPart(new(0, 0, 0), centralPrefab);
+        CentralPart = AddPart(new(3, 0, 3), centralPrefab);
     }
 
     public BodyPart AddPart(Vector3Int coords, BodyPart prefab, Direction orientation = Direction.Forward)
@@ -49,9 +49,10 @@ public class Body : MonoBehaviour
             return null;
 
         BodyPart bodyPart = Instantiate(prefab, transform);
-        bodyParts[coords] = bodyPart;
         bodyPart.Initialize(this, coords, orientation);
-        bodyPart.transform.localPosition = coords;
+        bodyPart.transform.localPosition = CoordsToWorld(coords);
+
+        bodyParts[coords] = bodyPart;
 
         UpdateAvailableSlots();
 
@@ -98,7 +99,7 @@ public class Body : MonoBehaviour
             };
 
             for (int i = 0; i < slotMatrices.Length; i++)
-                slotMatrices[i] = Matrix4x4.TRS(transform.TransformPoint(slots[i].coords), transform.rotation, Vector3.one * 0.25f);
+                slotMatrices[i] = Matrix4x4.TRS(transform.TransformPoint(CoordsToWorld(slots[i].coords)), transform.rotation, Vector3.one * 0.25f);
 
             // Render slots in batches of 1023
             for (int i = 0; i < slotMatrices.Length; i += 1023)
@@ -174,7 +175,7 @@ public class Body : MonoBehaviour
         // Find the slot whose center is closest to the ray
         foreach (var s in slots)
         {
-            Vector3 slotWorldPos = transform.TransformPoint(s.coords);
+            Vector3 slotWorldPos = transform.TransformPoint(CoordsToWorld(s.coords));
 
             // Distance from ray to slot center
             Vector3 toSlot = slotWorldPos - ray.origin;
@@ -222,6 +223,9 @@ public class Body : MonoBehaviour
         orientation = bestDir;
         return true;
     }
+
+    Vector3 CoordsToWorld(Vector3Int coords) =>
+        coords - (Vector3)size * 0.5f + Vector3.one * 0.5f;
 
     [Serializable]
     public struct Slot
