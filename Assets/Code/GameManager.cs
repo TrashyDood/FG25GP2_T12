@@ -110,6 +110,8 @@ public class StateManager
     List<State> states;
     State currentState;
 
+    public int CurrentStateIndex => currentIndex;
+
     public event Action<State> OnStateChanged;
 
     public StateManager(IEnumerable<State> states = null)

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -13,7 +14,8 @@ public class Body : MonoBehaviour
     [SerializeField]
     LayerMask bodypartLayer;
     [SerializeField]
-    BodyPart defaultPart;
+    BodyPart defaultPrefab,
+        centralPrefab;
 
     [Header("Rendering")]
     [SerializeField]
@@ -38,7 +40,7 @@ public class Body : MonoBehaviour
 
     private void Awake()
     {
-        CentralPart = AddPart(new(0, 0, 0), defaultPart);
+        CentralPart = AddPart(new(0, 0, 0), centralPrefab);
     }
 
     public BodyPart AddPart(Vector3Int coords, BodyPart prefab, Direction orientation = Direction.Forward)
@@ -66,10 +68,10 @@ public class Body : MonoBehaviour
                 yield return slot;
     }
 
-    public bool EnterEditMode(Action returnCallback, BodyPart prefab = null, Slot[] validSlots = null)
+    public bool EnterEditMode(Action returnCallback, BodyPart prefab = null)
     {
-        prefab ??= defaultPart;
-        validSlots ??= GetValidSlots(prefab).ToArray();
+        prefab ??= defaultPrefab;
+        Slot[] validSlots = availableSlots.Where((slot) => (slot.directions & prefab.AttachTo) != 0).ToArray();
 
         if (validSlots.Length > 0)
         {
