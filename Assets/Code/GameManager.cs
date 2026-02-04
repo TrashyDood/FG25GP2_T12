@@ -112,7 +112,7 @@ public class StateManager
     List<State> states;
     State currentState;
 
-    public int CurrentStateIndex => currentIndex;
+    public int CurrentIndex => currentIndex;
 
     public event Action<State> OnStateChanged;
 
