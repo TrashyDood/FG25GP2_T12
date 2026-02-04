@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: WeaponLibrary
   m_EditorClassIdentifier: Assembly-CSharp::WeaponLibrary
   weapons:
-  - {fileID: 11400000, guid: 9cf31ab15442e594c8c05fd314050fb2, type: 2}
+  - {fileID: 11400000, guid: 7739f3138df8fce4887d9cd572358fc7, type: 2}
+  - {fileID: 11400000, guid: cf0c06446e6fbdb42a282c48689441f6, type: 2}
   - {fileID: 11400000, guid: 7aa41a2185ab51240a840c3543b3f136, type: 2}

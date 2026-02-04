@@ -2358,6 +2358,7 @@ MonoBehaviour:
   voxelBody: {fileID: 0}
   player: {fileID: 4462133793604444455}
   upgradeLibrary: {fileID: 11400000, guid: 5b6fe93d991a48442aa139251cdf3f8a, type: 2}
+  weaponManager: {fileID: 0}
   fixedChoiceName: Fixed Choice
   fixedChoiceDescription: 
   fixedChoiceIcon: {fileID: 0}
@@ -2626,19 +2627,41 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3001057493141643324, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4462133793604444457}
   m_SourcePrefab: {fileID: 100100000, guid: b68d2b976c85a184b87590630a600616, type: 3}
 --- !u!114 &4462133793604444455 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -2582018424560963497, guid: b68d2b976c85a184b87590630a600616, type: 3}
   m_PrefabInstance: {fileID: 4462133793604444454}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 4462133793604444456}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2aacd1ad4dcc4349bd235e965b96d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+--- !u!1 &4462133793604444456 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3001057493141643324, guid: b68d2b976c85a184b87590630a600616, type: 3}
+  m_PrefabInstance: {fileID: 4462133793604444454}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4462133793604444457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4462133793604444456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3527af7b5a1dba14298d3a35debae1a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
+  weaponLibrary: {fileID: 11400000, guid: 89ad90d6d5a664c4cbe4a02bdab09110, type: 2}
+  startingWeaponId: Quill
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

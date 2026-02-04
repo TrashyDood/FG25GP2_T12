@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47b0d772914d1394799601605e3e2e00, type: 3}
-  m_Name: SnakeDef
+  m_Name: QuillDef
   m_EditorClassIdentifier: Assembly-CSharp::WeaponDefinition
-  weaponName: Snake
-  weaponId: Snake
+  weaponName: Quill
+  weaponId: Quill
   icon: {fileID: 0}
   baseStats:
-    damage: 1
+    damage: 5
     fireRate: 1
-    range: 1
-  weaponPrefab: {fileID: 8964071370543500817, guid: fea2b914ce038784480441254d77fe8b, type: 3}
-  shootingBehaviour: {fileID: 11400000, guid: 3d11bd5ca88e63741825f08bc43c850b, type: 2}
+    range: 5
+  weaponPrefab: {fileID: 4847483082424459837, guid: a7f17ba815382c2448ee46e54a055721, type: 3}
+  shootingBehaviour: {fileID: 11400000, guid: 515bc97157f3b6d4695698bb6bd1fd83, type: 2}
