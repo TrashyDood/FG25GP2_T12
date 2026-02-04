@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement_Designers : MonoBehaviour
 {
     public float baseSpeed = 0;
     public float legMassMult;
@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rb;
     BodyPlacing bodyPlacing;
     PlayerMeters playerMeters;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
