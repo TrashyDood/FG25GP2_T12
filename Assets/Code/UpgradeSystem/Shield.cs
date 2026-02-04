@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Shield : MonoBehaviour
 {
@@ -7,69 +8,145 @@ public class Shield : MonoBehaviour
     public int maxHp = 100;
     public int currentHp;
     public float regenDelay = 5f;
-    public float regenRate = 10f;
-    public float blockAngle = 90f; 
+    public float blockAngle = 90f;
 
+    [Header("Behaviour")]
+    public bool oneHitPerContact = true;
 
-    private bool isRegenerating = false;
-    private Transform playerTransform;
+    [Header("Knockback")]
+    public float pushSpeed = 8f;
+
+    private Renderer[] renderers;
+    private Collider[] colliders;
+
+    private bool isDown;
+    private Coroutine respawnRoutine;
+
+    private readonly HashSet<Enemy> hitThisContact = new();
 
     private void Awake()
     {
         currentHp = maxHp;
-        playerTransform = transform.parent;
+
+        renderers = GetComponentsInChildren<Renderer>(true);
+        colliders = GetComponentsInChildren<Collider>(true);
+
+        SetShieldEnabled(true);
+        isDown = false;
     }
 
-    private void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        if (isRegenerating)
-        {
-            Regenerate();
-        }
+        TryProcessEnemyHit(other);
     }
 
-    public void TakeDamage(int dmg, Vector3 hitDirection)
+    private void OnTriggerExit(Collider other)
     {
+        if (!oneHitPerContact)
+            return;
+
+        var enemy = other.GetComponentInParent<Enemy>();
+        if (enemy == null)
+            return;
+
+        hitThisContact.Remove(enemy);
+    }
+
+    private void TryProcessEnemyHit(Collider other)
+    {
+        if (isDown)
+            return;
+        
+        var enemy = other.GetComponentInParent<Enemy>();
+        if (enemy == null)
+            return;
+
+        if (oneHitPerContact && hitThisContact.Contains(enemy))
+            return;
+
+        Vector3 hitDirection = (enemy.transform.position - transform.position).normalized;
         if (!IsBlocking(hitDirection))
             return;
 
-        currentHp -= dmg;
+        int damage = Mathf.CeilToInt(enemy.Data.damage);
+        if (damage <= 0)
+            return;
+
+        int hpBefore = currentHp;
+
+        currentHp -= damage;
         if (currentHp <= 0)
         {
             currentHp = 0;
-            DeactivateShield();
-            StartCoroutine(StartRegen());
+            BringShieldDown();
+        }
+
+        if (currentHp < hpBefore)
+        {
+            ApplyKnockback(enemy);
+
+            if (oneHitPerContact)
+                hitThisContact.Add(enemy);
         }
     }
 
     private bool IsBlocking(Vector3 hitDirection)
     {
-        Vector3 forward = playerTransform.forward;
-        float angle = Vector3.Angle(forward, hitDirection);
+        float angle = Vector3.Angle(transform.forward, hitDirection);
         return angle <= blockAngle / 2f;
     }
 
-    private void DeactivateShield()
+    private void ApplyKnockback(Enemy enemy)
     {
-        gameObject.SetActive(false);
-        isRegenerating = true;
+        if (enemy.Movement == null)
+            return;
+
+        Vector3 pushDir = enemy.transform.position - transform.position;
+        pushDir.y = 0f;
+
+        if (pushDir.sqrMagnitude < 0.001f)
+            return;
+
+        enemy.Movement.ApplyKnockback(pushDir, pushSpeed);
     }
 
-    private IEnumerator StartRegen()
+    private void BringShieldDown()
+    {
+        isDown = true;
+        SetShieldEnabled(false);
+
+        hitThisContact.Clear();
+
+        if (respawnRoutine != null)
+            StopCoroutine(respawnRoutine);
+
+        respawnRoutine = StartCoroutine(RespawnAfterDelay());
+    }
+
+    private IEnumerator RespawnAfterDelay()
     {
         yield return new WaitForSeconds(regenDelay);
-        isRegenerating = false;
-        gameObject.SetActive(true);
-        currentHp = 0;
+
+        currentHp = maxHp;
+        isDown = false;
+        SetShieldEnabled(true);
+
+        respawnRoutine = null;
     }
 
-    private void Regenerate()
+    private void SetShieldEnabled(bool enabled)
     {
-        currentHp += Mathf.CeilToInt(regenRate * Time.deltaTime);
-        if (currentHp >= maxHp)
+        if (colliders != null)
         {
-            currentHp = maxHp;
-            isRegenerating = false;
+            foreach (var c in colliders)
+                if (c != null) c.enabled = enabled;
+        }
+
+        // Could instead change the look of the shield instead of turning invisible?
+        if (renderers != null)
+        {
+            foreach (var r in renderers)
+                if (r != null) r.enabled = enabled;
         }
     }
 }
