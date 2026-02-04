@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(BoxCollider))]
 public class BodyPart : MonoBehaviour
 {
+    [SerializeField]
+    UnityEvent onIntialized;
     [SerializeField]
     Direction attachTo,
         attachFrom;
@@ -29,6 +32,7 @@ public class BodyPart : MonoBehaviour
         Body = body;
         Coords = coords;
         transform.rotation = GetRotation(orientation);
+        onIntialized.Invoke();
     }
 
     public virtual void OnRemoved() { }
@@ -47,7 +51,7 @@ public class BodyPart : MonoBehaviour
         };
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(transform.position, size);

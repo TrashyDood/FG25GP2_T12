@@ -125,6 +125,7 @@ public class Body : MonoBehaviour
 
     public bool EnterEditMode(Action returnCallback, BodyPart prefab = null)
     {
+        prefab ??= defaultPart;
         // Filters slots with valid 'AttachTo'.
         Slot[] slots = availableSlots.Where((s) => (s.directions & prefab.AttachTo) != 0).ToArray();
 
@@ -139,8 +140,6 @@ public class Body : MonoBehaviour
 
     IEnumerator EditModeCR(Action returnCallback, BodyPart prefab, Slot[] slots)
     {
-        prefab ??= defaultPart;
-
         Slot targetSlot;
         Direction targetDirection;
 
