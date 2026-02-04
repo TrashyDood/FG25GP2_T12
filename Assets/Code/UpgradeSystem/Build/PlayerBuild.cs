@@ -40,7 +40,7 @@ public class PlayerBuild
             return;
         }
 
-        // Add new weapon
+        // Add new weapon (logical only, no prefab)
         weapons.Add(new WeaponInstance
         {
             definition = def,
@@ -51,45 +51,19 @@ public class PlayerBuild
                 fireRate = def.baseStats.fireRate,
                 range = def.baseStats.range
             }
+            // weaponObject stays null until placed in EditMode
         });
     }
 
-    public void AddWeaponById(string weaponId, WeaponLibrary library, Transform playerTransform)
+    public void AddWeaponById(string weaponId, WeaponLibrary library)
     {
         WeaponDefinition def = library.GetWeapon(weaponId);
 
         if (def == null)
             return;
 
-        AddWeapon(def, playerTransform);
+        AddWeapon(def);
     }
 
-    public void AddWeapon(WeaponDefinition def, Transform playerTransform)
-    {
-        WeaponInstance existing = weapons.Find(w => w.definition == def);
-        if (existing != null)
-        {
-            existing.level++;
-            return;
-        }
 
-        BodyPart weaponGO = Object.Instantiate(def.weaponPrefab, playerTransform);
-        Transform firePoint = weaponGO.transform.Find("FirePoint");
-
-        WeaponInstance instance = new WeaponInstance
-        {
-            definition = def,
-            level = 1,
-            weaponObject = weaponGO,
-            firePoint = firePoint,
-            currentStats = new WeaponStats
-            {
-                damage = def.baseStats.damage,
-                fireRate = def.baseStats.fireRate,
-                range = def.baseStats.range
-            }
-        };
-
-        weapons.Add(instance);
-    }
 }

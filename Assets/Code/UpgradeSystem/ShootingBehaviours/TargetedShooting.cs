@@ -7,8 +7,17 @@ public class TargetedShotBehaviour : ShootingBehaviour
     public float projectileSpeed = 10f;
     public float maxRange = 15f;
 
-    public override void Shoot(WeaponInstance weapon, Transform firePoint)
+    public override void Shoot(WeaponInstance weapon)
     {
+
+        Transform firePoint = weapon.FirePoint;
+
+        if (firePoint == null)
+        {
+            Debug.LogWarning("FirePoint missing for TargetedShot!");
+            return;
+        }
+
         Enemy target = FindClosestEnemy(firePoint.position);
 
         if (target == null)
