@@ -274,10 +274,7 @@ public class UpgradeManager : MonoBehaviour
                     prefab
                 );
             }
-            else
-            {
-                GameManager.Instance.StateManager.SetState(GameState.Playing);
-            }
+     
         }
 
         choicesRoot.SetActive(false);
