@@ -164,7 +164,7 @@ public class StateManager
     }
 
     public void SetState<TEnum>(TEnum newState) where TEnum : Enum =>
-        CurrentState = states[Convert.ToInt32(newState)];
+        SetState(Convert.ToInt32(newState));
 
     public State GetState<TEnum>(TEnum state) where TEnum : Enum =>
         states[Convert.ToInt32(state)];
