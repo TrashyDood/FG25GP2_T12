@@ -12,6 +12,8 @@ public class WeaponInstance
 
     public float cooldownTimer;
 
-    public Transform firePoint;
+    //public Transform firePoint;
     public BodyPart weaponObject;
+
+    public Transform FirePoint => weaponObject != null ? weaponObject.transform.Find("FirePoint") : null;
 }

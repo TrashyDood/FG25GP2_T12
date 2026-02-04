@@ -13,9 +13,17 @@ public class SnakeBite : ShootingBehaviour
     [SerializeField]
     LayerMask enemyLayer;
 
-    public override void Shoot(WeaponInstance weapon, Transform firePoint)
+    public override void Shoot(WeaponInstance weapon)
     {
-        Vector3 start = firePoint.transform.position + firePoint.forward * forwardOffset;
+        Transform firePoint = weapon.FirePoint;
+
+        if (firePoint == null)
+        {
+            Debug.LogWarning("FirePoint not found for SnakeBite");
+            return;
+        }
+
+        Vector3 start = firePoint.position + firePoint.forward * forwardOffset;
         Vector3 end = start * maxRange;
 
         Collider[] enemyColliders = Physics.OverlapCapsule(start, end, capsuleRadius, enemyLayer);

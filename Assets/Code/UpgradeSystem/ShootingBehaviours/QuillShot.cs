@@ -7,25 +7,26 @@ public class QuillShot : ShootingBehaviour
     public float projectileSpeed = 40f;
     public int basePierceCount = 3;
 
-    public override void Shoot(WeaponInstance weapon, Transform firePoint)
+    public override void Shoot(WeaponInstance weapon)
     {
-        //Debug.Log();
+        if (weapon.FirePoint == null)
+        {
+            Debug.LogWarning("FirePoint not found!");
+            return;
+        }
+
         GameObject proj = Instantiate(
             projectilePrefab,
-            firePoint.position,
-            firePoint.rotation
+            weapon.FirePoint.position,
+            weapon.FirePoint.rotation
         );
 
-        Projectile projectile =
-            proj.GetComponent<Projectile>();
-
+        Projectile projectile = proj.GetComponent<Projectile>();
         projectile.Initialize(
-            firePoint.forward,
+            weapon.FirePoint.forward,
             projectileSpeed,
-            weapon.currentStats.damage,  
+            weapon.currentStats.damage,
             basePierceCount
         );
-
-        Debug.Log("SHOT QUILL");
     }
 }
