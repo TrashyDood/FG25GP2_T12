@@ -13,6 +13,11 @@ public class AddWeaponEffect : UpgradeEffect
     // Adds the weapon to the players build
     public override void Apply(PlayerBuild build)
     {
+        if(weapon == null)
+        {
+            Debug.LogError("AddWeaponEffect has null weaponDef");
+        }
+
         build.AddWeapon(weapon);
     }
 }

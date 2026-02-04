@@ -4,31 +4,31 @@ using System.Collections.Generic;
 public class WeaponManager : MonoBehaviour
 {
     public WeaponLibrary weaponLibrary;
-    public Transform playerTransform;
+    public PlayerBuild playerBuild;
 
-    private PlayerBuild playerBuild;
-    private List<WeaponInstance> activeWeapons;
+    private List<WeaponInstance> activeWeapons => playerBuild.weapons;
 
     public string startingWeaponId = "Quill";
 
     private void Awake()
     {
-        playerBuild = new PlayerBuild();
-        activeWeapons = playerBuild.weapons;
+        if (playerBuild == null)
+            playerBuild = new PlayerBuild();
 
-        AddDefaultWeapon();
+        //AddDefaultWeapon();
     }
 
     private void Update()
     {
         UpdateCooldowns();
 
-        if (Input.GetMouseButtonDown(0)) // triggers only on the frame the button is pressed
+        if (Input.GetMouseButtonDown(0))
         {
             TryFireWeapons();
         }
     }
 
+    /*
     private void AddDefaultWeapon()
     {
         WeaponDefinition def = weaponLibrary.GetWeapon(startingWeaponId);
@@ -38,15 +38,13 @@ public class WeaponManager : MonoBehaviour
             return;
         }
 
-        BodyPart weaponGO = Instantiate(def.weaponPrefab, playerTransform);
-        Transform firePoint = weaponGO.transform.Find("FirePoint");
+        BodyPart weaponGO = Instantiate(def.weaponPrefab, Vector3.zero, Quaternion.identity);
 
         WeaponInstance instance = new WeaponInstance
         {
             definition = def,
             level = 1,
             weaponObject = weaponGO,
-            firePoint = firePoint,
             currentStats = new WeaponStats
             {
                 damage = def.baseStats.damage,
@@ -56,58 +54,27 @@ public class WeaponManager : MonoBehaviour
         };
 
         playerBuild.weapons.Add(instance);
-
-        Debug.Log($"Default weapon added: {def.weaponName}");
     }
+    */
 
     private void UpdateCooldowns()
     {
-        foreach (WeaponInstance weapon in activeWeapons)
-        {
+        foreach (var weapon in activeWeapons)
             weapon.cooldownTimer -= Time.deltaTime;
-        }
     }
 
     private void TryFireWeapons()
     {
-        foreach (WeaponInstance weapon in activeWeapons)
+        foreach (var weapon in activeWeapons)
         {
-            if (weapon.firePoint == null)
+            if (weapon.FirePoint == null)
                 continue;
 
-            
-
             if (weapon.cooldownTimer <= 0f)
-            {               
-                FireWeapon(weapon);
-                ResetCooldown(weapon);
-                DebugWeaponState(weapon);
+            {
+                weapon.definition.shootingBehaviour.Shoot(weapon);
+                weapon.cooldownTimer = weapon.currentStats.fireRate > 0 ? 1f / weapon.currentStats.fireRate : 1f;
             }
-
         }
-    }
-
-    private void FireWeapon(WeaponInstance weapon)
-    {
-        weapon.definition.shootingBehaviour?.Shoot(
-            weapon,
-            weapon.firePoint
-        );
-    }
-
-    private void ResetCooldown(WeaponInstance weapon)
-    {
-        float fireRate = weapon.currentStats.fireRate;
-        weapon.cooldownTimer = fireRate > 0f ? 1f / fireRate : 1f;
-    }
-
-    private void DebugWeaponState(WeaponInstance weapon)
-    {
-        Debug.Log(
-            $"[WEAPON FIRED] {weapon.definition.weaponName} | " +
-            $"DMG: {weapon.currentStats.damage} | " +
-            $"FR: {weapon.currentStats.fireRate} | " +
-            $"CD RESET"
-        );
     }
 }

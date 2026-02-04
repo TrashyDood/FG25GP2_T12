@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
-using static VoxelBody;
 
 public class Body : MonoBehaviour
 {
@@ -25,6 +24,8 @@ public class Body : MonoBehaviour
     Dictionary<Vector3Int, BodyPart> bodyParts = new();
     List<Slot> availableSlots = new();
 
+    public BodyPart CentralPart { get; private set; }
+
     static readonly Dictionary<Vector3Int, Direction> dirToOrientation = new()
     {
          { Vector3Int.right, Direction.Right },
@@ -37,28 +38,125 @@ public class Body : MonoBehaviour
 
     private void Awake()
     {
-        AddPart(new(0, 0, 0));
+        CentralPart = AddPart(new(0, 0, 0), defaultPart);
     }
 
-    public bool AddPart(Vector3Int coords, Direction orientation = Direction.Forward, BodyPart prefab = null)
+    public BodyPart AddPart(Vector3Int coords, BodyPart prefab, Direction orientation = Direction.Forward)
     {
-        if (bodyParts.ContainsKey(coords))
-            return false;
+        if (bodyParts.ContainsKey(coords) || prefab == null)
+            return null;
 
-        BodyPart part = Instantiate(prefab ?? defaultPart, transform);
-        bodyParts[coords] = part;
-        part.Initialize(this, coords, orientation);
-        part.transform.localPosition = coords;
+        BodyPart bodyPart = Instantiate(prefab, transform);
+        bodyParts[coords] = bodyPart;
+        bodyPart.Initialize(this, coords, orientation);
+        bodyPart.transform.localPosition = coords;
 
         UpdateAvailableSlots();
 
-        return true;
+        return bodyPart;
     }
 
     public bool IsValid(Vector3Int coords) =>
         coords.x > -1 && coords.x < size.x && coords.y > -1 && coords.y < size.y && coords.z > -1 && coords.z < size.z;
 
-    public bool TryGetSlotAndOrientation(Camera camera, Slot[] slots, out Slot slot, out Direction orientation)
+    public IEnumerable<Slot> GetValidSlots(BodyPart bodyPart)
+    {
+        foreach (Slot slot in availableSlots)
+            if ((slot.directions & bodyPart.AttachTo) != 0)
+                yield return slot;
+    }
+
+    public bool EnterEditMode(Action returnCallback, BodyPart prefab = null, Slot[] validSlots = null)
+    {
+        prefab ??= defaultPart;
+        validSlots ??= GetValidSlots(prefab).ToArray();
+
+        if (validSlots.Length > 0)
+        {
+            StartCoroutine(EditModeCR(returnCallback, prefab, validSlots));
+            return true;
+        }
+
+        return false;
+    }
+
+    IEnumerator EditModeCR(Action returnCallback, BodyPart prefab, Slot[] slots)
+    {
+        Slot targetSlot;
+        Direction targetDirection;
+
+        while (true) // EWWWWWWWW
+        {
+            #region RENDER_SLOTS
+            Matrix4x4[] slotMatrices = new Matrix4x4[slots.Length];
+            RenderParams rp = new RenderParams(slotMaterial)
+            {
+                worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000),
+                shadowCastingMode = ShadowCastingMode.Off
+            };
+
+            for (int i = 0; i < slotMatrices.Length; i++)
+                slotMatrices[i] = Matrix4x4.TRS(transform.TransformPoint(slots[i].coords), transform.rotation, Vector3.one * 0.25f);
+
+            // Render slots in batches of 1023
+            for (int i = 0; i < slotMatrices.Length; i += 1023)
+            {
+                int count = Mathf.Min(1023, slotMatrices.Length - i);
+                Matrix4x4[] batch = new Matrix4x4[count];
+                Array.Copy(slotMatrices, i, batch, 0, count);
+                Graphics.RenderMeshInstanced(rp, slotMesh, 0, batch);
+            }
+            #endregion
+
+            if (TryGetSlotAndOrientation(Camera.main, slots, out Slot slot, out Direction direction) && Input.GetMouseButtonDown(0))
+            {
+                targetSlot = slot;
+                targetDirection = direction;
+                break;
+            }
+
+            yield return null;
+        }
+
+        AddPart(targetSlot.coords, prefab, targetDirection);
+        returnCallback();
+    }
+
+    void UpdateAvailableSlots()
+    {
+        availableSlots.Clear();
+        Dictionary<Vector3Int, Slot> slotMap = new();
+
+        foreach (var kvp in bodyParts)
+        {
+            Vector3Int partCoords = kvp.Key;
+            BodyPart part = kvp.Value;
+
+            foreach (var (dir, orientation) in dirToOrientation)
+            {
+                Vector3Int slotCoords = partCoords + dir;
+
+                if (!IsValid(slotCoords) || bodyParts.ContainsKey(slotCoords) || (part.AttachFrom & orientation) == 0)
+                    continue;
+
+                if (!slotMap.TryGetValue(slotCoords, out Slot slot))
+                {
+                    slot = new Slot
+                    {
+                        coords = slotCoords,
+                        directions = Direction.None
+                    };
+                }
+
+                slot.directions |= orientation;
+                slotMap[slotCoords] = slot;
+            }
+        }
+
+        availableSlots.AddRange(slotMap.Values);
+    }
+
+    bool TryGetSlotAndOrientation(Camera camera, Slot[] slots, out Slot slot, out Direction orientation)
     {
         slot = default;
         orientation = Direction.None;
@@ -121,106 +219,6 @@ public class Body : MonoBehaviour
 
         orientation = bestDir;
         return true;
-    }
-
-    public bool EnterEditMode(Action returnCallback, BodyPart prefab = null)
-    {
-        // Filters slots with valid 'AttachTo'.
-        Slot[] slots = availableSlots.Where((s) => (s.directions & prefab.AttachTo) != 0).ToArray();
-
-        if (slots.Length > 0)
-        {
-            StartCoroutine(EditModeCR(returnCallback, prefab, slots));
-            return true;
-        }
-
-        return false;
-    }
-
-    IEnumerator EditModeCR(Action returnCallback, BodyPart prefab, Slot[] slots)
-    {
-        prefab ??= defaultPart;
-
-        Slot targetSlot;
-        Direction targetDirection;
-
-        while (true) // EWWWWWWWW
-        {
-            #region RENDER_SLOTS
-            Matrix4x4[] slotMatrices = new Matrix4x4[slots.Length];
-            RenderParams rp = new RenderParams(slotMaterial)
-            {
-                worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000),
-                shadowCastingMode = ShadowCastingMode.Off
-            };
-
-            for (int i = 0; i < slotMatrices.Length; i++)
-                slotMatrices[i] = Matrix4x4.TRS(transform.TransformPoint(slots[i].coords), transform.rotation, Vector3.one * 0.25f);
-
-            // Render slots in batches of 1023
-            for (int i = 0; i < slotMatrices.Length; i += 1023)
-            {
-                int count = Mathf.Min(1023, slotMatrices.Length - i);
-                Matrix4x4[] batch = new Matrix4x4[count];
-                Array.Copy(slotMatrices, i, batch, 0, count);
-                Graphics.RenderMeshInstanced(rp, slotMesh, 0, batch);
-            }
-            #endregion
-
-            if (TryGetSlotAndOrientation(Camera.main, slots, out Slot slot, out Direction direction) && Input.GetMouseButtonDown(0))
-            {
-                targetSlot = slot;
-                targetDirection = direction;
-                break;
-            }
-
-            yield return null;
-        }
-
-        Debug.Log(targetDirection + " " +  targetSlot.coords);
-        AddPart(targetSlot.coords, targetDirection, prefab);
-        returnCallback();
-    }
-
-    // Finds slots with valid 'AttachFrom'.
-    void UpdateAvailableSlots()
-    {
-        availableSlots.Clear();
-        Dictionary<Vector3Int, Slot> slotMap = new();
-
-        foreach (var kvp in bodyParts)
-        {
-            Vector3Int partCoords = kvp.Key;
-            BodyPart part = kvp.Value;
-
-            foreach (var (dir, orientation) in dirToOrientation)
-            {
-                Vector3Int slotCoords = partCoords + dir;
-
-                if (!IsValid(slotCoords))
-                    continue;
-
-                if (bodyParts.ContainsKey(slotCoords))
-                    continue;
-
-                if ((part.AttachFrom & orientation) == 0)
-                    continue;
-
-                if (!slotMap.TryGetValue(slotCoords, out Slot slot))
-                {
-                    slot = new Slot
-                    {
-                        coords = slotCoords,
-                        directions = Direction.None
-                    };
-                }
-
-                slot.directions |= orientation;
-                slotMap[slotCoords] = slot;
-            }
-        }
-
-        availableSlots.AddRange(slotMap.Values);
     }
 
     [Serializable]
