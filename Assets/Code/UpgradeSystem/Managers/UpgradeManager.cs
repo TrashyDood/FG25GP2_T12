@@ -13,6 +13,7 @@ public class UpgradeManager : MonoBehaviour
     public VoxelBody voxelBody;
     public Player player;
     public UpgradeLibrary upgradeLibrary;
+    public WeaponManager weaponManager;
 
     public object fixedChoice;
     public string fixedChoiceName = "Fixed Choice";
@@ -260,6 +261,12 @@ public class UpgradeManager : MonoBehaviour
 
     private void OnChoiceClicked(ChoiceCard card)
     {
+        if (card.payload is UpgradeDefinition upgrade)
+        {
+            weaponManager.playerBuild.ApplyUpgrade(upgrade);
+        }
+
+
         player.Body.EnterEditMode(() => { GameManager.Instance.StateManager.SetState(GameState.Playing); }, GetPrefab(card.payload as UpgradeDefinition));
 
         choicesRoot.SetActive(false);

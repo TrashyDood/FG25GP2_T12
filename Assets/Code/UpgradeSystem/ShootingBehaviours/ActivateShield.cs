@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Weapons/Shooting Behaviours/ActivateShield")]
 public class ActivateShield : ShootingBehaviour
 {
-    public override void Shoot(WeaponInstance weapon, Transform firePoint)
+    public override void Shoot(WeaponInstance weapon)
     {
         Shield shield = weapon.weaponObject.GetComponent<Shield>();
         if (shield == null)
