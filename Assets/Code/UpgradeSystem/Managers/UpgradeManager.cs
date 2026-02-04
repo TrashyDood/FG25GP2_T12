@@ -264,10 +264,21 @@ public class UpgradeManager : MonoBehaviour
         if (card.payload is UpgradeDefinition upgrade)
         {
             weaponManager.playerBuild.ApplyUpgrade(upgrade);
+
+            BodyPart prefab = GetPrefab(upgrade);
+
+            if (prefab != null)
+            {
+                player.Body.EnterEditMode(
+                    () => { GameManager.Instance.StateManager.SetState(GameState.Playing); },
+                    prefab
+                );
+            }
+            else
+            {
+                GameManager.Instance.StateManager.SetState(GameState.Playing);
+            }
         }
-
-
-        player.Body.EnterEditMode(() => { GameManager.Instance.StateManager.SetState(GameState.Playing); }, GetPrefab(card.payload as UpgradeDefinition));
 
         choicesRoot.SetActive(false);
     }

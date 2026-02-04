@@ -32,6 +32,7 @@ public class PlayerBuild
     // If the weapon already exists, level up weapon instead
     public void AddWeapon(WeaponDefinition def)
     {
+        /*
         // Check if player already has the weapon
         WeaponInstance existing = weapons.Find(w => w.definition == def);
         if (existing != null)
@@ -39,6 +40,7 @@ public class PlayerBuild
             existing.level++; // increase level if duplicate
             return;
         }
+        */
 
         // Add new weapon (logical only, no prefab)
         weapons.Add(new WeaponInstance
