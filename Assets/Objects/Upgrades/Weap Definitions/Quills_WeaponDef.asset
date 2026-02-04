@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47b0d772914d1394799601605e3e2e00, type: 3}
-  m_Name: Test_WeaponDef
+  m_Name: Quills_WeaponDef
   m_EditorClassIdentifier: Assembly-CSharp::WeaponDefinition
-  weaponName: test
+  weaponName: Quills
   weaponId: 65446
   icon: {fileID: 0}
   baseStats:
     damage: 0
     fireRate: 0
     range: 0
-  weaponPrefab: {fileID: 4847483082424459837, guid: b229aea47cc37be42b594a243c0186a4, type: 3}
+  weaponPrefab: {fileID: 4847483082424459837, guid: 6fae8e1e272260d47b5b264e52977383, type: 3}
   shootingBehaviour: {fileID: 0}

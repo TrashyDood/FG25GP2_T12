@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7295234151877927221}
   - component: {fileID: 8402751751709856836}
   - component: {fileID: 4847483082424459837}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Eye_BodyPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,6 +81,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7295234151877927221}
     m_Modifications:
+    - target: {fileID: 6404579363386276367, guid: 036cc6b3eef5b554b8e7c8e68fb26581, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7267693017737058509, guid: 036cc6b3eef5b554b8e7c8e68fb26581, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -124,6 +128,10 @@ PrefabInstance:
     - target: {fileID: 7732736434274897723, guid: 036cc6b3eef5b554b8e7c8e68fb26581, type: 3}
       propertyPath: m_Name
       value: Mass_Center_Empty
+      objectReference: {fileID: 0}
+    - target: {fileID: 7732736434274897723, guid: 036cc6b3eef5b554b8e7c8e68fb26581, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

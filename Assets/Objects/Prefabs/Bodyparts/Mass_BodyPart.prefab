@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 114394099492417770}
   - component: {fileID: 7046461945206368803}
   - component: {fileID: 4788076387273759160}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Mass_BodyPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,6 +128,14 @@ PrefabInstance:
     - target: {fileID: 8016439173901622261, guid: d784cb14f186a154f865dede1bd30cc4, type: 3}
       propertyPath: m_Name
       value: Mass_Empty
+      objectReference: {fileID: 0}
+    - target: {fileID: 8016439173901622261, guid: d784cb14f186a154f865dede1bd30cc4, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8806117169421848936, guid: d784cb14f186a154f865dede1bd30cc4, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
