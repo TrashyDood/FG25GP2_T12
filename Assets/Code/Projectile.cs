@@ -7,12 +7,10 @@ public class Projectile : MonoBehaviour
 
     Ray ray;
     Vector3 direction;
-
+    int pierceRemaining;
     float speed,
         damage,
         width = 0.1f;
-
-    int pierceRemaining;
 
     private void Awake()
     {
@@ -63,7 +61,7 @@ public class Projectile : MonoBehaviour
             }
 
             // Maybe needed?
-            transform.position = hitInfo.point + direction * 0.05f;
+            //transform.position = hitInfo.point + direction * 0.05f;
 
         }
         else
