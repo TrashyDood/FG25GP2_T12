@@ -42,6 +42,11 @@ public class PlayerBuild
         }
         */
 
+        if (def == null)
+        {
+            Debug.LogError("PlayerBuild.AddWeapon called with null WeaponDef");
+        }
+
         // Add new weapon (logical only, no prefab)
         weapons.Add(new WeaponInstance
         {

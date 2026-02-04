@@ -264,9 +264,22 @@ public class UpgradeManager : MonoBehaviour
         if (card.payload is UpgradeDefinition upgrade)
         {
             weaponManager.playerBuild.ApplyUpgrade(upgrade);
+        }
+
+
+        player.Body.EnterEditMode(() => { GameManager.Instance.StateManager.SetState(GameState.Playing); }, GetPrefab(card.payload as UpgradeDefinition));
+
+        choicesRoot.SetActive(false);
+    }
+
+    /*
+    private void OnChoiceClicked(ChoiceCard card)
+    {
+        if (card.payload is UpgradeDefinition upgrade)
+        {
+            weaponManager.playerBuild.ApplyUpgrade(upgrade);
 
             BodyPart prefab = GetPrefab(upgrade);
-
             if (prefab != null)
             {
                 player.Body.EnterEditMode(
@@ -274,11 +287,15 @@ public class UpgradeManager : MonoBehaviour
                     prefab
                 );
             }
-     
+            else
+            {
+                GameManager.Instance.StateManager.SetState(GameState.Playing);
+            }
         }
 
         choicesRoot.SetActive(false);
     }
+    */
 
     public BodyPart GetPrefab(UpgradeDefinition upgrade)
     {
