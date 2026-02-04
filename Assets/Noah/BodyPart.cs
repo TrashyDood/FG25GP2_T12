@@ -10,6 +10,8 @@ public class BodyPart : MonoBehaviour
     [SerializeField]
     Vector3Int size = Vector3Int.one;
 
+    BodyPart[] neighbours = new BodyPart[6];
+
     public Direction AttachTo => attachTo;
     public Direction AttachFrom => attachFrom;
     public Body Body { get; private set; }

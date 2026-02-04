@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b6f705b1ae568142a761f2c36e34585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BodyPart
-  attachTo: -1
+  attachTo: 27
   attachFrom: 0
   size: {x: 1, y: 1, z: 1}
 --- !u!1 &8972691399668447978

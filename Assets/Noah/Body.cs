@@ -58,9 +58,6 @@ public class Body : MonoBehaviour
     public bool IsValid(Vector3Int coords) =>
         coords.x > -1 && coords.x < size.x && coords.y > -1 && coords.y < size.y && coords.z > -1 && coords.z < size.z;
 
-    public void EnterEditMode(Action returnCallback, BodyPart part = null) =>
-        StartCoroutine(EditModeCR(returnCallback, part));
-
     public bool TryGetSlotAndOrientation(Camera camera, Slot[] slots, out Slot slot, out Direction orientation)
     {
         slot = default;
@@ -126,18 +123,31 @@ public class Body : MonoBehaviour
         return true;
     }
 
-    IEnumerator EditModeCR(Action returnCallback, BodyPart prefab)
+    public bool EnterEditMode(Action returnCallback, BodyPart prefab = null)
+    {
+        // Filters slots with valid 'AttachTo'.
+        Slot[] slots = availableSlots.Where((s) => (s.directions & prefab.AttachTo) != 0).ToArray();
+
+        if (slots.Length > 0)
+        {
+            StartCoroutine(EditModeCR(returnCallback, prefab, slots));
+            return true;
+        }
+
+        return false;
+    }
+
+    IEnumerator EditModeCR(Action returnCallback, BodyPart prefab, Slot[] slots)
     {
         prefab ??= defaultPart;
 
-        Slot[] validSlots = availableSlots.Where((s) => (s.directions & prefab.AttachTo) != 0).ToArray();
         Slot targetSlot;
         Direction targetDirection;
 
         while (true) // EWWWWWWWW
         {
             #region RENDER_SLOTS
-            Matrix4x4[] slotMatrices = new Matrix4x4[validSlots.Length];
+            Matrix4x4[] slotMatrices = new Matrix4x4[slots.Length];
             RenderParams rp = new RenderParams(slotMaterial)
             {
                 worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000),
@@ -145,7 +155,7 @@ public class Body : MonoBehaviour
             };
 
             for (int i = 0; i < slotMatrices.Length; i++)
-                slotMatrices[i] = Matrix4x4.TRS(transform.TransformPoint(validSlots[i].coords), transform.rotation, Vector3.one * 0.25f);
+                slotMatrices[i] = Matrix4x4.TRS(transform.TransformPoint(slots[i].coords), transform.rotation, Vector3.one * 0.25f);
 
             // Render slots in batches of 1023
             for (int i = 0; i < slotMatrices.Length; i += 1023)
@@ -157,7 +167,7 @@ public class Body : MonoBehaviour
             }
             #endregion
 
-            if (TryGetSlotAndOrientation(Camera.main, validSlots, out Slot slot, out Direction direction) && Input.GetMouseButtonDown(0))
+            if (TryGetSlotAndOrientation(Camera.main, slots, out Slot slot, out Direction direction) && Input.GetMouseButtonDown(0))
             {
                 targetSlot = slot;
                 targetDirection = direction;
@@ -172,6 +182,7 @@ public class Body : MonoBehaviour
         returnCallback();
     }
 
+    // Finds slots with valid 'AttachFrom'.
     void UpdateAvailableSlots()
     {
         availableSlots.Clear();
