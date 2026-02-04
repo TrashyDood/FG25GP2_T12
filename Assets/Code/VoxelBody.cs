@@ -22,8 +22,8 @@ public class VoxelBody : MonoBehaviour
     [SerializeField]
     bool renderSlots;
 
-    BodyPart[] bodyCubes;
-    List<BodyPart> parts = new();
+    Part[] bodyParts;
+    List<Part> parts = new();
     List<Vector3Int> slots = new();
     List<Matrix4x4> cubeMatrices = new(),
         slotMatrices = new();
@@ -36,7 +36,7 @@ public class VoxelBody : MonoBehaviour
 
     private void Awake()
     {
-        bodyCubes = new BodyPart[size.x * size.y * size.z];
+        bodyParts = new Part[size.x * size.y * size.z];
         cuberRenderParams = new RenderParams(cubeMaterial)
         {
             worldBounds = new Bounds(Vector3.zero, Vector3.one * 1000),
@@ -63,19 +63,19 @@ public class VoxelBody : MonoBehaviour
             Graphics.RenderMeshInstanced(cuberRenderParams, cubeMesh, 0, cubeMatrices, Mathf.Min(1023, parts.Count - i), i);
     }
 
-    public void EnterEditMode(Action onSlotFilledCallback, UpgradeDefinition upgrade = null) =>
-        StartCoroutine(EditModeCR(onSlotFilledCallback, upgrade));
+    public void EnterEditMode(Action onSlotFilledCallback, GameObject prefab = null) =>
+        StartCoroutine(EditModeCR(onSlotFilledCallback, prefab));
 
     public void AddCube(Vector3Int coords)
     {
         if (!IsValid(coords)) return;
 
         int index = GetIndex(coords);
-        if (bodyCubes[index] != null)
+        if (bodyParts[index] != null)
             return;
 
         cubeMatrices.Add(new());
-        parts.Add(bodyCubes[index] = new()
+        parts.Add(bodyParts[index] = new()
         {
             coords = coords
         });
@@ -83,10 +83,17 @@ public class VoxelBody : MonoBehaviour
         FindSlots();
     }
 
-    public BodyPart GetCube(Vector3Int coords)
+    public void AddPart(Vector3Int coords, Part part = null)
+    {
+        if (!IsValid(coords)) return;
+
+        int index = GetIndex(coords);
+    }
+
+    public Part GetCube(Vector3Int coords)
     {
         int index = GetIndex(coords);
-        return IsValid(coords) ? bodyCubes[index] : null;
+        return IsValid(coords) ? bodyParts[index] : null;
     }
 
     public Vector3 GetWorldPos(Vector3Int coords) =>
@@ -151,11 +158,11 @@ public class VoxelBody : MonoBehaviour
         }
     }
 
-    IEnumerator EditModeCR(Action onSlotFilledCallback, UpgradeDefinition upgrade = null)
+    IEnumerator EditModeCR(Action onSlotFilledCallback, GameObject prefab = null)
     {
-        Vector3Int coord;
-
-        while (!(Input.GetMouseButtonDown(0) && GetSlotFromCursor(Camera.main, Input.mousePosition, out coord)))
+        Vector3Int coords;
+        
+        while (!(Input.GetMouseButtonDown(0) && GetSlotFromCursor(Camera.main, Input.mousePosition, out coords)))
         {
             // Slot Matrices
             for (int i = 0; i < slotMatrices.Count; i++)
@@ -168,23 +175,13 @@ public class VoxelBody : MonoBehaviour
             yield return null;
         }
 
-        if (upgrade == null)
-            AddCube(coord);
-        else // Add Bodypart
-        {
-
-        }
+        AddPart(coords);
 
         onSlotFilledCallback();
     }
-}
 
-public class BodyPart
-{
-    public Vector3Int coords;
-
-    public BodyPart()
+    public class Part
     {
-
+        public Vector3Int coords;
     }
 }

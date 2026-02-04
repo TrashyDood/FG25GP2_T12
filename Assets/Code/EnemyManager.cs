@@ -6,11 +6,11 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField]
-    EnemyPool enemyPool;
-    [SerializeField]
     Transform spawnCenter;
     [SerializeField]
     EnemySpawnConfig config;
+    [SerializeField]
+    EnemyPool enemyPool;
     [SerializeField]
     EnemyData[] enemyData;
 
@@ -58,13 +58,13 @@ public class EnemyManager : MonoBehaviour
 
         return enemy;
     }
+
     EnemyData DetermineData()
     {
         int index = UnityEngine.Random.Range(0, enemyData.Length);
 
         return enemyData[index];
     }
-
 
     IEnumerator SpawnEnemies(float duration, int count)
     {
@@ -86,10 +86,10 @@ public class EnemyPool : ComponentPool<Enemy>
 {
     public Transform parent;
 
-    public Enemy FetchEnemy(EnemyData data = null)
+    public Enemy FetchEnemy(EnemyData data)
     {
         Enemy enemy = FetchObject();
-        enemy.SetData(data);
+        enemy.Data = data;
 
         return enemy;
     }

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Movement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     float speed = 10,
@@ -46,7 +46,7 @@ public class Movement : MonoBehaviour
             targetVelocity,
             ((currentVelocity.sqrMagnitude > targetVelocity.sqrMagnitude) ? deceleration : acceleration) * Time.fixedDeltaTime);
 
-        rigidBody.Move(transform.position + currentVelocity * Time.fixedDeltaTime, Quaternion.LookRotation(currentVelocity + transform.position));
+        rigidBody.Move(transform.position + currentVelocity * Time.fixedDeltaTime, Quaternion.identity);
     }
 
     public void OnMove(InputValue value)

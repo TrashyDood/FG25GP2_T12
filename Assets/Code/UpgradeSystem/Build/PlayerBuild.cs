@@ -73,7 +73,7 @@ public class PlayerBuild
             return;
         }
 
-        GameObject weaponGO = Object.Instantiate(def.weaponPrefab, playerTransform);
+        BodyPart weaponGO = Object.Instantiate(def.weaponPrefab, playerTransform);
         Transform firePoint = weaponGO.transform.Find("FirePoint");
 
         WeaponInstance instance = new WeaponInstance

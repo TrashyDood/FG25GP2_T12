@@ -260,45 +260,25 @@ public class UpgradeManager : MonoBehaviour
 
     private void OnChoiceClicked(ChoiceCard card)
     {
-        /*
-        if (card.payload is UpgradeDefinition upgrade)
-        {
-            voxelBody.GetUpgrade(upgrade);
-        }
-        else
-        {
-            voxelBody.GetUpgrade(null); // fixed choice
-        }
-        */
-
-        
-
-        player.Body.EnterEditMode(() => { GameManager.Instance.StateManager.SetState(GameState.Playing); }, card.payload as UpgradeDefinition);
+        player.Body.EnterEditMode(() => { GameManager.Instance.StateManager.SetState(GameState.Playing); }, GetPrefab(card.payload as UpgradeDefinition));
 
         choicesRoot.SetActive(false);
     }
 
-    public void GetUpgrade(UpgradeDefinition upgrade)
+    public BodyPart GetPrefab(UpgradeDefinition upgrade)
     {
-        /*
-        if(upgrade == null)
+        if (upgrade == null) return null;
+        
+        foreach (UpgradeEffect effect in upgrade.effects)
         {
-            //FixedChoice
-        }
-        else
-        {
-            foreach (UpgradeEffect effect in upgrade.effects)
+            if (effect is AddWeaponEffect addWeapon)
             {
-                if (effect is AddWeaponEffect addWeapon)
-                {
-                    GameObject prefab = addWeapon.weapon.prefab;
-
-                    //EnterBuildMode(prefab);
-                    return;
-                }
+                BodyPart prefab = addWeapon.weapon.weaponPrefab;
+                return prefab;
             }
         }
-        */
+        
+        return null;
     }
 
     public void EnterUpgradeState()

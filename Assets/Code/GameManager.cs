@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
             new(), // Paused
             new() // Upgrading
             {
-                onEnterCallback = (state) => { Time.timeScale = 1; },
+                onEnterCallback = (state) => { Time.timeScale = 0; },
                 onExitCallback = (state) => { Time.timeScale = 1; }
             },
             new(), // Dead
@@ -43,11 +43,14 @@ public class GameManager : MonoBehaviour
         StateManager.SetState(GameState.Playing);
     }
 
-    private void Update() =>
+    private void FixedUpdate() =>
         stateManager.Evaluate(Time.fixedDeltaTime);
 
     public void SetState(int state) =>
         stateManager.SetState(state);
+
+    public CallbackState GetCBState(GameState state) =>
+        (CallbackState)stateManager.GetState(state);
 }
 
 public enum GameState
@@ -104,7 +107,7 @@ public class StateManager
     [SerializeField]
     int currentIndex = -1;
 
-    List<State> states = new();
+    List<State> states;
     State currentState;
 
     public event Action<State> OnStateChanged;
@@ -114,6 +117,8 @@ public class StateManager
         if (states != null)
             this.states = states.ToList();
     }
+
+    public StateManager() => states = new();
 
     public State CurrentState
     {
