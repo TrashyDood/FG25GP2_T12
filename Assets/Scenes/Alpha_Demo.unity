@@ -2363,6 +2363,7 @@ MonoBehaviour:
   voxelBody: {fileID: 0}
   player: {fileID: 4462133793604444455}
   upgradeLibrary: {fileID: 11400000, guid: 5b6fe93d991a48442aa139251cdf3f8a, type: 2}
+  weaponManager: {fileID: 0}
   fixedChoiceName: Fixed Choice
   fixedChoiceDescription: 
   fixedChoiceIcon: {fileID: 0}
@@ -2661,7 +2662,8 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8705035447532630953, guid: b68d2b976c85a184b87590630a600616, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b68d2b976c85a184b87590630a600616, type: 3}

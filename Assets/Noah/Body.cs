@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -23,9 +22,11 @@ public class Body : MonoBehaviour
     Mesh slotMesh;
 
     Dictionary<Vector3Int, BodyPart> bodyParts = new();
-    Slot[] availableSlots, validSlots;
+    List<Slot> availableSlots = new();
 
-    public static readonly Dictionary<Vector3Int, Direction> dirToOrientation = new()
+    public BodyPart CentralPart { get; private set; }
+
+    static readonly Dictionary<Vector3Int, Direction> dirToOrientation = new()
     {
          { Vector3Int.right, Direction.Right },
          { Vector3Int.left, Direction.Left },
@@ -37,33 +38,38 @@ public class Body : MonoBehaviour
 
     private void Awake()
     {
-        AddPart(new(0, 0, 0));
+        CentralPart = AddPart(new(0, 0, 0), defaultPart);
     }
 
-    public BodyPart AddPart(Vector3Int coords, Direction orientation = Direction.Forward, BodyPart prefab = null)
+    public BodyPart AddPart(Vector3Int coords, BodyPart prefab, Direction orientation = Direction.Forward)
     {
         if (bodyParts.ContainsKey(coords) || prefab == null)
             return null;
 
-        BodyPart bodypart = Instantiate(prefab, transform);
-        bodyParts[coords] = bodypart;
-        bodypart.Initialize(this, coords, orientation);
-        bodypart.transform.localPosition = coords;
+        BodyPart bodyPart = Instantiate(prefab, transform);
+        bodyParts[coords] = bodyPart;
+        bodyPart.Initialize(this, coords, orientation);
+        bodyPart.transform.localPosition = coords;
 
-        availableSlots = GetAvailableSlots().ToArray();
+        UpdateAvailableSlots();
 
-        return bodypart;
+        return bodyPart;
     }
 
     public bool IsValid(Vector3Int coords) =>
         coords.x > -1 && coords.x < size.x && coords.y > -1 && coords.y < size.y && coords.z > -1 && coords.z < size.z;
 
-    public Slot[] GetValidSlots(BodyPart bodyPart) => FilterValidSlots(availableSlots, bodyPart).ToArray();
+    public IEnumerable<Slot> GetValidSlots(BodyPart bodyPart)
+    {
+        foreach (Slot slot in availableSlots)
+            if ((slot.directions & bodyPart.AttachTo) != 0)
+                yield return slot;
+    }
 
     public bool EnterEditMode(Action returnCallback, BodyPart prefab = null, Slot[] validSlots = null)
     {
         prefab ??= defaultPart;
-        validSlots ??= FilterValidSlots(availableSlots, prefab).ToArray();
+        validSlots ??= GetValidSlots(prefab).ToArray();
 
         if (validSlots.Length > 0)
         {
@@ -72,51 +78,6 @@ public class Body : MonoBehaviour
         }
 
         return false;
-    }
-
-    IEnumerable<Slot> FilterValidSlots(IEnumerable<Slot> slots, BodyPart bodyPart)
-    {
-        foreach (Slot slot in slots)
-            if ((slot.directions & bodyPart.AttachTo) != 0)
-                yield return slot;
-    }
-
-    IEnumerable<Slot> GetAvailableSlots()
-    {
-        Dictionary<Vector3Int, Slot> slotMap = new();
-
-        foreach (var kvp in bodyParts)
-        {
-            Vector3Int partCoords = kvp.Key;
-            BodyPart part = kvp.Value;
-
-            foreach (var (dir, orientation) in dirToOrientation)
-            {
-                Vector3Int slotCoords = partCoords + dir;
-
-                if (!IsValid(slotCoords))
-                    continue;
-
-                if (bodyParts.ContainsKey(slotCoords))
-                    continue;
-
-                if ((part.AttachFrom & orientation) == 0)
-                    continue;
-
-                if (!slotMap.TryGetValue(slotCoords, out Slot slot))
-                {
-                    slot = new Slot
-                    {
-                        coords = slotCoords,
-                        directions = Direction.None
-                    };
-                }
-
-                slot.directions |= orientation;
-                slotMap[slotCoords] = slot;
-                yield return slot;
-            }
-        }
     }
 
     IEnumerator EditModeCR(Action returnCallback, BodyPart prefab, Slot[] slots)
@@ -157,9 +118,42 @@ public class Body : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log(targetDirection + " " +  targetSlot.coords);
-        AddPart(targetSlot.coords, targetDirection, prefab);
+        AddPart(targetSlot.coords, prefab, targetDirection);
         returnCallback();
+    }
+
+    void UpdateAvailableSlots()
+    {
+        availableSlots.Clear();
+        Dictionary<Vector3Int, Slot> slotMap = new();
+
+        foreach (var kvp in bodyParts)
+        {
+            Vector3Int partCoords = kvp.Key;
+            BodyPart part = kvp.Value;
+
+            foreach (var (dir, orientation) in dirToOrientation)
+            {
+                Vector3Int slotCoords = partCoords + dir;
+
+                if (!IsValid(slotCoords) || bodyParts.ContainsKey(slotCoords) || (part.AttachFrom & orientation) == 0)
+                    continue;
+
+                if (!slotMap.TryGetValue(slotCoords, out Slot slot))
+                {
+                    slot = new Slot
+                    {
+                        coords = slotCoords,
+                        directions = Direction.None
+                    };
+                }
+
+                slot.directions |= orientation;
+                slotMap[slotCoords] = slot;
+            }
+        }
+
+        availableSlots.AddRange(slotMap.Values);
     }
 
     bool TryGetSlotAndOrientation(Camera camera, Slot[] slots, out Slot slot, out Direction orientation)

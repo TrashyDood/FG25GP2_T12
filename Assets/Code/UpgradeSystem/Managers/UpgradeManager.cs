@@ -266,7 +266,6 @@ public class UpgradeManager : MonoBehaviour
             weaponManager.playerBuild.ApplyUpgrade(upgrade);
         }
 
-
         player.Body.EnterEditMode(() => { GameManager.Instance.StateManager.SetState(GameState.Playing); }, GetPrefab(card.payload as UpgradeDefinition));
 
         choicesRoot.SetActive(false);
