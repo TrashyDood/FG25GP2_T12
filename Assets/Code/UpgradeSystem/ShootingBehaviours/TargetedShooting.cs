@@ -3,59 +3,41 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Weapons/Shooting Behaviours/Targeted Shot")]
 public class TargetedShotBehaviour : ShootingBehaviour
 {
-    public GameObject projectilePrefab;
-    public float projectileSpeed = 5f;
-    public float maxRange = 15f;
+    [Header("Projectile Settings")]
+    public Projectile projectilePrefab;   // Must have your Projectile component
+    public float projectileSpeed = 24f;  // Speed of the projectile
+    public float maxRange = 15f;         // Maximum targeting range
 
     public override void Shoot(WeaponInstance weapon)
     {
-
-        Transform firePoint = weapon.FirePoint;
-
-        if (firePoint == null)
+        if (weapon.FirePoint == null || projectilePrefab == null)
         {
-            Debug.LogWarning("FirePoint missing for TargetedShot!");
+            Debug.LogWarning($"{weapon.definition.weaponName} missing FirePoint or projectilePrefab");
             return;
         }
 
-        Enemy target = FindClosestEnemy(firePoint.position);
+        Enemy target = FindClosestEnemy(weapon.FirePoint.position);
+        if (target == null) return;
 
-        if (target == null)
-            return;
+        Vector3 direction = (target.transform.position - weapon.FirePoint.position).normalized;
 
-        Vector3 direction =
-            (target.transform.position - firePoint.position).normalized;
+        Projectile proj = Instantiate(projectilePrefab, weapon.FirePoint.position, Quaternion.LookRotation(direction));
 
-        Quaternion rotation = Quaternion.LookRotation(direction);
-
-        GameObject projectile = Instantiate(
-            projectilePrefab,
-            firePoint.position,
-            rotation
-        );
-
-        Rigidbody rb = projectile.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.linearVelocity = direction * projectileSpeed;
-        }
+        proj.Initialize(direction, projectileSpeed, weapon.currentStats.damage);
     }
 
     private Enemy FindClosestEnemy(Vector3 origin)
     {
         Enemy[] enemies = Object.FindObjectsOfType<Enemy>();
-
         Enemy closest = null;
-        float closestDist = maxRange * maxRange;
+        float closestDistSq = maxRange * maxRange;
 
         foreach (Enemy enemy in enemies)
         {
-            float dist =
-                (enemy.transform.position - origin).sqrMagnitude;
-
-            if (dist < closestDist)
+            float distSq = (enemy.transform.position - origin).sqrMagnitude;
+            if (distSq <= closestDistSq)
             {
-                closestDist = dist;
+                closestDistSq = distSq;
                 closest = enemy;
             }
         }
