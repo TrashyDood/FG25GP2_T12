@@ -10,11 +10,13 @@ public class Player : MonoBehaviour
         maxHealth = 100;
     [SerializeField]
     FillbarUI healthBar;
+    [SerializeField]
+    PlayerBuild build;
 
     PlayerInput input;
     Body body;
 
-    public Body Body { get; private set; }
+    public Body Body => body;
     public float MaxHealth => maxHealth;
     public float Health
     {
@@ -28,8 +30,12 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        Body = GetComponent<Body>();
+        body = GetComponent<Body>();
         input = GetComponent<PlayerInput>();
+
+        build = new PlayerBuild();
+        build.stats = new StatCollection();
+        build.stats.SetBaseStat(StatType.Speed, 10f);
     }
 
     private void Start()
