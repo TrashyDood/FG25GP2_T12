@@ -36,11 +36,9 @@ public class WeaponManager : MonoBehaviour
 
         UpdateCooldowns();
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log($"Active weapons: {activeWeapons.Count}");
-            TryFireWeapons();
-        }
+
+        TryFireWeapons();
+        
     }
 
     private void UpdateCooldowns()

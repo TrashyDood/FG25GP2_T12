@@ -20,4 +20,4 @@ MonoBehaviour:
     fireRate: 0
     range: 0
   weaponPrefab: {fileID: 4847483082424459837, guid: b229aea47cc37be42b594a243c0186a4, type: 3}
-  shootingBehaviour: {fileID: 0}
+  shootingBehaviour: {fileID: 11400000, guid: 6cf5f74173735b3478085506362d5334, type: 2}
