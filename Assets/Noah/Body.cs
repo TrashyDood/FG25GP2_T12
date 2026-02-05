@@ -60,10 +60,10 @@ public class Body : MonoBehaviour
 
 
         // Milton added this, remove and let me know if this breaks something
-        if (player?.build != null)
+        if (player?.Build != null)
         {
             // Find a WeaponInstance that matches this prefab's definition and doesn't have a weaponObject yet
-            WeaponInstance instance = player.build.weapons
+            WeaponInstance instance = player.Build.weapons
                 .Find(w => w.definition.weaponPrefab == prefab && w.weaponObject == null);
 
             if (instance != null)
