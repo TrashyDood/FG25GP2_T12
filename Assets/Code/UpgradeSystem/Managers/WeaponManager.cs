@@ -25,6 +25,7 @@ public class WeaponManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log($"Active weapons: {activeWeapons.Count}");
             TryFireWeapons();
         }
     }
@@ -69,7 +70,10 @@ public class WeaponManager : MonoBehaviour
         foreach (var weapon in activeWeapons)
         {
             if (weapon.FirePoint == null)
+            {
+                Debug.LogError($"{weapon.definition.name} has no FirePoint!");
                 continue;
+            }
 
             if (weapon.cooldownTimer <= 0f)
             {

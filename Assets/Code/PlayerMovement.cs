@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(speed);
+        
         currentVelocity = Vector3.MoveTowards(currentVelocity,
             targetVelocity,
             ((currentVelocity.sqrMagnitude > targetVelocity.sqrMagnitude) ? deceleration : acceleration) * Time.fixedDeltaTime);

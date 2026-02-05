@@ -4,6 +4,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Body))]
 public class Player : MonoBehaviour
 {
+    public PlayerBuild build;
+
     [SerializeField]
     float currentHealth,
         maxHealth = 100;
@@ -26,6 +28,10 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Body = GetComponent<Body>();
+
+        build = new PlayerBuild();
+        build.stats = new StatCollection();
+        build.stats.SetBaseStat(StatType.Speed, 10f);
     }
 
     private void Start()
