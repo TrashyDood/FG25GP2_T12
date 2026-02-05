@@ -2,10 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Rendering;
+using UnityEngine.InputSystem.EnhancedTouch;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 [RequireComponent(typeof(Player))]
 public class Body : MonoBehaviour
@@ -106,6 +106,7 @@ public class Body : MonoBehaviour
     {
         Slot targetSlot;
         Direction targetDirection;
+        Touch touch;
 
         while (true) // EWWWWWWWW
         {
@@ -130,11 +131,22 @@ public class Body : MonoBehaviour
             }
             #endregion
 
-            if (TryGetSlotAndOrientation(Camera.main, slots, out Slot slot, out Direction direction) && Input.GetMouseButtonDown(0))
+            if (Touch.activeTouches.Count > 0)
             {
-                targetSlot = slot;
-                targetDirection = direction;
-                break;
+                touch = Touch.activeTouches[0]; // First touch
+
+                Vector2 touchPosition = touch.screenPosition;
+
+                // Check touch phase
+                if (touch.phase == UnityEngine.InputSystem.TouchPhase.Began)
+                {
+                    if (TryGetSlotAndOrientation(Camera.main, slots, out Slot slot, out Direction direction, touch.screenPosition))
+                    {
+                        targetSlot = slot;
+                        targetDirection = direction;
+                        break;
+                    }
+                }
             }
 
             yield return null;
@@ -178,7 +190,7 @@ public class Body : MonoBehaviour
         availableSlots.AddRange(slotMap.Values);
     }
 
-    bool TryGetSlotAndOrientation(Camera camera, Slot[] slots, out Slot slot, out Direction orientation)
+    bool TryGetSlotAndOrientation(Camera camera, Slot[] slots, out Slot slot, out Direction orientation, Vector2 cursorPos)
     {
         slot = default;
         orientation = Direction.None;
@@ -186,7 +198,7 @@ public class Body : MonoBehaviour
         if (slots == null || slots.Length == 0)
             return false;
 
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = camera.ScreenPointToRay(cursorPos);
 
         float closestDistance = float.MaxValue;
         Slot closestSlot = default;

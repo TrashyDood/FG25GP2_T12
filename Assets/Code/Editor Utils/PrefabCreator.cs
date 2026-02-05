@@ -2,6 +2,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
 public class PrefabCreator
 {
     [MenuItem("Assets/Create/New Body Part")]
@@ -39,3 +40,4 @@ public class PrefabCreator
         Selection.activeObject = AssetDatabase.LoadAssetAtPath<GameObject>(assetPathAndName);
     }
 }
+#endif
