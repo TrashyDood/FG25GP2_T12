@@ -3,7 +3,7 @@
 [CreateAssetMenu(menuName = "Weapons/Shooting Behaviours/QuillShot")]
 public class QuillShot : ShootingBehaviour
 {
-    public GameObject projectilePrefab;
+    public Projectile projectilePrefab;
     public float projectileSpeed = 5f;
     public int basePierceCount = 3;
 
@@ -15,14 +15,14 @@ public class QuillShot : ShootingBehaviour
             return;
         }
 
-        GameObject proj = Instantiate(
+        Projectile proj = Instantiate(
             projectilePrefab,
             weapon.FirePoint.position,
             weapon.FirePoint.rotation
         );
 
-        Projectile projectile = proj.GetComponent<Projectile>();
-        projectile.Initialize(
+        
+        proj.Initialize(
             weapon.FirePoint.forward,
             projectileSpeed,
             weapon.currentStats.damage,

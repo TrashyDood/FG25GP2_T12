@@ -4,9 +4,9 @@ using UnityEngine;
 public class TargetedShotBehaviour : ShootingBehaviour
 {
     [Header("Projectile Settings")]
-    public Projectile projectilePrefab;   // Must have your Projectile component
-    public float projectileSpeed = 24f;  // Speed of the projectile
-    public float maxRange = 15f;         // Maximum targeting range
+    public Projectile projectilePrefab;   
+    public float projectileSpeed = 24f;  
+    public float maxRange = 15f;         
 
     public override void Shoot(WeaponInstance weapon)
     {
