@@ -226,7 +226,7 @@ public class UpgradeManager : MonoBehaviour
 
     private void OnChoiceClicked(ChoiceCard card)
     {
-        if (weaponManager == null || weaponManager.build == null)
+        if (weaponManager == null || weaponManager.Build == null)
         {
             Debug.LogError("WeaponManager or PlayerBuild missing!");
             return;
@@ -234,9 +234,9 @@ public class UpgradeManager : MonoBehaviour
 
         if (card.payload is UpgradeDefinition upgrade)
         {
-            weaponManager.build.ApplyUpgrade(upgrade);
+            weaponManager.Build.ApplyUpgrade(upgrade);
 
-            float newSpeed = weaponManager.build.stats.GetStat(StatType.Speed);
+            float newSpeed = weaponManager.Build.stats.GetStat(StatType.Speed);
 
             Debug.Log($"[UpgradeManager] new player speed: {newSpeed}");
         }
