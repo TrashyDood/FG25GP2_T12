@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class GameManager : MonoBehaviour
         upgradeScreen;
     [SerializeField]
     StateManager stateManager;
+    [SerializeField]
+    CallbackState[] states;
 
     public StateManager StateManager => stateManager;
     public static GameManager Instance { get; private set; }
@@ -25,21 +28,23 @@ public class GameManager : MonoBehaviour
         Player = FindFirstObjectByType<Player>();
         Instance = this;
 
-        CallbackState[] states = new CallbackState[]
-        {
-            new(), // Playing
-            new(), // Paused
-            new() // Upgrading
-            {
-                onEnterCallback = (state) => { Time.timeScale = 0; },
-                onExitCallback = (state) => { Time.timeScale = 1; }
-            },
-            new(), // Dead
-            new(), // Victory
-            new() // Menu
-        };
+        //states = new CallbackState[]
+        //{
+        //    new(), // Playing
+        //    new(), // Paused
+        //    new() // Upgrading
+        //    {
+        //        onEnterCallback = (state) => { Time.timeScale = 0; },
+        //        onExitCallback = (state) => { Time.timeScale = 1; }
+        //    },
+        //    new(), // Dead
+        //    new(), // Victory
+        //    new() // Menu
+        //};
 
-        //var state = (CallbackState)GameManager.Instance.StateManager.GetState(GameState.Playing);
+        //states[(int)GameState.Dead].onEnterCallback += (state) => { Time.timeScale = 0; };
+        states[(int)GameState.Upgrading].onEnterCallback += (state) => { Time.timeScale = 0; };
+        states[(int)GameState.Upgrading].onExitCallback += (state) => { Time.timeScale = 1; };
 
         stateManager = new(states);
         StateManager.SetState(GameState.Playing);
@@ -53,6 +58,11 @@ public class GameManager : MonoBehaviour
 
     public CallbackState GetCBState(GameState state) =>
         (CallbackState)stateManager.GetState(state);
+
+    public void RestartCurrentLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }
 
 public enum GameState

@@ -72,6 +72,7 @@ MonoBehaviour:
       m_Calls: []
   attachTo: 27
   attachFrom: 0
+  canTakeDamage: 1
   size: {x: 1, y: 1, z: 1}
 --- !u!1001 &1484785755166828034
 PrefabInstance:
@@ -81,6 +82,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7295234151877927221}
     m_Modifications:
+    - target: {fileID: 650000025822449551, guid: e7636b3769b8f5c44b19082eb31ebda8, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 746593118831934784, guid: e7636b3769b8f5c44b19082eb31ebda8, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 946643475631329729, guid: e7636b3769b8f5c44b19082eb31ebda8, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007620527731551869, guid: e7636b3769b8f5c44b19082eb31ebda8, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145379718821622769, guid: e7636b3769b8f5c44b19082eb31ebda8, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4093983064990709425, guid: e7636b3769b8f5c44b19082eb31ebda8, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4641592496825535167, guid: e7636b3769b8f5c44b19082eb31ebda8, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426309834965735130, guid: e7636b3769b8f5c44b19082eb31ebda8, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427876425904486782, guid: e7636b3769b8f5c44b19082eb31ebda8, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5739376803926965112, guid: e7636b3769b8f5c44b19082eb31ebda8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.006
@@ -121,9 +158,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5844951402232206615, guid: e7636b3769b8f5c44b19082eb31ebda8, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 6141044676688247906, guid: e7636b3769b8f5c44b19082eb31ebda8, type: 3}
       propertyPath: m_Name
       value: Quills_Empty
+      objectReference: {fileID: 0}
+    - target: {fileID: 6141044676688247906, guid: e7636b3769b8f5c44b19082eb31ebda8, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8035535150753307853, guid: e7636b3769b8f5c44b19082eb31ebda8, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8869439079296309361, guid: e7636b3769b8f5c44b19082eb31ebda8, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

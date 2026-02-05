@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5237398698951981692}
   - component: {fileID: 3179280213650352554}
   - component: {fileID: -8952755331963687643}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Wings_BodyPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,9 +82,53 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5237398698951981692}
     m_Modifications:
+    - target: {fileID: 55108458047921459, guid: bcb08950bf45ab54db54b307f7f06041, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 468327488163085291, guid: bcb08950bf45ab54db54b307f7f06041, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2560666560652406590, guid: bcb08950bf45ab54db54b307f7f06041, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4782676949417869101, guid: bcb08950bf45ab54db54b307f7f06041, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5221760588071855811, guid: bcb08950bf45ab54db54b307f7f06041, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5261576390191358646, guid: bcb08950bf45ab54db54b307f7f06041, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120971539838864144, guid: bcb08950bf45ab54db54b307f7f06041, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6650483071394710634, guid: bcb08950bf45ab54db54b307f7f06041, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7431261032975611126, guid: bcb08950bf45ab54db54b307f7f06041, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7462038182264475273, guid: bcb08950bf45ab54db54b307f7f06041, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 8500637492385813313, guid: bcb08950bf45ab54db54b307f7f06041, type: 3}
       propertyPath: m_Name
       value: Wing_Empty
+      objectReference: {fileID: 0}
+    - target: {fileID: 8500637492385813313, guid: bcb08950bf45ab54db54b307f7f06041, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8990402669569255778, guid: bcb08950bf45ab54db54b307f7f06041, type: 3}
       propertyPath: m_LocalPosition.x
@@ -125,6 +169,10 @@ PrefabInstance:
     - target: {fileID: 8990402669569255778, guid: bcb08950bf45ab54db54b307f7f06041, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 64.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 9003500953836416898, guid: bcb08950bf45ab54db54b307f7f06041, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

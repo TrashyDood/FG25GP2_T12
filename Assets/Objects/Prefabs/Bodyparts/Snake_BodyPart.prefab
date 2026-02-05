@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5237398698951981692}
   - component: {fileID: 3179280213650352554}
   - component: {fileID: -8952755331963687643}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Snake_BodyPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,6 +82,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5237398698951981692}
     m_Modifications:
+    - target: {fileID: 44338782237175366, guid: 0e0286f4ea38796438239c92a9e80064, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 194291932234352153, guid: 0e0286f4ea38796438239c92a9e80064, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 514549243403641711, guid: 0e0286f4ea38796438239c92a9e80064, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1736913747670741389, guid: 0e0286f4ea38796438239c92a9e80064, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1989131368945714864, guid: 0e0286f4ea38796438239c92a9e80064, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2679630897023501756, guid: 0e0286f4ea38796438239c92a9e80064, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4750004760507254931, guid: 0e0286f4ea38796438239c92a9e80064, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.009
@@ -122,9 +146,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6554561634797673886, guid: 0e0286f4ea38796438239c92a9e80064, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 6741815811427317298, guid: 0e0286f4ea38796438239c92a9e80064, type: 3}
       propertyPath: m_Name
       value: Snake_Empty
+      objectReference: {fileID: 0}
+    - target: {fileID: 6741815811427317298, guid: 0e0286f4ea38796438239c92a9e80064, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

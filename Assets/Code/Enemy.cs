@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(EnemyMovement))]
 public class Enemy : PoolableComponent<Enemy>
@@ -8,6 +9,8 @@ public class Enemy : PoolableComponent<Enemy>
     Transform target;
     [SerializeField]
     LayerMask targetLayer;
+    [SerializeField]
+    UnityEvent onAttackkEvent;
     [SerializeField]
     EnemyData data;
 
@@ -65,7 +68,8 @@ public class Enemy : PoolableComponent<Enemy>
         if (attackTimer <= 0 && Physics.SphereCast(transform.position, 1, target.position - transform.position, out RaycastHit hitInfo, data.attackRange, targetLayer))
         {
             Attack(hitInfo);
-            attackTimer = 1 / data.attackSpeed;
+            attackTimer = data.attackCooldown;
+            Debug.Log(name + " Attack for " + data.attackDamage + " damage!");
         }
         else
             attackTimer -= Time.fixedDeltaTime;
@@ -110,7 +114,7 @@ public class EnemyData
         speed = 5,
         attackDamage = 20,
         attackRange = 5,
-        attackSpeed = 1,
+        attackCooldown = 1,
         size;
 
     // attackSpeed kan vara istället att spelaren har i-frames
