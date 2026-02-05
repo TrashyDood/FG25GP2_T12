@@ -1,22 +1,19 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Body), typeof(PlayerInput))]
+[RequireComponent(typeof(Body))]
 public class Player : MonoBehaviour
 {
+    public PlayerBuild build;
+
     [SerializeField]
     float currentHealth,
         maxHealth = 100;
+
     [SerializeField]
     FillbarUI healthBar;
-    [SerializeField]
-    PlayerBuild build;
 
-    PlayerInput input;
-    Body body;
-
-    public Body Body => body;
+    public Body Body { get; private set; }
     public float MaxHealth => maxHealth;
     public float Health
     {
@@ -30,8 +27,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        body = GetComponent<Body>();
-        input = GetComponent<PlayerInput>();
+        Body = GetComponent<Body>();
 
         build = new PlayerBuild();
         build.stats = new StatCollection();
@@ -45,14 +41,12 @@ public class Player : MonoBehaviour
 
     void OnHealthChanged(float newValue)
     {
-        healthBar.FillAmount = newValue / maxHealth;
-
-        Debug.Log(healthBar.FillAmount);
+        currentHealth = newValue;
+        healthBar.FillAmount = currentHealth / maxHealth;
 
         if (Mathf.Round(newValue) < 1)
         {
             GameManager.Instance.StateManager.SetState(GameState.Dead);
-            
         }
     }
 }

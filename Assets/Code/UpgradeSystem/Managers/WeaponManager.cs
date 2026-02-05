@@ -4,17 +4,18 @@ using System.Collections.Generic;
 public class WeaponManager : MonoBehaviour
 {
     public WeaponLibrary weaponLibrary;
-    public PlayerBuild playerBuild;
 
-    private List<WeaponInstance> activeWeapons => playerBuild.weapons;
+    public Player player;
+    public PlayerBuild build => player.build;
+
+    private List<WeaponInstance> activeWeapons => build.weapons;
 
     public string startingWeaponId = "Quill";
 
     private void Awake()
     {
-        if (playerBuild == null)
-            playerBuild = new PlayerBuild();
-
+        if (player == null)
+            player = FindObjectOfType<Player>();
         //AddDefaultWeapon();
     }
 
@@ -24,6 +25,7 @@ public class WeaponManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log($"Active weapons: {activeWeapons.Count}");
             TryFireWeapons();
         }
     }
@@ -68,7 +70,10 @@ public class WeaponManager : MonoBehaviour
         foreach (var weapon in activeWeapons)
         {
             if (weapon.FirePoint == null)
+            {
+                Debug.LogError($"{weapon.definition.name} has no FirePoint!");
                 continue;
+            }
 
             if (weapon.cooldownTimer <= 0f)
             {
