@@ -232,38 +232,23 @@ public class UpgradeManager : MonoBehaviour
         return text;
     }
 
-    /*
-    private void OnChoiceClicked(ChoiceCard card)
-    {
-        Debug.Log($"Choice selected: {card.payload}");
-        choicesRoot.SetActive(false);
-    }
-    
-    private void OnChoiceClicked(ChoiceCard card)
-    {
-        if (card.payload is UpgradeDefinition upgrade)
-        {
-            foreach (UpgradeEffect effect in upgrade.effects)
-            {
-                if (effect is AddWeaponEffect addWeapon)
-                {
-                    GameObject prefabToBuild = addWeapon.weapon.prefab;
+   
 
-                    //BuildManager.Instance.EnterBuildMode(prefabToBuild);
-                    break;
-                }
-            }
+    private void OnChoiceClicked(ChoiceCard card)
+    {
+        if (weaponManager == null || weaponManager.build == null)
+        {
+            Debug.LogError("WeaponManager or PlayerBuild missing!");
+            return;
         }
 
-        choicesRoot.SetActive(false);
-    }
-    */
-
-    private void OnChoiceClicked(ChoiceCard card)
-    {
         if (card.payload is UpgradeDefinition upgrade)
         {
-            weaponManager.playerBuild.ApplyUpgrade(upgrade);
+            weaponManager.build.ApplyUpgrade(upgrade);
+
+            float newSpeed = weaponManager.build.stats.GetStat(StatType.Speed);
+
+            Debug.Log($"[UpgradeManager] new player speed: {newSpeed}");
         }
 
 

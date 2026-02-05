@@ -5,22 +5,24 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
-    float speed = 10,
-          acceleration = 50,
-          deceleration = 80;
+   
+    float acceleration = 50,
+            deceleration = 80;
     [SerializeField]
     PlayerInput playerInput;
+
+    [SerializeField]
+    Player player;
+
 
     Rigidbody rigidBody;
     Vector2 input;
     Vector3 currentVelocity,
             targetVelocity;
 
-    public float Speed
-    {
-        get => speed;
-        set => speed = value;
-    }
+    public float speed => player?.build?.stats.GetStat(StatType.Speed) ?? 10f;
+
+
 
     public float Acceleration
     {
@@ -38,10 +40,16 @@ public class PlayerMovement : MonoBehaviour
     {
         rigidBody ??= GetComponent<Rigidbody>();
         playerInput ??= GetComponent<PlayerInput>();
+
+        if (player == null)
+        {
+            player = FindObjectOfType<Player>();
+        }
     }
 
     private void FixedUpdate()
     {
+        Debug.Log(speed);
         currentVelocity = Vector3.MoveTowards(currentVelocity,
             targetVelocity,
             ((currentVelocity.sqrMagnitude > targetVelocity.sqrMagnitude) ? deceleration : acceleration) * Time.fixedDeltaTime);

@@ -18,6 +18,7 @@ public class PlayerBuild
     public PlayerBuild() 
     {
         stats = new StatCollection();
+        stats.SetBaseStat(StatType.Speed, 10f);
         weapons = new List<WeaponInstance>();
     }
 

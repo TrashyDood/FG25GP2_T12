@@ -4,17 +4,18 @@ using System.Collections.Generic;
 public class WeaponManager : MonoBehaviour
 {
     public WeaponLibrary weaponLibrary;
-    public PlayerBuild playerBuild;
 
-    private List<WeaponInstance> activeWeapons => playerBuild.weapons;
+    public Player player;
+    public PlayerBuild build => player.build;
+
+    private List<WeaponInstance> activeWeapons => build.weapons;
 
     public string startingWeaponId = "Quill";
 
     private void Awake()
     {
-        if (playerBuild == null)
-            playerBuild = new PlayerBuild();
-
+        if (player == null)
+            player = FindObjectOfType<Player>();
         //AddDefaultWeapon();
     }
 
