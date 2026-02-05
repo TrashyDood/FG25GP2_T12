@@ -27,6 +27,13 @@ public class GameManager : MonoBehaviour
         Player = FindFirstObjectByType<Player>();
         Instance = this;
 
+        if (states == null || states.Length < 1)
+        {
+            states = new CallbackState[6];
+            for (int i = 0; i < states.Length; i++)
+                states[i] = new();
+        }
+
         states[(int)GameState.Playing].onEnterCallback = (state) => { Time.timeScale = 1; };
         states[(int)GameState.Upgrading].onEnterCallback = (state) => { Time.timeScale = 0; };
         states[(int)GameState.Upgrading].onExitCallback += (state) => { Time.timeScale = 1; };

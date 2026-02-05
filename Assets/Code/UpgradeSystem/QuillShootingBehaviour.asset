@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5e6ff587dc41d4dad39a6198162d9f, type: 3}
   m_Name: QuillShootingBehaviour
   m_EditorClassIdentifier: Assembly-CSharp::QuillShot
-  projectilePrefab: {fileID: 7390228874865262273, guid: d9b0892fc0fc1b2468a77fc2a0420a33, type: 3}
+  projectilePrefab: {fileID: 3879573122035661383, guid: 2ef01901419933d45a860192e278e918, type: 3}
   projectileSpeed: 40
   basePierceCount: 3

@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        transform.position += direction * speed * Time.fixedDeltaTime;
+        transform.SetLocalPositionAndRotation(transform.position + direction * speed * Time.fixedDeltaTime, Quaternion.LookRotation(transform.position + direction * speed * Time.fixedDeltaTime));
     }
 
     private void OnDrawGizmos()
