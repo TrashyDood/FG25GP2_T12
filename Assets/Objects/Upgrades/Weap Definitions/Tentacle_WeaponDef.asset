@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tentacle_WeaponDef
   m_EditorClassIdentifier: Assembly-CSharp::WeaponDefinition
   weaponName: Tentacles
-  weaponId: 65446
+  weaponId: 1345441
   icon: {fileID: 0}
   baseStats:
     damage: 0

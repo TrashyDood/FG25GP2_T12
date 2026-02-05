@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 2123195880003866622}
   - component: {fileID: 6825332668043674253}
   - component: {fileID: 7319833572454886761}
-  - component: {fileID: 8655100144952709001}
   - component: {fileID: 6454924862363815314}
   - component: {fileID: -2582018424560963497}
   - component: {fileID: 6435731811321519823}
   - component: {fileID: 5253724668774118500}
   - component: {fileID: 3117290854059341669}
+  - component: {fileID: 3985845377055536104}
   m_Layer: 15
   m_Name: Player
   m_TagString: Player
@@ -123,6 +123,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3001057493141643324}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _currentXP: 0
   _currentLevel: 1
   _currentXPReq: 2
@@ -142,23 +154,6 @@ MonoBehaviour:
   acceleration: 50
   deceleration: 80
   playerInput: {fileID: 0}
---- !u!114 &8655100144952709001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3001057493141643324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d62b1f0a140ce4d4ebc9eb875a360d2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerShoot
-  attackSpeed: 1
-  attackRange: 10
-  projectilePrefab: {fileID: 8864721375597374351, guid: e7043bb5bcf2d434bb6674efb247be5b, type: 3}
-  allEnemies: []
-  nearestEnemy: {fileID: 9057473989697554662, guid: e7043bb5bcf2d434bb6674efb247be5b, type: 3}
 --- !u!114 &6454924862363815314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +196,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2aacd1ad4dcc4349bd235e965b96d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  currentHealth: 0
+  maxHealth: 100
   healthBar: {fileID: 0}
 --- !u!114 &6435731811321519823
 MonoBehaviour:
@@ -218,7 +215,8 @@ MonoBehaviour:
   bodypartLayer:
     serializedVersion: 2
     m_Bits: 0
-  defaultPart: {fileID: 4788076387273759160, guid: 6087e36347ef52c4ab142177b810b844, type: 3}
+  defaultPrefab: {fileID: 4788076387273759160, guid: 6087e36347ef52c4ab142177b810b844, type: 3}
+  centralPrefab: {fileID: 4847483082424459837, guid: 566a58d9279a6e74fb493e20fd70c5bc, type: 3}
   slotMaterial: {fileID: 2100000, guid: 8b44773059fde0d4791e148bd2d8df64, type: 2}
   slotMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &5253724668774118500
@@ -233,6 +231,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e1f4e41b66db24e9b888c3bbe08f78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MobileTouch
+  joyStickSize: {x: 300, y: 300}
+  joyStick: {fileID: 0}
 --- !u!54 &3117290854059341669
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -260,6 +260,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &3985845377055536104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3001057493141643324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3527af7b5a1dba14298d3a35debae1a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
+  weaponLibrary: {fileID: 11400000, guid: 89ad90d6d5a664c4cbe4a02bdab09110, type: 2}
+  startingWeaponId: Quill
 --- !u!1 &8705035447532630953
 GameObject:
   m_ObjectHideFlags: 0

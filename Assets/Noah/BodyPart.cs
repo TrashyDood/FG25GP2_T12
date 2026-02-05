@@ -11,6 +11,8 @@ public class BodyPart : MonoBehaviour
     Direction attachTo,
         attachFrom;
     [SerializeField]
+    bool canTakeDamage = true;
+    [SerializeField]
     Vector3Int size = Vector3Int.one;
 
     BodyPart[] neighbours = new BodyPart[6];
@@ -36,6 +38,14 @@ public class BodyPart : MonoBehaviour
     }
 
     public virtual void OnRemoved() { }
+
+    public virtual void TakeDamage(float damage)
+    {
+        if (!canTakeDamage)
+            return;
+
+        Body.Player.Health -= damage;
+    }
 
     static Quaternion GetRotation(Direction orientation)
     {

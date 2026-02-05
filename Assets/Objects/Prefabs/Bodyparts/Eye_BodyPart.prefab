@@ -71,7 +71,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   attachTo: 0
-  attachFrom: -1
+  attachFrom: 27
   size: {x: 1, y: 1, z: 1}
 --- !u!1001 &7115870223753533566
 PrefabInstance:

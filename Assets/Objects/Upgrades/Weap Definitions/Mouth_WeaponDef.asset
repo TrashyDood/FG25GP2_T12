@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mouth_WeaponDef
   m_EditorClassIdentifier: Assembly-CSharp::WeaponDefinition
   weaponName: Mouth
-  weaponId: 65446
+  weaponId: 4313451
   icon: {fileID: 0}
   baseStats:
     damage: 0
