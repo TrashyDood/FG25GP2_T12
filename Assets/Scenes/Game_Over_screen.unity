@@ -250,7 +250,7 @@ Animation:
   m_GameObject: {fileID: 702874658}
   m_Enabled: 1
   serializedVersion: 4
-  m_Animation: {fileID: 0}
+  m_Animation: {fileID: 7400000, guid: bde83df83ef8c734a8de2fff312eac1f, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: bde83df83ef8c734a8de2fff312eac1f, type: 2}
   m_WrapMode: 0
@@ -526,7 +526,7 @@ Animation:
   m_GameObject: {fileID: 824224630}
   m_Enabled: 1
   serializedVersion: 4
-  m_Animation: {fileID: 0}
+  m_Animation: {fileID: 7400000, guid: c37952d8a4f64264bb477bb156a7d961, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: c37952d8a4f64264bb477bb156a7d961, type: 2}
   m_WrapMode: 0
@@ -712,7 +712,7 @@ Animation:
   m_GameObject: {fileID: 1063108907}
   m_Enabled: 1
   serializedVersion: 4
-  m_Animation: {fileID: 0}
+  m_Animation: {fileID: 7400000, guid: 916cb6c9e2383774fb7b2f4663b48a36, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 916cb6c9e2383774fb7b2f4663b48a36, type: 2}
   m_WrapMode: 0
@@ -861,7 +861,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 5557969
+    rgba: 4283748049
   m_fontColor: {r: 0.81960785, g: 0.80784315, b: 0.32941177, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1169,7 +1169,7 @@ Animation:
   m_GameObject: {fileID: 1540405035}
   m_Enabled: 1
   serializedVersion: 4
-  m_Animation: {fileID: 0}
+  m_Animation: {fileID: 7400000, guid: fff56dbb136d08740a9ca23df3fb3a96, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: fff56dbb136d08740a9ca23df3fb3a96, type: 2}
   m_WrapMode: 0
