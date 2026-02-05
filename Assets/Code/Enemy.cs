@@ -14,6 +14,7 @@ public class Enemy : PoolableComponent<Enemy>
     [SerializeField]
     EnemyData data;
 
+    Ray attackRay;
     EnemyMovement movement;
     Material material;
     MeshRenderer meshRenderer;
@@ -65,11 +66,12 @@ public class Enemy : PoolableComponent<Enemy>
 
     private void FixedUpdate()
     {
-        if (attackTimer <= 0 && Physics.SphereCast(transform.position, 1, target.position - transform.position, out RaycastHit hitInfo, data.attackRange, targetLayer))
+        attackRay = new Ray(transform.position, target.position - transform.position);
+
+        if (attackTimer <= 0 && Physics.SphereCast(attackRay, data.attackWidth, out RaycastHit hitInfo, data.attackRange, targetLayer))
         {
             Attack(hitInfo);
             attackTimer = data.attackCooldown;
-            Debug.Log(name + " Attack for " + data.attackDamage + " damage!");
         }
         else
             attackTimer -= Time.fixedDeltaTime;
@@ -102,6 +104,14 @@ public class Enemy : PoolableComponent<Enemy>
     {
 
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(attackRay);
+    }
+#endif
 }
 
 [Serializable]
@@ -115,6 +125,7 @@ public class EnemyData
         attackDamage = 20,
         attackRange = 5,
         attackCooldown = 1,
+        attackWidth = 1,
         size;
 
     // attackSpeed kan vara istället att spelaren har i-frames

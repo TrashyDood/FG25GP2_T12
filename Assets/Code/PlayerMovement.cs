@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 currentVelocity,
             targetVelocity;
 
-    public float speed => player?.build?.stats.GetStat(StatType.Speed) ?? 10f;
+    public float speed => player?.Build?.stats.GetStat(StatType.Speed) ?? 10f;
 
 
 

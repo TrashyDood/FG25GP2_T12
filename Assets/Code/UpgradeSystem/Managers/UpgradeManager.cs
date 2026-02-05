@@ -29,16 +29,8 @@ public class UpgradeManager : MonoBehaviour
         {
             upgradePool.Add(upgrade);
         }
-    }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            EnterUpgradeState();
-        }
-
-        ((CallbackState)GameManager.Instance.StateManager.GetState(GameState.Upgrading)).onEnterCallback += (s) => { EnterUpgradeState(); };
+        GameManager.Instance.GetCBState(GameState.Upgrading).onEnterCallback += (s) => { EnterUpgradeState(); };
     }
 
     public class ChoiceBundle
@@ -232,8 +224,6 @@ public class UpgradeManager : MonoBehaviour
         return text;
     }
 
-   
-
     private void OnChoiceClicked(ChoiceCard card)
     {
         if (weaponManager == null || weaponManager.build == null)
@@ -300,6 +290,7 @@ public class UpgradeManager : MonoBehaviour
 
     public void EnterUpgradeState()
     {
+        Debug.Log("Enter upgrade state");
         ShowChoices(GetChoices());
     }
 }

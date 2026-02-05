@@ -6,7 +6,7 @@ public class WeaponManager : MonoBehaviour
     public WeaponLibrary weaponLibrary;
 
     public Player player;
-    public PlayerBuild build => player.build;
+    public PlayerBuild build => player.Build;
 
     private List<WeaponInstance> activeWeapons => build.weapons;
 
