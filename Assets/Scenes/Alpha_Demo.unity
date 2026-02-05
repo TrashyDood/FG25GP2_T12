@@ -1019,7 +1019,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[0].attackRange
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[0].attackSpeed
@@ -1031,7 +1031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[1].attackRange
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[1].attackSpeed
@@ -2037,7 +2037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5174965039657163963, guid: 46c46fb050b364448b485da3d82379f2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.13
+      value: -2.53
       objectReference: {fileID: 0}
     - target: {fileID: 5174965039657163963, guid: 46c46fb050b364448b485da3d82379f2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2045,7 +2045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5174965039657163963, guid: 46c46fb050b364448b485da3d82379f2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.81
+      value: 1.23
       objectReference: {fileID: 0}
     - target: {fileID: 5174965039657163963, guid: 46c46fb050b364448b485da3d82379f2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3353,6 +3353,14 @@ PrefabInstance:
       propertyPath: xpBar
       value: 
       objectReference: {fileID: 1317094514}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _XPReqScaling.m_Curve.Array.data[0].time
+      value: 0.16077042
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: _XPReqScaling.m_Curve.Array.data[0].value
+      value: 3.6285706
+      objectReference: {fileID: 0}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _onLevelGained.m_PersistentCalls.m_Calls.Array.size
       value: 2

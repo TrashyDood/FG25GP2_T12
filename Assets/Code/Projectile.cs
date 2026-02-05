@@ -51,22 +51,8 @@ public class Projectile : MonoBehaviour
         if (enemy != null)
         {
             enemy.Health -= damage;
-
-            pierceRemaining--;
-
-            if (pierceRemaining <= 0)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            // Maybe needed?
-            //transform.position = hitInfo.point + direction * 0.05f;
-
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+
+        Destroy(gameObject);
     }
 }
