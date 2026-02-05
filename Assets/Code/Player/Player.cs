@@ -4,18 +4,23 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Body))]
 public class Player : MonoBehaviour
 {
-    private float currentHealth;
-    private float maxHealth = 100;
+    [SerializeField]
+    float currentHealth,
+        maxHealth = 100;
 
     [SerializeField]
     FillbarUI healthBar;
 
     public Body Body { get; private set; }
-
+    public float MaxHealth => maxHealth;
     public float Health
     {
         get => currentHealth;
-        set => SetHealth(value);
+        set
+        {
+            OnHealthChanged(value);
+            currentHealth = value;
+        }
     }
 
     private void Awake()
@@ -27,17 +32,15 @@ public class Player : MonoBehaviour
     {
         Health = maxHealth;
     }
-    private void Update()
-    {
-        if (Input.GetButtonDown("Jump"))
-        {
-            currentHealth -= 20;
-            SetHealth(currentHealth);
-        }
-    }
-    public void SetHealth(float newValue)
+
+    void OnHealthChanged(float newValue)
     {
         currentHealth = newValue;
         healthBar.FillAmount = currentHealth / maxHealth;
+
+        if (Mathf.Round(newValue) < 1)
+        {
+            GameManager.Instance.StateManager.SetState(GameState.Dead);
+        }
     }
 }

@@ -68,7 +68,7 @@ public class Shield : MonoBehaviour
         if (!IsBlocking(hitDirection))
             return;
 
-        int damage = Mathf.CeilToInt(enemy.Data.damage);
+        int damage = Mathf.CeilToInt(enemy.Data.attackDamage);
         if (damage <= 0)
             return;
 

@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
 
+[RequireComponent(typeof(Player))]
 public class Body : MonoBehaviour
 {
     [SerializeField]
@@ -23,10 +24,12 @@ public class Body : MonoBehaviour
     [SerializeField]
     Mesh slotMesh;
 
+    Player player;
     Dictionary<Vector3Int, BodyPart> bodyParts = new();
     List<Slot> availableSlots = new();
 
     public BodyPart CentralPart { get; private set; }
+    public Player Player => player;
 
     static readonly Dictionary<Vector3Int, Direction> dirToOrientation = new()
     {
@@ -40,6 +43,7 @@ public class Body : MonoBehaviour
 
     private void Awake()
     {
+        player = GetComponent<Player>();
         CentralPart = AddPart(new(3, 0, 3), centralPrefab);
     }
 

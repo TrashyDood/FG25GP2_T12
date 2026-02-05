@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Quills_WeaponDef
   m_EditorClassIdentifier: Assembly-CSharp::WeaponDefinition
   weaponName: Quills
-  weaponId: 65446
+  weaponId: 13454331
   icon: {fileID: 0}
   baseStats:
     damage: 0

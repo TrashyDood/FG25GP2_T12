@@ -7,12 +7,15 @@ public class Enemy : PoolableComponent<Enemy>
     [SerializeField]
     Transform target;
     [SerializeField]
+    LayerMask targetLayer;
+    [SerializeField]
     EnemyData data;
 
     EnemyMovement movement;
     Material material;
     MeshRenderer meshRenderer;
-    float health;
+    float health,
+        attackTimer;
 
     public EnemyMovement Movement => movement;
 
@@ -57,6 +60,24 @@ public class Enemy : PoolableComponent<Enemy>
         target = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
+    private void FixedUpdate()
+    {
+        if (attackTimer <= 0 && Physics.SphereCast(transform.position, 1, target.position - transform.position, out RaycastHit hitInfo, data.attackRange, targetLayer))
+        {
+            Attack(hitInfo);
+            attackTimer = 1 / data.attackSpeed;
+        }
+        else
+            attackTimer -= Time.fixedDeltaTime;
+    }
+
+    void Attack(RaycastHit hitInfo)
+    {
+        BodyPart bodyPart = hitInfo.collider.GetComponent<BodyPart>();
+        if (bodyPart != null)
+            bodyPart.TakeDamage(data.attackDamage);
+    }
+
     void OnHealthChanged(float newHealth)
     {
         if (Mathf.Round(newHealth) < 1)
@@ -85,7 +106,12 @@ public class EnemyData
     public GameObject[] dropOnDeath;
     public Mesh model;
     public Material material;
-    public float maxHealth, speed, damage, damageRange, attackSpeed, size;
+    public float maxHealth = 50,
+        speed = 5,
+        attackDamage = 20,
+        attackRange = 5,
+        attackSpeed = 1,
+        size;
 
     // attackSpeed kan vara istället att spelaren har i-frames
 }
