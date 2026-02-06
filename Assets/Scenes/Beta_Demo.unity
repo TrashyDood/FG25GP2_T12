@@ -999,7 +999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[0].attackRange
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[0].attackSpeed
@@ -1015,7 +1015,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[1].attackRange
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[1].attackSpeed
@@ -1614,6 +1614,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: XP Bar
       objectReference: {fileID: 0}
+    - target: {fileID: 1773068182352922581, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1301257871, guid: 8428059ebd2f3c44aaa7f6b43f4f4113, type: 3}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1652,7 +1656,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1688,7 +1692,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -26.199951
+      value: -152.59998
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1702,6 +1706,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4979413968902493345, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 873140246, guid: 47510e7e41bd8ff408aa6ac23db59a52, type: 3}
     - target: {fileID: 4979413968902493345, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_FillAmount
       value: 0.342
@@ -1722,6 +1730,10 @@ PrefabInstance:
       propertyPath: fillAreas.Array.data[1].fillAmount
       value: 0.342
       objectReference: {fileID: 0}
+    - target: {fileID: 8989047962272941767, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 873140246, guid: 47510e7e41bd8ff408aa6ac23db59a52, type: 3}
     - target: {fileID: 8989047962272941767, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_Color.b
       value: 0.18123543
@@ -2005,6 +2017,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Health Bar
       objectReference: {fileID: 0}
+    - target: {fileID: 1773068182352922581, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1301257871, guid: 8428059ebd2f3c44aaa7f6b43f4f4113, type: 3}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2043,7 +2059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2079,7 +2095,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -10
+      value: -132.6001
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2093,6 +2109,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4979413968902493345, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 873140246, guid: 47510e7e41bd8ff408aa6ac23db59a52, type: 3}
     - target: {fileID: 4979413968902493345, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_FillAmount
       value: 1
@@ -2113,6 +2133,10 @@ PrefabInstance:
       propertyPath: fillAreas.Array.data[1].fillAmount
       value: 0.3421365
       objectReference: {fileID: 0}
+    - target: {fileID: 8989047962272941767, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 873140246, guid: 47510e7e41bd8ff408aa6ac23db59a52, type: 3}
     - target: {fileID: 8989047962272941767, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_FillAmount
       value: 1
@@ -2361,7 +2385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.15686275}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
