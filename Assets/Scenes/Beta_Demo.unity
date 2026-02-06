@@ -2107,11 +2107,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8004698657344673448, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: fillAreas.Array.data[0].fillAmount
-      value: 1
+      value: 0.44565704
       objectReference: {fileID: 0}
     - target: {fileID: 8004698657344673448, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: fillAreas.Array.data[1].fillAmount
-      value: 1
+      value: 0.3421365
       objectReference: {fileID: 0}
     - target: {fileID: 8989047962272941767, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_FillAmount
@@ -2815,6 +2815,10 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1720148720}
+    - target: {fileID: -2582018424560963497, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: weaponLibrary
+      value: 
+      objectReference: {fileID: 11400000, guid: 2075026625ded494eabb277b3ee5c201, type: 2}
     - target: {fileID: 2123195880003866622, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
