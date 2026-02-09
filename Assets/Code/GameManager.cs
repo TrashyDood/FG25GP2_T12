@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     StateManager stateManager;
     [SerializeField]
     CallbackState[] states;
+    [SerializeField]
+    GameObject healthBar,
+        xpBar;
 
     public StateManager StateManager => stateManager;
     public static GameManager Instance { get; private set; }
@@ -37,7 +40,9 @@ public class GameManager : MonoBehaviour
         states[(int)GameState.Playing].onEnterCallback = (state) => { Time.timeScale = 1; };
         states[(int)GameState.Upgrading].onEnterCallback = (state) => { Time.timeScale = 0; };
         states[(int)GameState.Upgrading].onExitCallback += (state) => { Time.timeScale = 1; };
-        states[(int)GameState.Dead].onEnterCallback = (state) => { StartCoroutine(Timer(() => { Time.timeScale = 0; })); };
+        states[(int)GameState.Dead].onEnterCallback = (state) => { StartCoroutine(Timer(() => { Time.timeScale = 0; }));
+                                                                   healthBar.SetActive(false);
+                                                                   xpBar.SetActive(false); };
 
         stateManager.AddStates(states);
         StateManager.SetState(GameState.Playing);
