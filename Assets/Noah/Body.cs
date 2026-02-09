@@ -87,18 +87,19 @@ public class Body : MonoBehaviour
 
     public bool EnterEditMode(Action returnCallback, WeaponDefinition weapon)
     {
-        Slot[] validSlots = availableSlots.Where((slot) => (slot.directions & weapon.weaponPrefab.AttachTo) != 0).ToArray();
+        BodyPart prefab = weapon?.weaponPrefab ?? defaultPrefab;
+        Slot[] validSlots = availableSlots.Where((slot) => (slot.directions & prefab.AttachTo) != 0).ToArray();
 
         if (validSlots.Length > 0)
         {
-            StartCoroutine(EditModeCR(returnCallback, weapon, validSlots));
+            StartCoroutine(EditModeCR(returnCallback, weapon, prefab, validSlots));
             return true;
         }
 
         return false;
     }
 
-    IEnumerator EditModeCR(Action returnCallback, WeaponDefinition weapon, Slot[] slots)
+    IEnumerator EditModeCR(Action returnCallback, WeaponDefinition weapon, BodyPart prefab, Slot[] slots)
     {
         Slot targetSlot;
         Direction targetDirection;
@@ -148,7 +149,7 @@ public class Body : MonoBehaviour
             yield return null;
         }
 
-        AddPart(targetSlot.coords, weapon?.weaponPrefab, targetDirection)
+        AddPart(targetSlot.coords, prefab, targetDirection)
             .Initialize(this, weapon, targetSlot.coords, targetDirection);
         returnCallback();
     }
