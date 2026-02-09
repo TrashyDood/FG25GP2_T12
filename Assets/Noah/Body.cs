@@ -45,13 +45,14 @@ public class Body : MonoBehaviour
         CentralPart = AddPart(new(3, 0, 3), centralPrefab);
     }
 
-    public BodyPart AddPart(Vector3Int coords, BodyPart prefab, Direction orientation = Direction.Forward)
+    public BodyPart AddPart(Vector3Int coords, BodyPart prefab, Direction direction = Direction.Forward, WeaponDefinition weapon = null)
     {
         if (bodyParts.ContainsKey(coords) || prefab == null)
             return null;
 
         BodyPart bodyPart = Instantiate(prefab, transform);
         bodyPart.transform.localPosition = CoordsToWorld(coords);
+        bodyPart.Initialize(this, weapon, coords, direction);
 
         bodyParts[coords] = bodyPart;
 
@@ -149,8 +150,7 @@ public class Body : MonoBehaviour
             yield return null;
         }
 
-        AddPart(targetSlot.coords, prefab, targetDirection)
-            .Initialize(this, weapon, targetSlot.coords, targetDirection);
+        AddPart(targetSlot.coords, prefab, targetDirection, weapon);
         returnCallback();
     }
 

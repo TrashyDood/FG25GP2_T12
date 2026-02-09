@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(EnemyMovement), typeof(SphereCollider))]
-public class Enemy : PoolableComponent<Enemy>
+public class Enemy : MonoBehaviour
 {
     [SerializeField]
     Transform target;
@@ -17,7 +17,6 @@ public class Enemy : PoolableComponent<Enemy>
     Ray attackRay;
     EnemyMovement movement;
     SphereCollider collider;
-    MeshRenderer meshRenderer;
     float currentHealth,
         attackTimer;
 
@@ -56,8 +55,9 @@ public class Enemy : PoolableComponent<Enemy>
 
     private void Awake()
     {
+        Data = data; // Initialize data.
+
         collider = GetComponent<SphereCollider>();
-        meshRenderer = GetComponentInChildren<MeshRenderer>();
         movement = GetComponent<EnemyMovement>();
     }
 
@@ -81,16 +81,14 @@ public class Enemy : PoolableComponent<Enemy>
 
     void Attack(RaycastHit hitInfo)
     {
-        BodyPart bodyPart = hitInfo.collider.GetComponent<BodyPart>();
-        if (bodyPart != null)
-            bodyPart.TakeDamage(data.attackDamage);
+        hitInfo.collider.GetComponent<BodyPart>()?.TakeDamage(data.attackDamage);
     }
 
     void OnHealthChanged(float newHealth)
     {
         if (Mathf.Round(newHealth) < 1)
         {
-            ReturnToPool();
+            Destroy(gameObject);
             foreach (var item in data.dropOnDeath)
                 Instantiate(item, transform.position + Utils.RandomVector3(1, 0, 1, -1, 0, -1), Quaternion.identity);
         }
@@ -99,7 +97,6 @@ public class Enemy : PoolableComponent<Enemy>
     void OnDataChanged(EnemyData newData)
     {
         currentHealth = newData.maxHealth;
-        meshRenderer.material = newData.material;
     }
 
     void OnTargetChanged(Transform newTarget)
@@ -120,8 +117,6 @@ public class Enemy : PoolableComponent<Enemy>
 public class EnemyData
 {
     public GameObject[] dropOnDeath;
-    public Mesh model;
-    public Material material;
     public float maxHealth = 50,
         speed = 5,
         attackDamage = 20,

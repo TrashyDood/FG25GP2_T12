@@ -8,17 +8,15 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     Transform spawnCenter;
     [SerializeField]
-    EnemySpawnConfig config;
+    SpawnConfig config;
     [SerializeField]
-    EnemyPool enemyPool;
-    [SerializeField]
-    EnemyData[] enemyData;
+    SpawnParams spawnParams;
 
     float spawnIntervalTimer;
     bool isSpawning;
 
     public static EnemyManager Instance { get; private set; }
-    public EnemySpawnConfig Config => config;
+    public SpawnConfig Config => config;
 
     private void Awake()
     {
@@ -26,7 +24,6 @@ public class EnemyManager : MonoBehaviour
             Destroy(Instance);
 
         Instance = this;
-        enemyPool.parent = transform;
     }
 
     private void Start()
@@ -53,15 +50,15 @@ public class EnemyManager : MonoBehaviour
 
     Enemy SpawnEnemy(Vector3 position)
     {
-        Enemy enemy = enemyPool.FetchEnemy(DetermineData());
+        Enemy enemy = Instantiate(DeterminePrefab());
         enemy.transform.position = position;
 
         return enemy;
     }
 
-    EnemyData DetermineData()
+    Enemy DeterminePrefab()
     {
-        return enemyData[UnityEngine.Random.Range(0, enemyData.Length)];
+        return spawnParams.Data[0].prefab;
     }
 
     IEnumerator SpawnEnemies(float duration, int count)
@@ -77,36 +74,52 @@ public class EnemyManager : MonoBehaviour
 
         isSpawning = false;
     }
-}
 
-[Serializable]
-public class EnemyPool : ComponentPool<Enemy>
-{
-    public Transform parent;
-
-    public Enemy FetchEnemy(EnemyData data)
+    [Serializable]
+    public class SpawnParams
     {
-        Enemy enemy = FetchObject();
-        enemy.Data = data;
+        [SerializeField]
+        SpawnData[] data;
 
-        return enemy;
+        public SpawnData[] Data => data;
+
+        public float GetTotalWeight(float factor)
+        {
+            float result = 0;
+
+            for (int i = 0; i < data.Length; i++)
+                result += data[i].CurrentWeight(factor);
+
+            return result;
+        }
+
+        public Enemy[] GetPrefabs(float factor)
+        {
+            float totWeight = GetTotalWeight(factor);
+
+            return null;
+        }
+
+        [Serializable]
+        public struct SpawnData
+        {
+            public AnimationCurve spawnWeight;
+            public Enemy prefab;
+
+            public float CurrentWeight(float factor) =>
+                spawnWeight.Evaluate(factor);
+        }
     }
 
-    protected override void OnFetched(Enemy obj)
+    [Serializable]
+    public class SpawnConfig
     {
-        base.OnFetched(obj);
-        obj.transform.parent = parent;
+        public float minInterval = 5,
+            maxInterval = 8,
+            minCount = 1,
+            maxCount = 3,
+            minDuration = 2.5f,
+            maxDuration = 5,
+            spawnRadius = 10;
     }
-}
-
-[Serializable]
-public class EnemySpawnConfig
-{
-    public float minInterval = 5,
-        maxInterval = 8,
-        minCount = 1,
-        maxCount = 3,
-        minDuration = 2.5f,
-        maxDuration = 5,
-        spawnRadius = 10;
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,20 +7,22 @@ using UnityEngine.Events;
 public class BodyPart : MonoBehaviour
 {
     [SerializeField]
-    UnityEvent onInitialized;
-    [SerializeField]
     Direction attachTo,
         attachFrom;
     [SerializeField]
     bool canTakeDamage = true;
     [SerializeField]
     Vector3Int size = Vector3Int.one;
-
-    public AudioSource audioSource { get; private set; }
+    [SerializeField]
+    UnityEvent onActivated,
+        onInitialized;
 
     BodyPart[] neighbours = new BodyPart[6];
     BodyPartData data;
 
+    public event Action OnActivatedEvent;
+
+    public AudioSource audioSource { get; private set; }
     public Direction AttachTo => attachTo;
     public Direction AttachFrom => attachFrom;
     public Body Body { get; private set; }
@@ -42,15 +45,11 @@ public class BodyPart : MonoBehaviour
         onInitialized.Invoke();
     }
 
-    void OnDataChanged(BodyPartData newData)
+    public virtual void OnActivated()
     {
-        Body = newData.body;
-        Coords = newData.coords;
-        transform.rotation = GetRotation(newData.direction);
-        onInitialized.Invoke();
+        onActivated.Invoke();
+        OnActivatedEvent?.Invoke();
     }
-
-    public virtual void OnRemoved() { }
 
     public virtual void TakeDamage(float damage)
     {
