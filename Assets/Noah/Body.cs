@@ -86,7 +86,7 @@ public class Body : MonoBehaviour
                 yield return slot;
     }
 
-    public bool EnterEditMode(Action returnCallback, WeaponDefinition weapon)
+    public bool EnterEditMode(Action<BodyPart> returnCallback, WeaponDefinition weapon)
     {
         BodyPart prefab = weapon?.weaponPrefab ?? defaultPrefab;
         Slot[] validSlots = availableSlots.Where((slot) => (slot.directions & prefab.AttachTo) != 0).ToArray();
@@ -100,7 +100,7 @@ public class Body : MonoBehaviour
         return false;
     }
 
-    IEnumerator EditModeCR(Action returnCallback, WeaponDefinition weapon, BodyPart prefab, Slot[] slots)
+    IEnumerator EditModeCR(Action<BodyPart> returnCallback, WeaponDefinition weapon, BodyPart prefab, Slot[] slots)
     {
         Slot targetSlot;
         Direction targetDirection;
@@ -150,8 +150,7 @@ public class Body : MonoBehaviour
             yield return null;
         }
 
-        AddPart(targetSlot.coords, prefab, targetDirection, weapon);
-        returnCallback();
+        returnCallback(AddPart(targetSlot.coords, prefab, targetDirection, weapon));
     }
 
     void UpdateAvailableSlots()
