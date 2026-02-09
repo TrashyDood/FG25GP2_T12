@@ -197,12 +197,22 @@ public static class Utils
             float t = rayCount == 1 ? 0.5f : i / (float)(rayCount - 1);
             float angle = Mathf.Lerp(-halfAngleDeg, halfAngleDeg, t);
 
-            Vector3 rayDir = Quaternion.AngleAxis(angle, Vector3.forward) * direction;
+            Vector3 rayDir = Quaternion.AngleAxis(angle, Vector3.up) * direction;
 
             if (Physics.Raycast(originPos, rayDir, out RaycastHit hit, maxDistance, mask))
             {
-
+                float distSq = (hit.point - originPos).sqrMagnitude;
+                if (distSq < closestDistSq)
+                {
+                    closestDistSq = distSq;
+                    hitInfo = hit;
+                    hitSomething = true;
+                }
             }
+
+#if UNITY_EDITOR
+            Debug.DrawRay(originPos, rayDir * maxDistance, Color.cyan, 0.05f);
+#endif
         }
 
         return hitSomething;
