@@ -39,10 +39,10 @@ public class WeaponInstance
 
     public void PlayFireSound()
     {
-        if (weaponObject.audioSource == null || definition.fireClip == null)
+        if (weaponObject.AudioSource == null || definition.fireClip == null)
             return;
 
-        weaponObject.audioSource.PlayOneShot(definition.fireClip);
+        weaponObject.AudioSource.PlayOneShot(definition.fireClip);
     }
 }
 

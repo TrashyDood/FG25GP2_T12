@@ -22,7 +22,7 @@ public class BodyPart : MonoBehaviour
 
     public event Action OnActivatedEvent;
 
-    public AudioSource audioSource { get; private set; }
+    public AudioSource AudioSource { get; private set; }
     public Direction AttachTo => attachTo;
     public Direction AttachFrom => attachFrom;
     public Body Body { get; private set; }
@@ -34,7 +34,7 @@ public class BodyPart : MonoBehaviour
     protected virtual void Awake()
     {
         Collider = GetComponent<BoxCollider>();
-        audioSource = GetComponent<AudioSource>();
+        AudioSource = GetComponent<AudioSource>();
     }
     
     public void Initialize(Body body, WeaponDefinition weapon, Vector3Int coords, Direction direction)

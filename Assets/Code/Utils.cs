@@ -143,22 +143,7 @@ public static class Utils
         return values[index].Item1;
     }
 
-    public static float OscillateDamped(float time, float timeEnd, float frequency,
-        float freqDamp)
-    {
-        freqDamp = Mathf.Clamp01(freqDamp);
-        float dampFactor = Mathf.Min(time, timeEnd) / timeEnd;
-
-        return Mathf.Sin(Mathf.PI * time * frequency * (1 - dampFactor * freqDamp)) * (1 - dampFactor);
-    }
-
-    public static float Snap(float value, float size) =>
-        Mathf.Round(value / size) * size;
-
-    public static float SnapCeil(float value, float size) =>
-        Mathf.Ceil(value / size) * size;
-
-    public static int WeightedRandom(float[] weights)
+    public static int WeightedRandom(params float[] weights)
     {
         int count = weights.Length;
         float totalWeight = 0;
@@ -178,6 +163,21 @@ public static class Utils
 
         return weights.Length - 1;
     }
+
+    public static float OscillateDamped(float time, float timeEnd, float frequency,
+        float freqDamp)
+    {
+        freqDamp = Mathf.Clamp01(freqDamp);
+        float dampFactor = Mathf.Min(time, timeEnd) / timeEnd;
+
+        return Mathf.Sin(Mathf.PI * time * frequency * (1 - dampFactor * freqDamp)) * (1 - dampFactor);
+    }
+
+    public static float Snap(float value, float size) =>
+        Mathf.Round(value / size) * size;
+
+    public static float SnapCeil(float value, float size) =>
+        Mathf.Ceil(value / size) * size;
 
     public static bool RadiusCast(Vector3 originPos, Vector3 direction, float maxDistance, float radians, uint rayCount, out RaycastHit hitInfo, LayerMask mask = default)
     {

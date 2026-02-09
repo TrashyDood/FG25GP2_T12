@@ -93,13 +93,6 @@ public class EnemyManager : MonoBehaviour
             return result;
         }
 
-        public Enemy[] GetPrefabs(float factor)
-        {
-            float totWeight = GetTotalWeight(factor);
-
-            return null;
-        }
-
         [Serializable]
         public struct SpawnData
         {

@@ -17,6 +17,4 @@ public class WeaponDefinition : ScriptableObject
     //public GameObject projectilePrefab;
 
     public ShootingBehaviour shootingBehaviour;
-
-
 }
