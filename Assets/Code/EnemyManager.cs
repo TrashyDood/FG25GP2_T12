@@ -61,9 +61,7 @@ public class EnemyManager : MonoBehaviour
 
     EnemyData DetermineData()
     {
-        int index = UnityEngine.Random.Range(0, enemyData.Length);
-
-        return enemyData[index];
+        return enemyData[UnityEngine.Random.Range(0, enemyData.Length)];
     }
 
     IEnumerator SpawnEnemies(float duration, int count)

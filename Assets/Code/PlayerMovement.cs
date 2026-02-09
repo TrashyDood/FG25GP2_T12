@@ -1,28 +1,30 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Player))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-   
+    [SerializeField]   
     float acceleration = 50,
             deceleration = 80;
     [SerializeField]
     PlayerInput playerInput;
-
     [SerializeField]
     Player player;
 
+    [Header("Events")]
+    [SerializeField]
+    UnityEvent onMove,
+    onStill;
 
     Rigidbody rigidBody;
     Vector2 input;
     Vector3 currentVelocity,
             targetVelocity;
 
-    public float speed => player?.Build?.stats.GetStat(StatType.Speed) ?? 10f;
-
-
+    public float Speed => player.Build?.stats.GetStat(StatType.Speed) ?? 10f;
 
     public float Acceleration
     {
@@ -38,18 +40,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        rigidBody ??= GetComponent<Rigidbody>();
-        playerInput ??= GetComponent<PlayerInput>();
-
-        if (player == null)
-        {
-            player = FindObjectOfType<Player>();
-        }
+        player = GetComponent<Player>();
+        rigidBody = GetComponent<Rigidbody>();
+        playerInput = GetComponent<PlayerInput>();
     }
 
     private void FixedUpdate()
     {
-        
         currentVelocity = Vector3.MoveTowards(currentVelocity,
             targetVelocity,
             ((currentVelocity.sqrMagnitude > targetVelocity.sqrMagnitude) ? deceleration : acceleration) * Time.fixedDeltaTime);
@@ -60,6 +57,6 @@ public class PlayerMovement : MonoBehaviour
     public void OnMove(InputValue value)
     {
         input = value.Get<Vector2>();
-        targetVelocity = new Vector3(input.x, 0, input.y) * speed;
+        targetVelocity = new Vector3(input.x, 0, input.y) * Speed;
     }
 }
