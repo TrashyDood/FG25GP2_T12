@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 
 // Runtime instance of a weapon
@@ -34,6 +35,14 @@ public class WeaponInstance
 
             return null;
         }
+    }
+
+    public void PlayFireSound()
+    {
+        if (weaponObject.audioSource == null || definition.fireClip == null)
+            return;
+
+        weaponObject.audioSource.PlayOneShot(definition.fireClip);
     }
 }
 

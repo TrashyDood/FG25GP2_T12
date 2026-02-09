@@ -15,6 +15,8 @@ public class BodyPart : MonoBehaviour
     [SerializeField]
     Vector3Int size = Vector3Int.one;
 
+    public AudioSource audioSource { get; private set; }
+
     BodyPart[] neighbours = new BodyPart[6];
 
     public Direction AttachTo => attachTo;
@@ -23,10 +25,12 @@ public class BodyPart : MonoBehaviour
     public Vector3Int Coords { get; private set; }
     public Vector3Int Size { get; private set; }
     public BoxCollider Collider { get; private set; }
+    public WeaponDefinition WeaponDefinition { get; set; }
 
     protected virtual void Awake()
     {
         Collider = GetComponent<BoxCollider>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public virtual void Initialize(Body body, Vector3Int coords, Direction orientation)
@@ -61,9 +65,11 @@ public class BodyPart : MonoBehaviour
         };
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(transform.position, size);
     }
+#endif
 }

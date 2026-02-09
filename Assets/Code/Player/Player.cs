@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 
 [RequireComponent(typeof(Body), typeof(PlayerInput))]
 public class Player : MonoBehaviour
@@ -21,10 +19,6 @@ public class Player : MonoBehaviour
     XPManager xpManager;
     PlayerInput input;
     Body body;
-
-    [SerializeField] WeaponLibrary weaponLibrary;
-    [SerializeField] string startingWeaponId = "Eye_Weapon";
-    [SerializeField] private BodyPart startingWeaponObject;
 
     public XPManager XPManager => xpManager;
     public PlayerBuild Build => build;
@@ -48,7 +42,9 @@ public class Player : MonoBehaviour
         input = GetComponent<PlayerInput>();
         xpManager = GetComponent<XPManager>();
 
-        CreateNewBuild();
+        build = new PlayerBuild();
+        build.stats = new StatCollection();
+        build.stats.SetBaseStat(StatType.Speed, 10f);
     }
 
     private void Start()
@@ -67,42 +63,4 @@ public class Player : MonoBehaviour
             onDeathEvent.Invoke();
         }
     }
-
-    public void CreateNewBuild()
-    {
-        build = new PlayerBuild();
-
-        build.stats = new StatCollection();
-        build.stats.SetBaseStat(StatType.Speed, 10f);
-
-        build.weapons = new List<WeaponInstance>();
-
-        AddStartingWeapon();
-    }
-
-    public void AddStartingWeapon()
-    {
-        if (weaponLibrary == null) return;
-
-        WeaponDefinition weaponDef = weaponLibrary.GetWeapon(startingWeaponId);
-        if (weaponDef == null) return;
-
-        // Use the central part as the weapon object
-        BodyPart centralWeaponPart = Body.CentralPart;
-
-        WeaponInstance instance = new WeaponInstance
-        {
-            definition = weaponDef,
-            level = 1,
-            currentStats = weaponDef.baseStats.Clone(),
-            cooldownTimer = 0f,
-            weaponObject = centralWeaponPart // assign the existing central cube
-        };
-
-        build.weapons.Add(instance);
-
-        Debug.Log($"Starting weapon '{weaponDef.weaponName}' added to build. FirePoint: {instance.FirePoint.position}");
-    }
-
-
 }

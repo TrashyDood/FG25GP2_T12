@@ -1007,7 +1007,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[0].attackRange
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[0].attackSpeed
@@ -1023,7 +1023,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[1].attackRange
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[1].attackSpeed
@@ -1047,11 +1047,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[0].attackCooldown
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[1].attackCooldown
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[0].dropOnDeath.Array.size
@@ -1625,7 +1625,7 @@ PrefabInstance:
     - target: {fileID: 1773068182352922581, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -1301257871, guid: 8428059ebd2f3c44aaa7f6b43f4f4113, type: 3}
+      objectReference: {fileID: 818281947, guid: a1cd5f0ddb20b3a47909906bce5df12c, type: 3}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1664,7 +1664,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 1.34445
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1700,7 +1700,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -152.59998
+      value: -62.6
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1717,14 +1717,14 @@ PrefabInstance:
     - target: {fileID: 4979413968902493345, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 873140246, guid: 47510e7e41bd8ff408aa6ac23db59a52, type: 3}
+      objectReference: {fileID: 818281947, guid: a1cd5f0ddb20b3a47909906bce5df12c, type: 3}
     - target: {fileID: 4979413968902493345, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_FillAmount
-      value: 0.342
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8004698657344673448, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: <FillAmount>k__BackingField
-      value: 0.342
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8004698657344673448, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: fillAreas.Array.data[1].speed
@@ -1732,16 +1732,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8004698657344673448, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: fillAreas.Array.data[0].fillAmount
-      value: 0.342
+      value: 0.52504855
       objectReference: {fileID: 0}
     - target: {fileID: 8004698657344673448, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: fillAreas.Array.data[1].fillAmount
-      value: 0.342
+      value: 0.48638827
       objectReference: {fileID: 0}
     - target: {fileID: 8989047962272941767, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 873140246, guid: 47510e7e41bd8ff408aa6ac23db59a52, type: 3}
+      objectReference: {fileID: 818281947, guid: a1cd5f0ddb20b3a47909906bce5df12c, type: 3}
     - target: {fileID: 8989047962272941767, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_Color.b
       value: 0.18123543
@@ -1756,7 +1756,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8989047962272941767, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_FillAmount
-      value: 0.342
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2028,7 +2028,7 @@ PrefabInstance:
     - target: {fileID: 1773068182352922581, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -1301257871, guid: 8428059ebd2f3c44aaa7f6b43f4f4113, type: 3}
+      objectReference: {fileID: 818281947, guid: a1cd5f0ddb20b3a47909906bce5df12c, type: 3}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2067,7 +2067,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 1.5057
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2103,7 +2103,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -132.6001
+      value: -26.2
       objectReference: {fileID: 0}
     - target: {fileID: 2883444075275437298, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2120,7 +2120,7 @@ PrefabInstance:
     - target: {fileID: 4979413968902493345, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 873140246, guid: 47510e7e41bd8ff408aa6ac23db59a52, type: 3}
+      objectReference: {fileID: 818281947, guid: a1cd5f0ddb20b3a47909906bce5df12c, type: 3}
     - target: {fileID: 4979413968902493345, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_FillAmount
       value: 1
@@ -2135,16 +2135,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8004698657344673448, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: fillAreas.Array.data[0].fillAmount
-      value: 0.44565704
+      value: 0.29944736
       objectReference: {fileID: 0}
     - target: {fileID: 8004698657344673448, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: fillAreas.Array.data[1].fillAmount
-      value: 0.3421365
+      value: 0.19828898
       objectReference: {fileID: 0}
     - target: {fileID: 8989047962272941767, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 873140246, guid: 47510e7e41bd8ff408aa6ac23db59a52, type: 3}
+      objectReference: {fileID: 818281947, guid: a1cd5f0ddb20b3a47909906bce5df12c, type: 3}
     - target: {fileID: 8989047962272941767, guid: c7507809f61300c4ea15cbf005fe22a3, type: 3}
       propertyPath: m_FillAmount
       value: 1
@@ -2393,7 +2393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.15686275}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2847,10 +2847,6 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1720148720}
-    - target: {fileID: -2582018424560963497, guid: b68d2b976c85a184b87590630a600616, type: 3}
-      propertyPath: weaponLibrary
-      value: 
-      objectReference: {fileID: 11400000, guid: 2075026625ded494eabb277b3ee5c201, type: 2}
     - target: {fileID: 2123195880003866622, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -2897,7 +2893,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3117290854059341669, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: m_Mass
-      value: 999999
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3117290854059341669, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: m_Constraints
@@ -2917,11 +2913,11 @@ PrefabInstance:
       objectReference: {fileID: 1317094514}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _XPReqScaling.m_Curve.Array.data[0].time
-      value: 0.080387115
+      value: 0.18684769
       objectReference: {fileID: 0}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _XPReqScaling.m_Curve.Array.data[0].value
-      value: 1.3999939
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _onLevelGained.m_PersistentCalls.m_Calls.Array.data[1].m_Target
