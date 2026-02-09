@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        Target = GameObject.FindGameObjectWithTag("Player")?.transform;
+        Target = GameManager.Instance.Player.transform;
     }
 
     private void FixedUpdate()
