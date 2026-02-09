@@ -25,9 +25,9 @@ public class BodyPart : MonoBehaviour
 
     public event Action OnActivatedEvent;
 
-    public AudioSource AudioSource { get; private set; }
     public Direction AttachTo => attachTo;
     public Direction AttachFrom => attachFrom;
+    public AudioSource AudioSource { get; private set; }
     public Body Body { get; private set; }
     public Vector3Int Coords { get; private set; }
     public Vector3Int Size { get; private set; }
@@ -59,7 +59,7 @@ public class BodyPart : MonoBehaviour
         if (!canTakeDamage)
             return;
 
-        Body.Player.Health -= damage;
+        Body.Player.CurrentHealth -= damage;
     }
 
     static Quaternion GetRotation(Direction orientation)

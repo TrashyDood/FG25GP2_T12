@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(EnemyMovement), typeof(SphereCollider))]
-public class Enemy : MonoBehaviour
+public class Enemy : Entity
 {
     [SerializeField]
     Transform target;
@@ -19,21 +19,10 @@ public class Enemy : MonoBehaviour
     Ray attackRay;
     EnemyMovement movement;
     SphereCollider collider;
-    float currentHealth,
-        attackTimer;
+    float attackTimer;
 
     public SphereCollider Collider => collider;
     public EnemyMovement Movement => movement;
-
-    public float Health
-    {
-        get => currentHealth;
-        set
-        {
-            OnHealthChanged(value);
-            currentHealth = value;
-        }
-    }
 
     public EnemyData Data
     {
@@ -55,8 +44,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         Data = data; // Initialize data.
 
         collider = GetComponent<SphereCollider>();
@@ -86,24 +77,16 @@ public class Enemy : MonoBehaviour
         hitInfo.collider.GetComponent<BodyPart>()?.TakeDamage(data.attackDamage);
     }
 
-    void OnHealthChanged(float newHealth)
-    {
-        if (Mathf.Round(newHealth) < 1)
-        {
-            Destroy(gameObject);
-            foreach (var item in data.dropOnDeath)
-                Instantiate(item, transform.position + Utils.RandomVector3(1, 0, 1, -1, 0, -1), Quaternion.identity);
-        }
-    }
+    void OnDataChanged(EnemyData newData) { }
+    void OnTargetChanged(Transform newTarget) { }
 
-    void OnDataChanged(EnemyData newData)
+    protected override void OnDeath()
     {
-        currentHealth = newData.maxHealth;
-    }
+        base.OnDeath();
 
-    void OnTargetChanged(Transform newTarget)
-    {
-
+        Destroy(gameObject);
+        foreach (var item in data.dropOnDeath)
+            Instantiate(item, transform.position + Utils.RandomVector3(1, 0, 1, -1, 0, -1), Quaternion.identity);
     }
 
 #if UNITY_EDITOR

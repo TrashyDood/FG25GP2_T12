@@ -1102,6 +1102,106 @@ PrefabInstance:
       propertyPath: 'enemyData.Array.data[1].dropOnDeath.Array.data[1]'
       value: 
       objectReference: {fileID: 4721473660522759184, guid: 17d20f0fa7504704abe027b322e73355, type: 3}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[0].spawnWeight.m_PreInfinity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[1].spawnWeight.m_PreInfinity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[2].spawnWeight.m_PreInfinity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[0].spawnWeight.m_PostInfinity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[1].spawnWeight.m_PostInfinity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[2].spawnWeight.m_PostInfinity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[0].spawnWeight.m_RotationOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[1].spawnWeight.m_RotationOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[2].spawnWeight.m_RotationOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[0].spawnWeight.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[1].spawnWeight.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[2].spawnWeight.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[0].spawnWeight.m_Curve.Array.data[1].time
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[1].spawnWeight.m_Curve.Array.data[1].time
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[2].spawnWeight.m_Curve.Array.data[1].time
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[0].spawnWeight.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[0].spawnWeight.m_Curve.Array.data[1].value
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[1].spawnWeight.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[1].spawnWeight.m_Curve.Array.data[1].value
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[2].spawnWeight.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[2].spawnWeight.m_Curve.Array.data[1].value
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[2].spawnWeight.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[2].spawnWeight.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[2].spawnWeight.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[2].spawnWeight.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7585911998284658465, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: m_Name
       value: Game Manager
@@ -3229,6 +3329,10 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1720148720}
+    - target: {fileID: -2582018424560963497, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: currentHealth
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 2123195880003866622, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -3273,18 +3377,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3117290854059341669, guid: b68d2b976c85a184b87590630a600616, type: 3}
-      propertyPath: m_Mass
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3117290854059341669, guid: b68d2b976c85a184b87590630a600616, type: 3}
-      propertyPath: m_Constraints
-      value: 116
-      objectReference: {fileID: 0}
-    - target: {fileID: 3117290854059341669, guid: b68d2b976c85a184b87590630a600616, type: 3}
-      propertyPath: m_Interpolate
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5253724668774118500, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: joyStick
       value: 
@@ -3293,14 +3385,6 @@ PrefabInstance:
       propertyPath: xpBar
       value: 
       objectReference: {fileID: 1317094514}
-    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
-      propertyPath: _XPReqScaling.m_Curve.Array.data[0].time
-      value: 0.18684769
-      objectReference: {fileID: 0}
-    - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
-      propertyPath: _XPReqScaling.m_Curve.Array.data[0].value
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 6825332668043674253, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: _onLevelGained.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 

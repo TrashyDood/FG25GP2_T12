@@ -55,7 +55,7 @@ public class PiercingProjectile : MonoBehaviour
 
         if (enemy != null)
         {
-            enemy.Health -= damage;
+            enemy.CurrentHealth -= damage;
 
             pierceRemaining--;
 

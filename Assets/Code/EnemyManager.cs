@@ -1,21 +1,38 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField]
     Transform spawnCenter;
     [SerializeField]
-    SpawnConfig config;
+    SpawnConfig spawnConfig;
     [SerializeField]
     SpawnParams spawnParams;
 
-    float spawnIntervalTimer;
+    [Header("Events")]
+    [SerializeField]
+    UnityEvent<SpawnConfig, SpawnConfig> onConfigsChangedEvent;
+
     bool isSpawning;
+    float spawnIntervalTimer,
+        gameTime;
 
     public static EnemyManager Instance { get; private set; }
-    public SpawnConfig Config => config;
+    public float GameTime => gameTime;
+
+    public SpawnConfig Config
+    {
+        get => spawnConfig;
+        set
+        {
+            OnSpawnConfigChanged(value);
+            spawnConfig = value;
+        }
+    }
 
     private void Awake()
     {
@@ -25,53 +42,52 @@ public class EnemyManager : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
-    {
+    private void Start() =>
         spawnCenter = GameManager.Instance.Player.transform;
-    }
+
+    private void Update() =>
+        gameTime += Time.deltaTime;
 
     private void FixedUpdate()
     {
         if (spawnIntervalTimer <= 0 && !isSpawning)
         {
-            spawnIntervalTimer = UnityEngine.Random.Range(config.minInterval, config.maxInterval);
             StartCoroutine(
                 SpawnEnemies(
-                    UnityEngine.Random.Range(config.minDuration, config.maxDuration),
-                    (int)UnityEngine.Random.Range(config.minCount, config.maxCount)));
+                    UnityEngine.Random.Range(spawnConfig.minDuration, spawnConfig.maxDuration),
+                    (uint)UnityEngine.Random.Range(spawnConfig.minCount, spawnConfig.maxCount)));
+
+            spawnIntervalTimer = UnityEngine.Random.Range(spawnConfig.minInterval, spawnConfig.maxInterval);
         }
         else
             spawnIntervalTimer -= Time.fixedDeltaTime;
     }
 
-    Vector3 DeterminePosition() =>
-        Utils.RandomCircleEdge(config.spawnRadius) + spawnCenter.position;
+    void OnSpawnConfigChanged(SpawnConfig newConfig) { }
 
-    Enemy DeterminePrefab()
-    {
-        return spawnParams.Data[UnityEngine.Random.Range(0, spawnParams.Data.Length)].prefab;
-    }
-
-    Enemy SpawnEnemy(Vector3 position)
-    {
-        Enemy enemy = Instantiate(DeterminePrefab(), transform);
-        enemy.transform.localPosition = position;
-
-        return enemy;
-    }
-
-    IEnumerator SpawnEnemies(float duration, int count)
+    IEnumerator SpawnEnemies(float duration, uint count)
     {
         isSpawning = true;
         float interval = duration / count;
 
-        for (int i = 0; i < count; i++)
+        foreach (var enemy in spawnParams.GetEnemies(gameTime, count))
         {
-            SpawnEnemy(DeterminePosition());
+            SpawnEnemy(DeterminePosition(), enemy.prefab);
             yield return new WaitForSeconds(interval);
         }
 
         isSpawning = false;
+    }
+
+    Vector3 DeterminePosition() =>
+        Utils.RandomCircleEdge(spawnConfig.spawnRadius) + spawnCenter.position;
+
+    Enemy SpawnEnemy(Vector3 position, Enemy prefab)
+    {
+        Enemy enemy = Instantiate(prefab, transform);
+        enemy.transform.localPosition = position;
+
+        return enemy;
     }
 
     [Serializable]
@@ -80,16 +96,36 @@ public class EnemyManager : MonoBehaviour
         [SerializeField]
         SpawnData[] data;
 
+        float[] weights;
+
         public SpawnData[] Data => data;
 
-        public float GetTotalWeight(float factor)
+        public IEnumerable<SpawnData> GetEnemies(float factor, uint count)
         {
-            float result = 0;
+            float totalWeight = 0;
+
+            weights ??= new float[data.Length];
 
             for (int i = 0; i < data.Length; i++)
-                result += data[i].CurrentWeight(factor);
+                totalWeight += (weights[i] = data[i].CurrentWeight(factor));
 
-            return result;
+            float rand = 0;
+
+            for (uint i = 0; i < count; i++)
+            {
+                rand = UnityEngine.Random.Range(0, totalWeight);
+
+                for (int j = 0; j < weights.Length; j++)
+                {
+                    if (rand < weights[j])
+                    {
+                        yield return data[j];
+                        break;
+                    }
+
+                    rand -= weights[j];
+                }
+            }
         }
 
         [Serializable]
@@ -108,10 +144,10 @@ public class EnemyManager : MonoBehaviour
     {
         public float minInterval = 5,
             maxInterval = 8,
-            minCount = 1,
-            maxCount = 3,
             minDuration = 2.5f,
             maxDuration = 5,
             spawnRadius = 10;
+        public uint minCount = 1,
+            maxCount = 3;
     }
 }

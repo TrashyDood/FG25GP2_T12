@@ -50,7 +50,7 @@ public class Projectile : MonoBehaviour
 
         if (enemy != null)
         {
-            enemy.Health -= damage;
+            enemy.CurrentHealth -= damage;
         }
 
         Destroy(gameObject);

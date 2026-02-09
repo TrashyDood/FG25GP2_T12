@@ -57,8 +57,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
+      time: 0.18684769
+      value: 5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -135,9 +135,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _currentXP: 0
-  _currentLevel: 1
-  _currentXPReq: 2
+  currentXP: 0
+  currentLevel: 0
+  currentXPReq: 0
 --- !u!114 &7319833572454886761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,10 +150,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97845e17bc4f6334d99605e44e43f8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
-  speed: 10
   acceleration: 50
   deceleration: 80
   playerInput: {fileID: 0}
+  player: {fileID: 0}
+  onMove:
+    m_PersistentCalls:
+      m_Calls: []
+  onStill:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6454924862363815314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,8 +202,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2aacd1ad4dcc4349bd235e965b96d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  currentHealth: 0
   maxHealth: 100
+  currentHealth: 0
+  onDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onHealthChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
   healthBar: {fileID: 0}
 --- !u!114 &6435731811321519823
 MonoBehaviour:
@@ -212,9 +224,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Body
   size: {x: 7, y: 1, z: 7}
-  bodypartLayer:
-    serializedVersion: 2
-    m_Bits: 0
   defaultPrefab: {fileID: 4788076387273759160, guid: 6087e36347ef52c4ab142177b810b844, type: 3}
   centralPrefab: {fileID: 4847483082424459837, guid: 566a58d9279a6e74fb493e20fd70c5bc, type: 3}
   slotMaterial: {fileID: 2100000, guid: 8b44773059fde0d4791e148bd2d8df64, type: 2}
@@ -241,7 +250,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3001057493141643324}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -257,8 +266,8 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
+  m_Interpolate: 2
+  m_Constraints: 116
   m_CollisionDetection: 1
 --- !u!114 &3985845377055536104
 MonoBehaviour:
@@ -273,6 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
   weaponLibrary: {fileID: 11400000, guid: 89ad90d6d5a664c4cbe4a02bdab09110, type: 2}
+  player: {fileID: 0}
   startingWeaponId: Quill
 --- !u!1 &8705035447532630953
 GameObject:
