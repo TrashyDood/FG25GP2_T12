@@ -242,7 +242,7 @@ public class UpgradeManager : MonoBehaviour
         }
 
 
-        player.Body.EnterEditMode(() => { GameManager.Instance.StateManager.SetState(GameState.Playing); }, GetPrefab(card.payload as UpgradeDefinition));
+        player.Body.EnterEditMode(() => { GameManager.Instance.StateManager.SetState(GameState.Playing); }, GetWeaponDefinition(card.payload as UpgradeDefinition));
 
         choicesRoot.SetActive(false);
     }
@@ -272,7 +272,7 @@ public class UpgradeManager : MonoBehaviour
     }
     */
 
-    public WeaponDefinition GetPrefab(UpgradeDefinition upgrade)
+    public WeaponDefinition GetWeaponDefinition(UpgradeDefinition upgrade)
     {
         if (upgrade == null) return null;
         
@@ -289,6 +289,7 @@ public class UpgradeManager : MonoBehaviour
 
     public void EnterUpgradeState()
     {
+        Debug.Log("Enter upgrade state");
         ShowChoices(GetChoices());
     }
 }
