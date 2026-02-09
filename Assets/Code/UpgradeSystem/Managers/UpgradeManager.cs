@@ -242,7 +242,12 @@ public class UpgradeManager : MonoBehaviour
         }
 
 
-        player.Body.EnterEditMode(() => { GameManager.Instance.StateManager.SetState(GameState.Playing); }, GetWeaponDefinition(card.payload as UpgradeDefinition));
+        player.Body.EnterEditMode((bodyPart) => 
+        {
+            GameManager.Instance.StateManager.SetState(GameState.Playing);
+            
+        }, 
+        GetWeaponDefinition(card.payload as UpgradeDefinition));
 
         choicesRoot.SetActive(false);
     }

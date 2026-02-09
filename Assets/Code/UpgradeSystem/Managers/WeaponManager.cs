@@ -59,6 +59,7 @@ public class WeaponManager : MonoBehaviour
 
             if (weapon.cooldownTimer <= 0f)
             {
+                weapon.weaponObject?.OnActivated();
                 weapon.definition.shootingBehaviour.Shoot(weapon);
                 weapon.cooldownTimer = weapon.currentStats.fireRate > 0 ? 1f / weapon.currentStats.fireRate : 1f;
             }
