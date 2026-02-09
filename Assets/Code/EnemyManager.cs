@@ -27,13 +27,13 @@ public class EnemyManager : MonoBehaviour
 
     private void Start()
     {
-        spawnCenter = GameObject.FindGameObjectWithTag("Player")?.transform;
+        spawnCenter = GameManager.Instance.Player.transform;
     }
 
     private void FixedUpdate()
     {
         if (spawnIntervalTimer <= 0 && !isSpawning)
-        {   
+        {
             spawnIntervalTimer = UnityEngine.Random.Range(config.minInterval, config.maxInterval);
             StartCoroutine(
                 SpawnEnemies(

@@ -46,7 +46,7 @@ public class EnemyMovement : MonoBehaviour
         //rb.MovePosition(Vector3.MoveTowards(rb.position, Target.transform.position, enemy.Data.speed * Time.deltaTime));
 
         rb.Move(Vector3.MoveTowards(transform.position, Target.transform.position, Data.speed * Time.fixedDeltaTime),
-            Quaternion.LookRotation(transform.position - Target.transform.position));
+            Quaternion.LookRotation(Target.transform.position - transform.position));
     }
 
     public void ApplyKnockback(Vector3 direction, float speed)

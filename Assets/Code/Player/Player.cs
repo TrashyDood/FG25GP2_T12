@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     PlayerBuild build;
 
+    [Header("Events")]
     [SerializeField]
     UnityEvent onDeathEvent;
 

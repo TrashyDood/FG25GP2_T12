@@ -10,9 +10,11 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     LayerMask targetLayer;
     [SerializeField]
-    UnityEvent onAttackkEvent;
-    [SerializeField]
     EnemyData data;
+
+    [Header("Events")]
+    [SerializeField]
+    UnityEvent onAttackEvent;
 
     Ray attackRay;
     EnemyMovement movement;

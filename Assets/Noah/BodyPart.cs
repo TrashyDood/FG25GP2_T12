@@ -13,9 +13,12 @@ public class BodyPart : MonoBehaviour
     bool canTakeDamage = true;
     [SerializeField]
     Vector3Int size = Vector3Int.one;
+
+    [Header("Events")]
     [SerializeField]
-    UnityEvent onActivated,
-        onInitialized;
+    UnityEvent onActivatedEvent;
+    [SerializeField]
+    UnityEvent onInitializedEvent;
 
     BodyPart[] neighbours = new BodyPart[6];
     BodyPartData data;
@@ -42,12 +45,12 @@ public class BodyPart : MonoBehaviour
         Body = body;
         Coords = coords;
         transform.rotation = GetRotation(direction);
-        onInitialized.Invoke();
+        onInitializedEvent.Invoke();
     }
 
     public virtual void OnActivated()
     {
-        onActivated.Invoke();
+        onActivatedEvent.Invoke();
         OnActivatedEvent?.Invoke();
     }
 
