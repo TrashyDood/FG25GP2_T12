@@ -972,7 +972,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: spawnParams.data.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[0].size
@@ -1066,6 +1066,14 @@ PrefabInstance:
       propertyPath: spawnParams.data.Array.data[0].prefab
       value: 
       objectReference: {fileID: 5368941952833580897, guid: f0476f4dec525d640840a3455291a0c7, type: 3}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[1].prefab
+      value: 
+      objectReference: {fileID: 5841816983743711238, guid: 9303e2c81e94e9e4d94ae8c821b39119, type: 3}
+    - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
+      propertyPath: spawnParams.data.Array.data[2].prefab
+      value: 
+      objectReference: {fileID: 4156334697098136850, guid: fbddc859dafe6ea4d8518af49848f5ad, type: 3}
     - target: {fileID: 5315425019157074050, guid: 861ec1b2fa05e3c4889e934186181f97, type: 3}
       propertyPath: enemyData.Array.data[0].attackCooldown
       value: 3

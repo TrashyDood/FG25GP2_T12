@@ -47,17 +47,17 @@ public class EnemyManager : MonoBehaviour
     Vector3 DeterminePosition() =>
         Utils.RandomCircleEdge(config.spawnRadius) + spawnCenter.position;
 
-    Enemy SpawnEnemy(Vector3 position)
-    {
-        Enemy enemy = Instantiate(DeterminePrefab());
-        enemy.transform.position = position;
-
-        return enemy;
-    }
-
     Enemy DeterminePrefab()
     {
-        return spawnParams.Data[UnityEngine.Random.Range(0, spawnParams.Data.Length + 1)].prefab;
+        return spawnParams.Data[UnityEngine.Random.Range(0, spawnParams.Data.Length)].prefab;
+    }
+
+    Enemy SpawnEnemy(Vector3 position)
+    {
+        Enemy enemy = Instantiate(DeterminePrefab(), transform);
+        enemy.transform.localPosition = position;
+
+        return enemy;
     }
 
     IEnumerator SpawnEnemies(float duration, int count)
