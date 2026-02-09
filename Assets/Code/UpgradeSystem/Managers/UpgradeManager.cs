@@ -272,7 +272,7 @@ public class UpgradeManager : MonoBehaviour
     }
     */
 
-    public BodyPart GetPrefab(UpgradeDefinition upgrade)
+    public WeaponDefinition GetPrefab(UpgradeDefinition upgrade)
     {
         if (upgrade == null) return null;
         
@@ -280,8 +280,7 @@ public class UpgradeManager : MonoBehaviour
         {
             if (effect is AddWeaponEffect addWeapon)
             {
-                BodyPart prefab = addWeapon.weapon.weaponPrefab;
-                return prefab;
+                return addWeapon.weapon;
             }
         }
         

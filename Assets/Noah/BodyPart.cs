@@ -15,6 +15,8 @@ public class BodyPart : MonoBehaviour
     [SerializeField]
     Vector3Int size = Vector3Int.one;
 
+    public AudioSource audioSource { get; private set; }
+
     BodyPart[] neighbours = new BodyPart[6];
 
     public Direction AttachTo => attachTo;
@@ -27,6 +29,7 @@ public class BodyPart : MonoBehaviour
     protected virtual void Awake()
     {
         Collider = GetComponent<BoxCollider>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public virtual void Initialize(Body body, Vector3Int coords, Direction orientation)

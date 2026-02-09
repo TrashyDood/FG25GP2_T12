@@ -179,6 +179,35 @@ public static class Utils
         return weights.Length - 1;
     }
 
+    public static bool RadiusCast(Vector3 originPos, Vector3 direction, float maxDistance, float radians, uint rayCount, out RaycastHit hitInfo, LayerMask mask = default)
+    {
+        hitInfo = default;
+
+        if (rayCount == 0) return false;
+
+        direction.Normalize();
+
+        float closestDistSq = maxDistance * maxDistance;
+        bool hitSomething = false;
+
+        float halfAngleDeg = radians * Mathf.Rad2Deg * 0.5f;
+
+        for (uint i = 0; i < rayCount; i++)
+        {
+            float t = rayCount == 1 ? 0.5f : i / (float)(rayCount - 1);
+            float angle = Mathf.Lerp(-halfAngleDeg, halfAngleDeg, t);
+
+            Vector3 rayDir = Quaternion.AngleAxis(angle, Vector3.forward) * direction;
+
+            if (Physics.Raycast(originPos, rayDir, out RaycastHit hit, maxDistance, mask))
+            {
+
+            }
+        }
+
+        return hitSomething;
+    }
+
     #region extensions
     public static Vector2 GetOrthoSize(this Camera camera)
     {
