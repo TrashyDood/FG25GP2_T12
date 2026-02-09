@@ -18,6 +18,7 @@ public class Enemy : PoolableComponent<Enemy>
     EnemyMovement movement;
     Material material;
     MeshRenderer meshRenderer;
+    MeshFilter meshFilter;
     float health,
         attackTimer;
 
@@ -56,6 +57,7 @@ public class Enemy : PoolableComponent<Enemy>
     private void Awake()
     {
         meshRenderer = GetComponentInChildren<MeshRenderer>();
+        meshFilter = GetComponentInChildren<MeshFilter>();
         movement = GetComponent<EnemyMovement>();
     }
 
@@ -98,6 +100,7 @@ public class Enemy : PoolableComponent<Enemy>
     {
         health = newData.maxHealth;
         meshRenderer.material = newData.material;
+        meshFilter.sharedMesh = newData.model;
     }
 
     void OnTargetChanged(Transform newTarget)
@@ -127,6 +130,4 @@ public class EnemyData
         attackCooldown = 1,
         attackWidth = 1,
         size;
-
-    // attackSpeed kan vara istället att spelaren har i-frames
 }

@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2361498066505497406}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9162609420880681060}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &3966421072759131687
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -142,6 +142,9 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 32768
+  onAttackkEvent:
+    m_PersistentCalls:
+      m_Calls: []
   data:
     dropOnDeath:
     - {fileID: 4721473660522759184, guid: 17d20f0fa7504704abe027b322e73355, type: 3}
@@ -153,7 +156,8 @@ MonoBehaviour:
     speed: 0
     attackDamage: 0
     attackRange: 0
-    attackSpeed: 0
+    attackCooldown: 1
+    attackWidth: 1
     size: 0
 --- !u!114 &5364724033248130
 MonoBehaviour:
