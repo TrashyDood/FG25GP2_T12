@@ -57,7 +57,7 @@ public class EnemyManager : MonoBehaviour
 
     Enemy DeterminePrefab()
     {
-        return spawnParams.Data[UnityEngine.Random.Range(0, spawnParams.Data.Length + 1)].prefab;
+        return spawnParams.Data[UnityEngine.Random.Range(0, spawnParams.Data.Length)].prefab;
     }
 
     IEnumerator SpawnEnemies(float duration, int count)
