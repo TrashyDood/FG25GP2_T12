@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(EnemyMovement))]
+[RequireComponent(typeof(EnemyMovement), typeof(SphereCollider))]
 public class Enemy : PoolableComponent<Enemy>
 {
     [SerializeField]
@@ -16,20 +16,21 @@ public class Enemy : PoolableComponent<Enemy>
 
     Ray attackRay;
     EnemyMovement movement;
-    Material material;
+    SphereCollider collider;
     MeshRenderer meshRenderer;
-    float health,
+    float currentHealth,
         attackTimer;
 
+    public SphereCollider Collider => collider;
     public EnemyMovement Movement => movement;
 
     public float Health
     {
-        get => health;
+        get => currentHealth;
         set
         {
             OnHealthChanged(value);
-            health = value;
+            currentHealth = value;
         }
     }
 
@@ -55,20 +56,21 @@ public class Enemy : PoolableComponent<Enemy>
 
     private void Awake()
     {
+        collider = GetComponent<SphereCollider>();
         meshRenderer = GetComponentInChildren<MeshRenderer>();
         movement = GetComponent<EnemyMovement>();
     }
 
     private void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player")?.transform;
+        Target = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
     private void FixedUpdate()
     {
         attackRay = new Ray(transform.position, target.position - transform.position);
 
-        if (attackTimer <= 0 && Physics.SphereCast(attackRay, data.attackWidth, out RaycastHit hitInfo, data.attackRange, targetLayer))
+        if (attackTimer <= 0 && Physics.Raycast(attackRay, out RaycastHit hitInfo, collider.radius + data.attackRange, targetLayer))
         {
             Attack(hitInfo);
             attackTimer = data.attackCooldown;
@@ -96,7 +98,7 @@ public class Enemy : PoolableComponent<Enemy>
 
     void OnDataChanged(EnemyData newData)
     {
-        health = newData.maxHealth;
+        currentHealth = newData.maxHealth;
         meshRenderer.material = newData.material;
     }
 
@@ -125,7 +127,6 @@ public class EnemyData
         attackDamage = 20,
         attackRange = 5,
         attackCooldown = 1,
-        attackWidth = 1,
         size;
 
     // attackSpeed kan vara istället att spelaren har i-frames

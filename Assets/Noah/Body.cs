@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 [RequireComponent(typeof(Player))]
@@ -12,8 +11,6 @@ public class Body : MonoBehaviour
 {
     [SerializeField]
     Vector3Int size = Vector3Int.one;
-    [SerializeField]
-    LayerMask bodypartLayer;
     [SerializeField]
     BodyPart defaultPrefab,
         centralPrefab;
@@ -88,21 +85,20 @@ public class Body : MonoBehaviour
                 yield return slot;
     }
 
-    public bool EnterEditMode(Action returnCallback, BodyPart prefab = null)
+    public bool EnterEditMode(Action returnCallback, WeaponDefinition weapon)
     {
-        prefab ??= defaultPrefab;
-        Slot[] validSlots = availableSlots.Where((slot) => (slot.directions & prefab.AttachTo) != 0).ToArray();
+        Slot[] validSlots = availableSlots.Where((slot) => (slot.directions & weapon.weaponPrefab.AttachTo) != 0).ToArray();
 
         if (validSlots.Length > 0)
         {
-            StartCoroutine(EditModeCR(returnCallback, prefab, validSlots));
+            StartCoroutine(EditModeCR(returnCallback, weapon, validSlots));
             return true;
         }
 
         return false;
     }
 
-    IEnumerator EditModeCR(Action returnCallback, BodyPart prefab, Slot[] slots)
+    IEnumerator EditModeCR(Action returnCallback, WeaponDefinition weapon, Slot[] slots)
     {
         Slot targetSlot;
         Direction targetDirection;
@@ -152,7 +148,7 @@ public class Body : MonoBehaviour
             yield return null;
         }
 
-        AddPart(targetSlot.coords, prefab, targetDirection);
+        AddPart(targetSlot.coords, weapon.weaponPrefab, targetDirection).WeaponDefinition = weapon;
         returnCallback();
     }
 

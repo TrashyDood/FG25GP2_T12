@@ -290,7 +290,6 @@ public class UpgradeManager : MonoBehaviour
 
     public void EnterUpgradeState()
     {
-        Debug.Log("Enter upgrade state");
         ShowChoices(GetChoices());
     }
 }

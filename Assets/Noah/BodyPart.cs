@@ -23,6 +23,7 @@ public class BodyPart : MonoBehaviour
     public Vector3Int Coords { get; private set; }
     public Vector3Int Size { get; private set; }
     public BoxCollider Collider { get; private set; }
+    public WeaponDefinition WeaponDefinition { get; set; }
 
     protected virtual void Awake()
     {
@@ -61,9 +62,11 @@ public class BodyPart : MonoBehaviour
         };
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(transform.position, size);
     }
+#endif
 }
