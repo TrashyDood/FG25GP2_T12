@@ -57,10 +57,11 @@ public class GameManager : MonoBehaviour
     public CallbackState GetCBState(GameState state) =>
         (CallbackState)stateManager.GetState(state);
 
-    public void RestartCurrentLevel()
-    {
+    public void RestartCurrentLevel() =>
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+
+    public void SetLevel(string sceneName) =>
+        SceneManager.LoadScene(sceneName);
 
     IEnumerator Timer(Action callback, float timer = 1)
     {

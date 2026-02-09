@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
@@ -50,7 +51,6 @@ public class Body : MonoBehaviour
             return null;
 
         BodyPart bodyPart = Instantiate(prefab, transform);
-        bodyPart.Initialize(this, coords, orientation);
         bodyPart.transform.localPosition = CoordsToWorld(coords);
 
         bodyParts[coords] = bodyPart;
@@ -148,7 +148,8 @@ public class Body : MonoBehaviour
             yield return null;
         }
 
-        AddPart(targetSlot.coords, weapon.weaponPrefab, targetDirection).WeaponDefinition = weapon;
+        AddPart(targetSlot.coords, weapon?.weaponPrefab, targetDirection)
+            .Initialize(this, weapon, targetSlot.coords, targetDirection);
         returnCallback();
     }
 

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class BodyPart : MonoBehaviour
 {
     [SerializeField]
-    UnityEvent onIntialized;
+    UnityEvent onInitialized;
     [SerializeField]
     Direction attachTo,
         attachFrom;
@@ -18,6 +18,7 @@ public class BodyPart : MonoBehaviour
     public AudioSource audioSource { get; private set; }
 
     BodyPart[] neighbours = new BodyPart[6];
+    BodyPartData data;
 
     public Direction AttachTo => attachTo;
     public Direction AttachFrom => attachFrom;
@@ -25,20 +26,28 @@ public class BodyPart : MonoBehaviour
     public Vector3Int Coords { get; private set; }
     public Vector3Int Size { get; private set; }
     public BoxCollider Collider { get; private set; }
-    public WeaponDefinition WeaponDefinition { get; set; }
+    public WeaponDefinition Weapon { get; private set; }
 
     protected virtual void Awake()
     {
         Collider = GetComponent<BoxCollider>();
         audioSource = GetComponent<AudioSource>();
     }
-
-    public virtual void Initialize(Body body, Vector3Int coords, Direction orientation)
+    
+    public void Initialize(Body body, WeaponDefinition weapon, Vector3Int coords, Direction direction)
     {
         Body = body;
         Coords = coords;
-        transform.rotation = GetRotation(orientation);
-        onIntialized.Invoke();
+        transform.rotation = GetRotation(direction);
+        onInitialized.Invoke();
+    }
+
+    void OnDataChanged(BodyPartData newData)
+    {
+        Body = newData.body;
+        Coords = newData.coords;
+        transform.rotation = GetRotation(newData.direction);
+        onInitialized.Invoke();
     }
 
     public virtual void OnRemoved() { }
@@ -72,4 +81,12 @@ public class BodyPart : MonoBehaviour
         Gizmos.DrawWireCube(transform.position, size);
     }
 #endif
+}
+
+public class BodyPartData
+{
+    public Body body;
+    public Vector3Int coords;
+    public Direction direction;
+    public WeaponDefinition weapon;
 }
