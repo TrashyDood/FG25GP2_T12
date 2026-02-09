@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -34,7 +33,7 @@ public class EnemyManager : MonoBehaviour
     private void FixedUpdate()
     {
         if (spawnIntervalTimer <= 0 && !isSpawning)
-        {
+        {   
             spawnIntervalTimer = UnityEngine.Random.Range(config.minInterval, config.maxInterval);
             StartCoroutine(
                 SpawnEnemies(
