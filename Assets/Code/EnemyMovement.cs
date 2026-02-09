@@ -12,7 +12,8 @@ public class EnemyMovement : MonoBehaviour
     public EnemyData Data => enemy?.Data;
     public Transform Target => enemy?.Target;
     
-    [SerializeField] private float knockbackDamping = 30f;
+    [SerializeField]
+    private float knockbackDamping = 30f;
 
     private Vector3 knockbackVelocity;
     
@@ -30,19 +31,22 @@ public class EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 toTarget = Target.transform.position;
-        Vector3 desiredPos = Vector3.MoveTowards(rb.position, toTarget, enemy.Data.speed * Time.deltaTime);
+        //Vector3 toTarget = Target.transform.position;
+        //Vector3 desiredPos = Vector3.MoveTowards(rb.position, toTarget, enemy.Data.speed * Time.deltaTime);
 
-        if (knockbackVelocity.sqrMagnitude > 0.001f)
-        {
-            desiredPos += knockbackVelocity * Time.deltaTime;
-            knockbackVelocity = Vector3.MoveTowards(knockbackVelocity, Vector3.zero, Time.deltaTime * knockbackDamping);
-            
-            if (knockbackVelocity.sqrMagnitude <= 0.0001f)
-                knockbackVelocity = Vector3.zero;
-        }
-        
-        rb.MovePosition(Vector3.MoveTowards(rb.position, Target.transform.position, enemy.Data.speed * Time.deltaTime));
+        //if (knockbackVelocity.sqrMagnitude > 0.001f)
+        //{
+        //    desiredPos += knockbackVelocity * Time.deltaTime;
+        //    knockbackVelocity = Vector3.MoveTowards(knockbackVelocity, Vector3.zero, Time.deltaTime * knockbackDamping);
+
+        //    if (knockbackVelocity.sqrMagnitude <= 0.0001f)
+        //        knockbackVelocity = Vector3.zero;
+        //}
+
+        //rb.MovePosition(Vector3.MoveTowards(rb.position, Target.transform.position, enemy.Data.speed * Time.deltaTime));
+
+        rb.Move(Vector3.MoveTowards(transform.position, Target.transform.position, Data.speed * Time.fixedDeltaTime),
+            Quaternion.LookRotation(transform.position - Target.transform.position));
     }
 
     public void ApplyKnockback(Vector3 direction, float speed)

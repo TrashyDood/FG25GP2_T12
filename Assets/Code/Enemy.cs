@@ -109,6 +109,7 @@ public class Enemy : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(attackRay);
+        Gizmos.DrawWireSphere(transform.position, 0.5f);
     }
 #endif
 }
