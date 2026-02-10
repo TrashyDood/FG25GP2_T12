@@ -1,5 +1,7 @@
 using UnityEngine;
 using FMODUnity;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class FModEvents : MonoBehaviour
 {
@@ -46,10 +48,6 @@ public class FModEvents : MonoBehaviour
     [field: SerializeField] public EventReference menuMusic { get; private set; }
     [field: SerializeField] public EventReference gameplayMusic { get; private set; }
 
-
-
-
-
     //Singleton setup
     public static FModEvents instance { get; private set; }
     private void Awake()
@@ -58,6 +56,7 @@ public class FModEvents : MonoBehaviour
         { 
             Debug.LogError("Found more than one FMOD events script in the scene"); 
         }
+
         instance = this;
     }
 }

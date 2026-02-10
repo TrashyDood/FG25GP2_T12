@@ -55,11 +55,13 @@ public class PlayerMovement : MonoBehaviour
         {
             isMoving = true;
             onMoveEvent.Invoke();
+            OnMoveEvent?.Invoke();
         }
         else if (isMoving && currentVelocity.sqrMagnitude == 0)
         {
             isMoving = false;
             onStillEvent.Invoke();
+            OnStillEvent?.Invoke();
         }
 
         currentVelocity = Vector3.MoveTowards(currentVelocity,

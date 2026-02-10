@@ -12,6 +12,8 @@ public class Body : MonoBehaviour
     [SerializeField]
     Vector3Int size = Vector3Int.one;
     [SerializeField]
+    Vector3 offset;
+    [SerializeField]
     BodyPart defaultPrefab,
         centralPrefab;
 
@@ -29,6 +31,7 @@ public class Body : MonoBehaviour
 
     public BodyPart CentralPart { get; private set; }
     public Player Player => player;
+    public Vector3Int Center => new((int)(size.x * 0.5f), (int)(size.y * 0.5f), (int)(size.z * 0.5f));
 
     static readonly Dictionary<Vector3Int, Direction> dirToOrientation = new()
     {
@@ -42,8 +45,9 @@ public class Body : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log(Center);
         player = GetComponent<Player>();
-        CentralPart = AddPart(new(3, 0, 3), centralPrefab);
+        CentralPart = AddPart(Center, centralPrefab);
     }
 
     public IEnumerable<T> GetPartType<T>() where T : BodyPart
@@ -263,7 +267,7 @@ public class Body : MonoBehaviour
     }
 
     Vector3 CoordsToWorld(Vector3Int coords) =>
-        coords - (Vector3)size * 0.5f + Vector3.one * 0.5f;
+        coords - (Vector3)size * 0.5f + Vector3.one * 0.5f + offset;
 
     [Serializable]
     public struct Slot
@@ -295,6 +299,14 @@ public class Body : MonoBehaviour
             directions ^= dir;
         }
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(CoordsToWorld(Center), Vector3.one);
+    }
+#endif
 }
 
 [Flags]

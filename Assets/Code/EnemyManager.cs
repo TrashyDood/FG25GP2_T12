@@ -77,13 +77,16 @@ public class EnemyManager : MonoBehaviour
         isSpawning = false;
     }
 
-    Vector3 DeterminePosition() =>
-        Utils.RandomCircleEdge(spawnConfig.spawnRadius) + spawnCenter.position;
+    Vector3 DeterminePosition()
+    {
+        float angle = UnityEngine.Random.Range(0, Mathf.PI * 2);
+        return (new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * spawnConfig.spawnRadius) + spawnCenter.position;
+    }
 
     Enemy SpawnEnemy(Vector3 position, Enemy prefab)
     {
         Enemy enemy = Instantiate(prefab, transform);
-        enemy.transform.localPosition = position;
+        enemy.transform.position = position;
 
         enemies.Add(enemy);
         enemy.OnDeathEvent += () => { enemies.Remove(enemy); };

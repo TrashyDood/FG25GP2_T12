@@ -45,7 +45,9 @@ public class EnemyMovement : MonoBehaviour
 
         //rb.MovePosition(Vector3.MoveTowards(rb.position, Target.transform.position, enemy.Data.speed * Time.deltaTime));
 
-        rb.Move(Vector3.MoveTowards(transform.position, Target.transform.position, Data.speed * Time.fixedDeltaTime),
+        Vector3 targetPosition = Vector3.MoveTowards(transform.position, Target.transform.position, Data.speed * Time.fixedDeltaTime);
+
+        rb.Move(new Vector3(targetPosition.x, transform.position.y, targetPosition.z),
             Quaternion.LookRotation(Target.transform.position - transform.position));
     }
 

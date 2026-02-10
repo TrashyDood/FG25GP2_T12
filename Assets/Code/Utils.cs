@@ -29,12 +29,6 @@ public static class Utils
     public static Vector3 RandomVector3(Rect bounds) =>
         RandomVector3(bounds.max.x, bounds.max.y, 0,
             bounds.min.x, bounds.min.y, 0);
-
-    public static Vector3 RandomCircleEdge(float radius)
-    {
-        float angle = Random.Range(0, Mathf.PI * 2);
-        return new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
-    }
     #endregion
 
     #region out of bounds
