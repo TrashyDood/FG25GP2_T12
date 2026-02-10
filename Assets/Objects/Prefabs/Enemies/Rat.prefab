@@ -40,6 +40,18 @@ PrefabInstance:
       propertyPath: 'data.dropOnDeath.Array.data[3]'
       value: 
       objectReference: {fileID: 4721473660522759184, guid: 17d20f0fa7504704abe027b322e73355, type: 3}
+    - target: {fileID: 9111667331048313168, guid: f0476f4dec525d640840a3455291a0c7, type: 3}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9111667331048313168, guid: f0476f4dec525d640840a3455291a0c7, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9111667331048313168, guid: f0476f4dec525d640840a3455291a0c7, type: 3}
+      propertyPath: m_Center.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9162609420880681060, guid: f0476f4dec525d640840a3455291a0c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -113,7 +125,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8174326534959758738, guid: 5ac1ce0181839a74ead6fb86034039d6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.493
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8174326534959758738, guid: 5ac1ce0181839a74ead6fb86034039d6, type: 3}
       propertyPath: m_LocalPosition.z
