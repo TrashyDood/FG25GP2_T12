@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4af28f82575e3f946b8eb1dff1ff4fb1, type: 3}
   m_Name: Eye Shot
   m_EditorClassIdentifier: Assembly-CSharp::EyeShooting
-  ownerBodyPart: {fileID: 0}
-  projectilePrefab: {fileID: 0}
+  ownerBodyPart: {fileID: 4847483082424459837, guid: 566a58d9279a6e74fb493e20fd70c5bc, type: 3}
+  projectilePrefab: {fileID: 6863219242111869025, guid: 46c46fb050b364448b485da3d82379f2, type: 3}
   projectileSpeed: 24
   maxRange: 15
-  BodyPart: {fileID: 0}
+  BodyPart: {fileID: 4847483082424459837, guid: 566a58d9279a6e74fb493e20fd70c5bc, type: 3}
