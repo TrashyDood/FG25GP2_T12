@@ -19,7 +19,7 @@ public class XPManager : MonoBehaviour
     public event Action<int, int> OnXPGainedEvent,
         OnLevelsGainedEvent;
 
-    int currentXP,
+    public int currentXP,
         currentLevel,
         currentXPReq;
 
@@ -28,7 +28,16 @@ public class XPManager : MonoBehaviour
     public int CurrentXP
     {
         get => currentXP;
-        set => AddXP(Mathf.Max(0, currentXP - value));
+        set
+        {
+            if (value >= currentXP)
+                AddXP(value - currentXP);
+        }
+    }
+
+    private void Awake()
+    {
+        currentXPReq = Mathf.CeilToInt(XPReqScaling.Evaluate(currentLevel));
     }
 
     private void FixedUpdate()
@@ -37,12 +46,10 @@ public class XPManager : MonoBehaviour
 
         if (pickups != null)
             foreach (var pickup in pickups)
+            {
                 pickup.GetComponent<XPPickup>().OnPickup(gameObject);
-    }
-
-    private void Awake()
-    {
-        currentXPReq = Mathf.CeilToInt(XPReqScaling.Evaluate(currentLevel));
+                CurrentXP++;
+            }
     }
 
     public void AddLevel(uint levelsToAdd = 1)
@@ -57,7 +64,7 @@ public class XPManager : MonoBehaviour
         int prevXP = currentXP;
         
         currentXP += toAdd;
-        
+
         onXPGainedEvent.Invoke(currentXP, currentXPReq);
         OnXPGainedEvent?.Invoke(currentXP, currentXPReq);
         
