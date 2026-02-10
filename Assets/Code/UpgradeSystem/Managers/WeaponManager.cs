@@ -54,6 +54,12 @@ public class WeaponManager : MonoBehaviour
     {
         foreach (var weapon in activeWeapons)
         {
+            if (weapon.weaponObject == null)
+            {
+                Debug.Log($"[WeaponManager] {weapon.definition.weaponName} has no BodyPart assigned yet.");
+                continue;
+            }
+
             if (weapon.FirePoint == null)
             {
                 Debug.LogError($"{weapon.definition.weaponName} has no FirePoint!");

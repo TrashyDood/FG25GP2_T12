@@ -74,14 +74,14 @@ public class Body : MonoBehaviour
         // Milton added this, remove and let me know if this breaks something
         if (player?.Build != null)
         {
-            // Find a WeaponInstance that matches this prefab's definition and doesn't have a weaponObject yet
-            WeaponInstance instance = player.Build.weapons
-                .Find(w => w.definition.weaponPrefab == prefab && w.weaponObject == null);
-
-            if (instance != null)
+            // Assign this new BodyPart to any matching WeaponInstances
+            foreach (var w in player.Build.weapons)
             {
-                instance.weaponObject = bodyPart; // now FirePoint works
-                Debug.Log($"[Body] Assigned {bodyPart.name} as weaponObject for {instance.definition.weaponName}");
+                if (w.definition.weaponPrefab == prefab && w.weaponObject == null)
+                {
+                    w.weaponObject = bodyPart;
+                    Debug.Log($"[Body] Assigned {bodyPart.name} to {w.definition.weaponName}");
+                }
             }
         }
 
