@@ -16,9 +16,10 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Events")]
     [SerializeField]
-    UnityEvent onMove,
-    onStill;
+    UnityEvent onMoveEvent,
+    onStillEvent;
 
+    bool isMoving;
     Rigidbody rigidBody;
     Vector2 input;
     Vector3 currentVelocity,
@@ -47,6 +48,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!isMoving && currentVelocity.sqrMagnitude > 0)
+        {
+            isMoving = true;
+            onMoveEvent.Invoke();
+        }
+        else if (isMoving && currentVelocity.sqrMagnitude == 0)
+        {
+            isMoving = false;
+            onStillEvent.Invoke();
+        }
+
         currentVelocity = Vector3.MoveTowards(currentVelocity,
             targetVelocity,
             ((currentVelocity.sqrMagnitude > targetVelocity.sqrMagnitude) ? deceleration : acceleration) * Time.fixedDeltaTime);
