@@ -38,7 +38,7 @@ public class TargetedShotBehaviour : ShootingBehaviour
 
         if (!found)
         {
-            Debug.LogError("No enemies found");
+            //Debug.LogError("No enemies found");
             return;
         }
 
