@@ -14,11 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5368941952833580897, guid: f0476f4dec525d640840a3455291a0c7, type: 3}
       propertyPath: maxHealth
-      value: 40
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5368941952833580897, guid: f0476f4dec525d640840a3455291a0c7, type: 3}
       propertyPath: data.speed
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5368941952833580897, guid: f0476f4dec525d640840a3455291a0c7, type: 3}
       propertyPath: data.maxHealth
