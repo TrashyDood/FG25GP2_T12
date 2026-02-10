@@ -22,6 +22,8 @@ public class EnemyManager : MonoBehaviour
 
     public static EnemyManager Instance { get; private set; }
 
+    public float GameTimeProgress => GameManager.Instance.GameTimeProgress;
+
     public SpawnConfig Config
     {
         get => spawnConfig;
@@ -49,10 +51,10 @@ public class EnemyManager : MonoBehaviour
         {
             StartCoroutine(
                 SpawnEnemies(
-                    UnityEngine.Random.Range(spawnConfig.minDuration, spawnConfig.maxDuration),
-                    (uint)UnityEngine.Random.Range(spawnConfig.minCount, spawnConfig.maxCount)));
+                    spawnConfig.waveDuration.GetValue(GameTimeProgress),
+                    (uint)spawnConfig.spawnCount.GetValue(GameTimeProgress)));
 
-            spawnIntervalTimer = UnityEngine.Random.Range(spawnConfig.minInterval, spawnConfig.maxInterval);
+            spawnIntervalTimer = spawnConfig.waveInterval.GetValue(GameTimeProgress);
         }
         else
             spawnIntervalTimer -= Time.fixedDeltaTime;
@@ -138,14 +140,7 @@ public class EnemyManager : MonoBehaviour
         public Value waveInterval,
             waveDuration,
             spawnCount;
-
-        public float minInterval = 5,
-            maxInterval = 8,
-            minDuration = 2.5f,
-            maxDuration = 5,
-            spawnRadius = 10;
-        public uint minCount = 1,
-            maxCount = 3;
+        public float spawnRadius = 20;
 
         [Serializable]
         public struct Value
