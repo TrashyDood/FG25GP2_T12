@@ -14,6 +14,12 @@ public class PlayerCamera : MonoBehaviour
     Transform followTarget;
     Vector3 followOffset;
 
+    private void Awake()
+    {
+        foreach (var info in shakeInfo)
+            info.Initialize();
+    }
+
     private void Start()
     {
         followTarget = GameManager.Instance.Player.transform;
@@ -39,30 +45,35 @@ public class PlayerCamera : MonoBehaviour
     {
         public Transform target;
         public Vector3 positionAmplitude,
-            rotationAmplitude,
-            defaultPosition,
-            defaultRotation;
+            rotationAmplitude;
         public float frequency;
+
+        Vector3 defaultPosition,
+            defaultRotation;
+
+        public void Initialize()
+        {
+            defaultPosition = target.localPosition;
+            defaultRotation = target.localEulerAngles;
+        }
 
         public IEnumerator ShakeCR(float duration, float freqDamp)
         {
-            if (target == null)
-                yield return null;
-
-            float time = 0,
-                shakeFactor;
-
-            while (time < duration + Time.deltaTime)
+            if (target != null)
             {
-                shakeFactor = Utils.OscillateDamped(time, duration, frequency, freqDamp);
-                target.SetLocalPositionAndRotation(defaultPosition + positionAmplitude * shakeFactor,
-                Quaternion.Euler(defaultRotation + rotationAmplitude * shakeFactor));
-                time += Time.deltaTime;
+                float time = 0,
+                    shakeFactor;
 
-                yield return new WaitForEndOfFrame();
+                while (time < duration + Time.deltaTime)
+                {
+                    shakeFactor = Utils.OscillateDamped(time, duration, frequency, freqDamp);
+                    target.SetLocalPositionAndRotation(defaultPosition + positionAmplitude * shakeFactor,
+                    Quaternion.Euler(defaultRotation + rotationAmplitude * shakeFactor));
+                    time += Time.deltaTime;
+
+                    yield return null;
+                }
             }
-
-            yield return null;
         }
     }
 }

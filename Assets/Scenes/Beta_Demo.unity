@@ -3781,12 +3781,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
       propertyPath: shakeInfo.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
       propertyPath: shakeInfo.Array.data[1].target
       value: 
-      objectReference: {fileID: 1343477920}
+      objectReference: {fileID: 95667085}
     - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
       propertyPath: shakeInfo.Array.data[2].target
       value: 
