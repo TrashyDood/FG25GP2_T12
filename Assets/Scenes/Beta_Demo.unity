@@ -3234,39 +3234,31 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
-      propertyPath: followSmoothing
-      value: 0.08
+      propertyPath: shakeInfo.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
-      propertyPath: shakeInfo.Array.data[0].frequency
+      propertyPath: shakeInfo.Array.data[1].target
+      value: 
+      objectReference: {fileID: 1343477920}
+    - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
+      propertyPath: shakeInfo.Array.data[1].frequency
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 7032120281675532731, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
+    - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
+      propertyPath: shakeInfo.Array.data[1].positionAmplitude.x
+      value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 7032120281675532731, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
+    - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
+      propertyPath: shakeInfo.Array.data[1].positionAmplitude.y
+      value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 7032120281675532731, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
+    - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
+      propertyPath: shakeInfo.Array.data[1].positionAmplitude.z
+      value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 7032120281675532731, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7032120281675532731, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7032120281675532731, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7032120281675532731, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
+    - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
+      propertyPath: shakeInfo.Array.data[1].rotationAmplitude.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

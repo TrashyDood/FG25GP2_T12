@@ -27,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2855348475721659813}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 3.69757, y: 21.49355, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3262840667858045094}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &5328605335349460052
 Camera:
   m_ObjectHideFlags: 0
@@ -182,11 +182,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0158b1ad8e4ea8942961c5146da5c028, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCamera
-  followSmoothing: 0.2
+  followSmoothing: 0.08
   shakeInfo:
   - target: {fileID: 7032120281675532731}
     positionAmplitude: {x: 0, y: 0, z: 0}
-    rotationAmplitude: {x: 0, y: 1, z: 0}
+    rotationAmplitude: {x: 0, y: 0, z: 10}
     defaultPosition: {x: 0, y: 0, z: 0}
     defaultRotation: {x: 0, y: 0, z: 0}
-    frequency: 5
+    frequency: 10
