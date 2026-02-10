@@ -25,6 +25,9 @@ public class PlayerMovement : MonoBehaviour
     Vector3 currentVelocity,
             targetVelocity;
 
+    public event Action OnMoveEvent,
+        OnStillEvent;
+
     public float Speed => player.Build?.stats.GetStat(StatType.Speed) ?? 10f;
 
     public float Acceleration
