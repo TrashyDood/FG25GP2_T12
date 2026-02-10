@@ -2890,6 +2890,7 @@ MonoBehaviour:
   player: {fileID: 4462133793604444455}
   upgradeLibrary: {fileID: 11400000, guid: 5b6fe93d991a48442aa139251cdf3f8a, type: 2}
   weaponManager: {fileID: 4462133793604444462}
+  fixedChoiceUpgradeDefinition: {fileID: 11400000, guid: 3f1a3f163da297f47a9eefd0c606c922, type: 2}
   fixedChoiceName: Fixed Choice
   fixedChoiceDescription: 
   fixedChoiceIcon: {fileID: 0}

@@ -15,6 +15,8 @@ public class UpgradeManager : MonoBehaviour
     public UpgradeLibrary upgradeLibrary;
     public WeaponManager weaponManager;
 
+    public UpgradeDefinition fixedChoiceUpgradeDefinition;
+
     public object fixedChoice;
     public string fixedChoiceName = "Fixed Choice";
     public string fixedChoiceDescription = "";
@@ -230,6 +232,15 @@ public class UpgradeManager : MonoBehaviour
         {
             Debug.LogError("WeaponManager or PlayerBuild missing!");
             return;
+        }
+
+        if (card.payload == fixedChoice)
+        {
+
+            weaponManager.Build.ApplyUpgrade(fixedChoiceUpgradeDefinition);
+
+            float newSpeed = weaponManager.Build.stats.GetStat(StatType.Speed);
+            Debug.Log($"[UpgradeManager] Fixed choice selected. New speed: {newSpeed}");
         }
 
         if (card.payload is UpgradeDefinition upgrade)
