@@ -15,9 +15,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     CallbackState[] states;
     [SerializeField]
-    GameObject healthBar,
-        xpBar;
+    float currentGameTime,
+        maxGameTime = 1500;
 
+    public float MaxGameTime => maxGameTime;
+    public float CurrentGameTime => currentGameTime;
+    public float GameTimeProgress => currentGameTime / maxGameTime;
     public StateManager StateManager => stateManager;
     public static GameManager Instance { get; private set; }
     public Player Player { get; private set; }
@@ -39,22 +42,21 @@ public class GameManager : MonoBehaviour
 
         states[(int)GameState.Playing].onEnterCallback = (state) => { Time.timeScale = 1; };
         states[(int)GameState.Upgrading].onEnterCallback = (state) => { Time.timeScale = 0; };
-        states[(int)GameState.Upgrading].onExitCallback += (state) => { Time.timeScale = 1; };
-        states[(int)GameState.Dead].onEnterCallback = (state) => { StartCoroutine(Timer(() => { Time.timeScale = 0; }));
-                                                                   healthBar.SetActive(false);
-                                                                   xpBar.SetActive(false); };
+        states[(int)GameState.Upgrading].onExitCallback = (state) => { Time.timeScale = 1; };
+        states[(int)GameState.Dead].onEnterCallback = (state) => 
+        {
+            StartTimer(() => { Time.timeScale = 0; }, 0.5f);
+        };
 
         stateManager.AddStates(states);
         StateManager.SetState(GameState.Playing);
     }
 
-    private void Start()
+    private void FixedUpdate()
     {
-        StartCoroutine(Timer(() => { stateManager.SetState(GameState.Upgrading); }));
-    }
-
-    private void FixedUpdate() =>
         stateManager.Evaluate(Time.fixedDeltaTime);
+        currentGameTime += Time.fixedDeltaTime;
+    }
 
     public void SetState(int state) =>
         stateManager.SetState(state);
@@ -62,13 +64,20 @@ public class GameManager : MonoBehaviour
     public CallbackState GetCBState(GameState state) =>
         (CallbackState)stateManager.GetState(state);
 
+    #region UTILITIES
     public void RestartCurrentLevel() =>
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
     public void SetLevel(string sceneName) =>
         SceneManager.LoadScene(sceneName);
 
-    IEnumerator Timer(Action callback, float timer = 1)
+    public void StartTimer(Action callback, float timer = 1) =>
+        StartCoroutine(Timer(callback, timer));
+
+    public void StartRuntimeCoroutine(Action<float, float> callback, float timer = 1) =>
+        StartCoroutine(RuntimeCoroutine(callback, timer));
+
+    public IEnumerator Timer(Action callback, float timer = 1)
     {
         while (timer >= 0)
         {
@@ -78,6 +87,17 @@ public class GameManager : MonoBehaviour
 
         callback?.Invoke();
     }
+
+    public IEnumerator RuntimeCoroutine(Action<float, float> callback, float timer = 1)
+    {
+        while (timer >= 0)
+        {
+            callback.Invoke(Time.fixedDeltaTime, timer);
+            yield return new WaitForFixedUpdate();
+            timer -= Time.fixedDeltaTime;
+        }
+    }
+    #endregion
 }
 
 public enum GameState

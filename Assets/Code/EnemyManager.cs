@@ -16,13 +16,11 @@ public class EnemyManager : MonoBehaviour
     [Header("Events")]
     [SerializeField]
     UnityEvent<SpawnConfig, SpawnConfig> onConfigsChangedEvent;
-
+    
     bool isSpawning;
-    float spawnIntervalTimer,
-        gameTime;
+    float spawnIntervalTimer;
 
     public static EnemyManager Instance { get; private set; }
-    public float GameTime => gameTime;
 
     public SpawnConfig Config
     {
@@ -44,9 +42,6 @@ public class EnemyManager : MonoBehaviour
 
     private void Start() =>
         spawnCenter = GameManager.Instance.Player.transform;
-
-    private void Update() =>
-        gameTime += Time.deltaTime;
 
     private void FixedUpdate()
     {
@@ -70,7 +65,7 @@ public class EnemyManager : MonoBehaviour
         isSpawning = true;
         float interval = duration / count;
 
-        foreach (var enemy in spawnParams.GetEnemies(gameTime, count))
+        foreach (var enemy in spawnParams.GetEnemies(GameManager.Instance.GameTimeProgress, count))
         {
             SpawnEnemy(DeterminePosition(), enemy.prefab);
             yield return new WaitForSeconds(interval);

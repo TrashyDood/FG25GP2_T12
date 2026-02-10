@@ -2,20 +2,24 @@ using System;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Entity : MonoBehaviour
 {
     [SerializeField]
     float maxHealth,
-        currentHealth;
+        currentHealth,
+        damageCooldown;
+
+    float damageTimer;
 
     [Header("Events")]
     [SerializeField]
     UnityEvent onDeathEvent;
     [SerializeField]
-    UnityEvent<float, float, float> onHealthChangedEvent;
+    UnityEvent<float, float> onHealthChangedEvent;
 
-    public event Action<float, float, float> OnHealthChangedEvent;
+    public event Action<float, float> OnHealthChangedEvent;
     public event Action OnDeathEvent;
 
     public float MaxHealth => maxHealth;
@@ -24,23 +28,34 @@ public class Entity : MonoBehaviour
         get => currentHealth;
         set
         {
-            OnHealthChanged(value);
-            currentHealth = value;
+            if (OnHealthChanged(value))
+                currentHealth = value;
         }
     }
 
     protected virtual void Awake()
     {
-        currentHealth = maxHealth;
+        CurrentHealth = maxHealth; // Initialize health
     }
 
-    protected virtual void OnHealthChanged(float newHealth)
+    protected virtual void FixedUpdate()
     {
-        onHealthChangedEvent.Invoke(newHealth, currentHealth, maxHealth);
-        OnHealthChangedEvent?.Invoke(newHealth, currentHealth, maxHealth);
+        if (damageTimer > 0)
+            damageTimer -= Time.deltaTime;
+    }
+
+    protected virtual bool OnHealthChanged(float newHealth)
+    {
+        if (newHealth < currentHealth && damageTimer > 0) // I-Frames
+            return false;
+
+        onHealthChangedEvent.Invoke(newHealth, maxHealth);
+        OnHealthChangedEvent?.Invoke(newHealth, maxHealth);
 
         if (Mathf.Round(newHealth) < 1)
             OnDeath();
+
+        return true;
     }
 
     protected virtual void OnDeath()

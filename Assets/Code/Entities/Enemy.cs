@@ -103,12 +103,10 @@ public class Enemy : Entity
 public class EnemyData
 {
     public GameObject[] dropOnDeath;
-    public float maxHealth = 50,
-        speed = 5,
+    public float speed = 5,
         attackDamage = 20,
         attackRange = 5,
-        attackCooldown = 1,
-        size;
+        attackCooldown = 1;
 
     // attackSpeed kan vara istället att spelaren har i-frames
 }

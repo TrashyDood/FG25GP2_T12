@@ -32,13 +32,6 @@ public class Player : Entity
         build.stats.SetBaseStat(StatType.Speed, 10f);
     }
 
-    protected override void OnHealthChanged(float newHealth)
-    {
-        base.OnHealthChanged(newHealth);
-
-        healthBar.FillAmount = newHealth / MaxHealth;
-    }
-
     protected override void OnDeath()
     {
         base.OnDeath();

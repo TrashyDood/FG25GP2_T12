@@ -5,32 +5,31 @@ using UnityEngine.Events;
 public class XPManager : MonoBehaviour
 {
     [SerializeField]
-    FillbarUI xpBar;
-    [SerializeField]
-    AnimationCurve _XPReqScaling;
+    AnimationCurve XPReqScaling;
     [SerializeField]
     float pickupRange = 5;
     [SerializeField]
     LayerMask pickupLayer;
+
+    [Header("Events")]
     [SerializeField]
-    UnityEvent<int, int> _onXPGained,
-        _onLevelGained;
+    UnityEvent<float, float> onXPGainedEvent,
+        onLevelGainedEvent;
 
     public event Action<int, int> OnXPGainedEvent,
         OnLevelsGainedEvent;
 
-    [SerializeField]
     int currentXP,
         currentLevel,
         currentXPReq;
+
+    public int CurrentLevel => currentLevel;
 
     public int CurrentXP
     {
         get => currentXP;
         set => AddXP(Mathf.Max(0, currentXP - value));
     }
-
-    public int CurrentLevel => currentLevel;
 
     private void FixedUpdate()
     {
@@ -46,7 +45,7 @@ public class XPManager : MonoBehaviour
 
     private void Awake()
     {
-        currentXPReq = Mathf.CeilToInt(_XPReqScaling.Evaluate(currentLevel));
+        currentXPReq = Mathf.CeilToInt(XPReqScaling.Evaluate(currentLevel));
     }
 
     public void AddLevel(uint levelsToAdd = 1)
@@ -62,22 +61,17 @@ public class XPManager : MonoBehaviour
         
         currentXP += toAdd;
         
-        _onXPGained.Invoke(prevXP, currentLevel);
-        OnXPGainedEvent?.Invoke(prevXP, currentLevel);
+        onXPGainedEvent.Invoke(currentXP, currentXPReq);
+        OnXPGainedEvent?.Invoke(currentXP, currentXPReq);
         
         while (currentXP >= currentXPReq)
         {
             currentLevel++;
             currentXP -= currentXPReq;
-            currentXPReq = Mathf.CeilToInt(_XPReqScaling.Evaluate(currentLevel));
+            currentXPReq = Mathf.CeilToInt(XPReqScaling.Evaluate(currentLevel));
 
-            _onLevelGained.Invoke(prevLevel, currentLevel);
+            onLevelGainedEvent.Invoke(prevLevel, currentLevel);
             OnLevelsGainedEvent?.Invoke(prevLevel, currentLevel);
         }
-    }
-
-    public void UpdateHUD()
-    {
-        xpBar.FillAmount = (float)currentXP / currentXPReq;
     }
 }

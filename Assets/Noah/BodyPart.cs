@@ -20,9 +20,6 @@ public class BodyPart : MonoBehaviour
     [SerializeField]
     UnityEvent onInitializedEvent;
 
-    BodyPart[] neighbours = new BodyPart[6];
-    BodyPartData data;
-
     public event Action OnActivatedEvent;
 
     public Direction AttachTo => attachTo;

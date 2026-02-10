@@ -2,22 +2,24 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    [SerializeField]
-    Transform _followTarget;
     [Range(0f, 2.5f)]
     [SerializeField]
-    float _followSmoothing;
+    float followSmoothing;
 
-    Vector3 _followOffset;
+    Transform followTarget;
+    Vector3 followOffset;
 
-    private void Awake()
+    private void Start()
     {
-        _followOffset =  transform.position - _followTarget.position;
+        followTarget = GameManager.Instance.Player.transform;
+        followOffset = transform.position - followTarget.position;
     }
 
     private void FixedUpdate()
     {
-        if (_followTarget != null)
-            transform.position = Vector3.Lerp(transform.position, _followTarget.position + _followOffset, (1 / _followSmoothing) * Time.fixedDeltaTime);
+        if (followTarget != null)
+            transform.position = Vector3.Lerp(transform.position,
+                followTarget.position + followOffset,
+                (1 / followSmoothing) * Time.fixedDeltaTime);
     }
 }
