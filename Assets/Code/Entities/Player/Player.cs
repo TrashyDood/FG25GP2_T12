@@ -6,8 +6,6 @@ using UnityEngine.InputSystem;
 public class Player : Entity
 {
     [SerializeField]
-    FillbarUI healthBar;
-    [SerializeField]
     PlayerBuild build;
 
     XPManager xpManager;

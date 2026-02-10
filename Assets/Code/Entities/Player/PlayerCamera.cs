@@ -28,7 +28,10 @@ public class PlayerCamera : MonoBehaviour
                 (1 / followSmoothing) * Time.fixedDeltaTime);
     }
 
-    public void Shake(float amplitudeMult = 1, float frequencyMult = 1, float duration = 0.75f, float freqDamp = 0)
+    public void Shake() =>
+        Shake(1);
+
+    public void Shake(float amplitudeMult, float frequencyMult = 1, float duration = 0.75f, float freqDamp = 0)
     {
         for (int i = 0; i < shakeInfo.Length; i++)
             StartCoroutine(shakeInfo[i].ShakeCR(duration, freqDamp));
