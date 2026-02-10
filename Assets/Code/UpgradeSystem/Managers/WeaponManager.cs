@@ -7,6 +7,8 @@ public class WeaponManager : MonoBehaviour
     public Player player;
 
     public PlayerBuild Build => player.Build;
+
+    
     private List<WeaponInstance> activeWeapons => Build?.weapons;
 
     public string startingWeaponId = "Quill";
@@ -32,7 +34,8 @@ public class WeaponManager : MonoBehaviour
 
     private void Update()
     {
-        if (Build == null) return; 
+        if (Build == null) return;
+
 
         UpdateCooldowns();
 

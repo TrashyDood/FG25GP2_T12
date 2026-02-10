@@ -12,6 +12,12 @@ public class Player : Entity
     PlayerInput input;
     Body body;
 
+    [SerializeField]
+    WeaponLibrary weaponLibrary;
+
+    [SerializeField]
+    string startingWeaponId = "Eye_Weapon";
+
     public XPManager XPManager => xpManager;
     public PlayerBuild Build => build;
     public PlayerInput Input => input;
@@ -28,6 +34,23 @@ public class Player : Entity
         build = new PlayerBuild();
         build.stats = new StatCollection();
         build.stats.SetBaseStat(StatType.Speed, 10f);
+
+        build.AddWeaponById(startingWeaponId, weaponLibrary);
+
+        // Grab the weapon instance that was just added
+        WeaponInstance instance = build.weapons.Find(
+            w => w.definition.weaponId == startingWeaponId
+        );
+
+        if (instance != null && body?.CentralPart != null)
+        {
+            instance.weaponObject = body.CentralPart;
+            Debug.Log("[Player] Default weapon bound to CentralPart");
+        }
+        else
+        {
+            Debug.LogWarning("[Player] Failed to bind default weapon");
+        }
     }
 
     protected override void OnDeath()

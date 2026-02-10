@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47b0d772914d1394799601605e3e2e00, type: 3}
   m_Name: Eye_Weapon
   m_EditorClassIdentifier: Assembly-CSharp::WeaponDefinition
-  weaponName: Eye
+  weaponName: Eye_Weapon
   weaponId: Eye_Weapon
   icon: {fileID: 0}
+  fireClip: {fileID: 0}
   baseStats:
     damage: 10
     fireRate: 1

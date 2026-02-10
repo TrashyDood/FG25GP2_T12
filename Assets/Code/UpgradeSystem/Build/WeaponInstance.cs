@@ -22,18 +22,11 @@ public class WeaponInstance
     {
         get
         {
-            if (weaponObject != null)
-            {
-                // Look for a child named "FirePoint"
-                Transform fp = weaponObject.transform.Find("FirePoint");
-                return fp != null ? fp : weaponObject.transform; // fallback to root
-            }
+            if (weaponObject == null)
+                return null;
 
-            // TEMP fallback if no instance exists yet: use prefab transform
-            if (definition != null && definition.weaponPrefab != null)
-                return definition.weaponPrefab.transform;
-
-            return null;
+            Transform fp = weaponObject.transform.Find("FirePoint");
+            return fp != null ? fp : weaponObject.transform;
         }
     }
 
