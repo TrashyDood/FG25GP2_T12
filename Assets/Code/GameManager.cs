@@ -8,9 +8,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    RectTransform buildingScreen,
-        upgradeScreen;
-    [SerializeField]
     StateManager stateManager;
     [SerializeField]
     CallbackState[] states;
@@ -24,12 +21,14 @@ public class GameManager : MonoBehaviour
     public StateManager StateManager => stateManager;
     public static GameManager Instance { get; private set; }
     public Player Player { get; private set; }
+    public PlayerCamera PlayerCamera { get; private set; }
 
     private void Awake()
     {
         if (Instance != this)
             Destroy(Instance);
 
+        PlayerCamera = FindFirstObjectByType<PlayerCamera>();
         Player = FindFirstObjectByType<Player>();
         Instance = this;
 
@@ -45,10 +44,14 @@ public class GameManager : MonoBehaviour
         states[(int)GameState.Upgrading].onExitCallback = (state) => { Time.timeScale = 1; };
         states[(int)GameState.Dead].onEnterCallback = (state) => 
         {
-            StartTimer(() => { Time.timeScale = 0; }, 0.5f);
+            StartTimer(() => { Time.timeScale = 0; }, 2);
         };
 
         stateManager.AddStates(states);
+    }
+
+    private void Start()
+    {
         StateManager.SetState(GameState.Playing);
     }
 
