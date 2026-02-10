@@ -36,7 +36,13 @@ public class TargetedShotBehaviour : ShootingBehaviour
             LayerMask.GetMask("Enemy")
         );
 
-        if (!found) return;
+        if (!found)
+        {
+            Debug.LogError("No enemies found");
+            return;
+        }
+
+        Debug.Log("Enemies found");
 
         Enemy target = hit.collider.GetComponentInParent<Enemy>();
         

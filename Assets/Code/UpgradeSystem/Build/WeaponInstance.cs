@@ -22,10 +22,18 @@ public class WeaponInstance
     {
         get
         {
-            if (weaponObject == null)
-                return null;
+            if (weaponObject == null) return null;
 
             Transform fp = weaponObject.transform.Find("FirePoint");
+
+            /*
+            if (fp != null)
+               Debug.Log($"{definition.weaponName} using FirePoint at {fp.position}");
+               
+            else
+                Debug.LogWarning($"{definition.weaponName} has no FirePoint, using fallback at {weaponObject.transform.position}");
+            */
+
             return fp != null ? fp : weaponObject.transform;
         }
     }
