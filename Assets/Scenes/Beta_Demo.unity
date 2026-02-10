@@ -3812,6 +3812,14 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
+      propertyPath: shakeInfo.Array.data[2].defaultPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
+      propertyPath: shakeInfo.Array.data[2].defaultPosition.y
+      value: 1525
+      objectReference: {fileID: 0}
+    - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
       propertyPath: shakeInfo.Array.data[0].rotationAmplitude.z
       value: 8
       objectReference: {fileID: 0}
