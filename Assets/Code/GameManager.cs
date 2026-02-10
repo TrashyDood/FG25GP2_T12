@@ -48,6 +48,10 @@ public class GameManager : MonoBehaviour
         };
 
         stateManager.AddStates(states);
+    }
+
+    private void Start()
+    {
         StateManager.SetState(GameState.Playing);
     }
 

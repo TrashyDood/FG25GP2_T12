@@ -88,15 +88,6 @@ public class Enemy : Entity
         foreach (var item in data.dropOnDeath)
             Instantiate(item, transform.position + Utils.RandomVector3(1, 0, 1, -1, 0, -1), Quaternion.identity);
     }
-
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(attackRay);
-        Gizmos.DrawWireSphere(transform.position, 0.5f);
-    }
-#endif
 }
 
 [Serializable]

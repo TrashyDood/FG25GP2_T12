@@ -1565,7 +1565,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -2948,7 +2948,7 @@ PrefabInstance:
       objectReference: {fileID: 1720148720}
     - target: {fileID: -2582018424560963497, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: damageCooldown
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2582018424560963497, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: onDeathEvent.m_PersistentCalls.m_Calls.Array.size
@@ -3199,7 +3199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3262840667858045094, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 3262840667858045094, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3242,8 +3242,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1343477920}
     - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
+      propertyPath: shakeInfo.Array.data[0].frequency
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
       propertyPath: shakeInfo.Array.data[1].frequency
-      value: 10
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
+      propertyPath: shakeInfo.Array.data[0].rotationAmplitude.z
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
       propertyPath: shakeInfo.Array.data[1].positionAmplitude.x
