@@ -15,9 +15,10 @@ MonoBehaviour:
   weaponName: Mouth
   weaponId: 4313451
   icon: {fileID: 0}
+  fireClip: {fileID: 0}
   baseStats:
-    damage: 10
-    fireRate: 2
+    damage: 15
+    fireRate: 1
     range: 10
   weaponPrefab: {fileID: 4847483082424459837, guid: a7f17ba815382c2448ee46e54a055721, type: 3}
   shootingBehaviour: {fileID: 11400000, guid: 54fc4dac95f0d29408c0cf4f3d19dc5a, type: 2}
