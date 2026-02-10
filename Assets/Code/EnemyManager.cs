@@ -89,13 +89,11 @@ public class EnemyManager : MonoBehaviour
     public class SpawnParams
     {
         [SerializeField]
-        SpawnData[] data;
+        Data[] data;
 
         float[] weights;
 
-        public SpawnData[] Data => data;
-
-        public IEnumerable<SpawnData> GetEnemies(float factor, uint count)
+        public IEnumerable<Data> GetEnemies(float factor, uint count)
         {
             float totalWeight = 0;
 
@@ -124,7 +122,7 @@ public class EnemyManager : MonoBehaviour
         }
 
         [Serializable]
-        public struct SpawnData
+        public struct Data
         {
             public AnimationCurve spawnWeight;
             public Enemy prefab;
@@ -137,6 +135,10 @@ public class EnemyManager : MonoBehaviour
     [Serializable]
     public class SpawnConfig
     {
+        public Value waveInterval,
+            waveDuration,
+            spawnCount;
+
         public float minInterval = 5,
             maxInterval = 8,
             minDuration = 2.5f,
@@ -144,5 +146,15 @@ public class EnemyManager : MonoBehaviour
             spawnRadius = 10;
         public uint minCount = 1,
             maxCount = 3;
+
+        [Serializable]
+        public struct Value
+        {
+            public AnimationCurve scaling;
+            public float min, max;
+
+            public float GetValue(float factor) =>
+                UnityEngine.Random.Range(min, max) * scaling.Evaluate(factor);
+        }
     }
 }

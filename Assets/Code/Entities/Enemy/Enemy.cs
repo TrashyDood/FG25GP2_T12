@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(EnemyMovement), typeof(SphereCollider))]
+[RequireComponent(typeof(EnemyMovement), typeof(CapsuleCollider))]
 public class Enemy : Entity
 {
     [SerializeField]
@@ -18,10 +18,10 @@ public class Enemy : Entity
 
     Ray attackRay;
     EnemyMovement movement;
-    SphereCollider collider;
+    CapsuleCollider collider;
     float attackTimer;
 
-    public SphereCollider Collider => collider;
+    public CapsuleCollider Collider => collider;
     public EnemyMovement Movement => movement;
 
     public EnemyData Data
@@ -50,7 +50,7 @@ public class Enemy : Entity
 
         Data = data; // Initialize data.
 
-        collider = GetComponent<SphereCollider>();
+        collider = GetComponent<CapsuleCollider>();
         movement = GetComponent<EnemyMovement>();
     }
 

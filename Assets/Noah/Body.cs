@@ -25,6 +25,8 @@ public class Body : MonoBehaviour
     Dictionary<Vector3Int, BodyPart> bodyParts = new();
     List<Slot> availableSlots = new();
 
+    public int Count => bodyParts.Count;
+
     public BodyPart CentralPart { get; private set; }
     public Player Player => player;
 
@@ -42,6 +44,15 @@ public class Body : MonoBehaviour
     {
         player = GetComponent<Player>();
         CentralPart = AddPart(new(3, 0, 3), centralPrefab);
+    }
+
+    public IEnumerable<T> GetPartType<T>() where T : BodyPart
+    {
+        T currentPart;
+
+        foreach(var part in bodyParts.Values)
+            if ((currentPart = part as T) != null)
+                yield return currentPart;
     }
 
     public BodyPart AddPart(Vector3Int coords, BodyPart prefab, Direction direction = Direction.Forward, WeaponDefinition weapon = null)
