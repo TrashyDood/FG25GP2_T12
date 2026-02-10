@@ -48,6 +48,7 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+*.vscode
 
 # Custom // Noah
 *.idea
