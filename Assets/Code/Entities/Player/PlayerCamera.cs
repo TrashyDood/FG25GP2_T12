@@ -20,12 +20,12 @@ public class PlayerCamera : MonoBehaviour
         followOffset = transform.position - followTarget.position;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (followTarget != null)
             transform.position = Vector3.Lerp(transform.position,
                 followTarget.position + followOffset,
-                (1 / followSmoothing) * Time.deltaTime);
+                (1 / followSmoothing) * Time.fixedDeltaTime);
     }
 
     public void Shake(float amplitudeMult = 1, float frequencyMult = 1, float duration = 0.75f, float freqDamp = 0)

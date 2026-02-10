@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
         states[(int)GameState.Upgrading].onExitCallback = (state) => { Time.timeScale = 1; };
         states[(int)GameState.Dead].onEnterCallback = (state) => 
         {
-            StartTimer(() => { Time.timeScale = 0; }, 0.5f);
+            StartTimer(() => { Time.timeScale = 0; }, 2);
         };
 
         stateManager.AddStates(states);
