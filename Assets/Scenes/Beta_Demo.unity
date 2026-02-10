@@ -616,7 +616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 948028764516673925, guid: d82e5d1c807215a4da73435d79172766, type: 3}
       propertyPath: m_FillAmount
-      value: 0
+      value: 0.662
       objectReference: {fileID: 0}
     - target: {fileID: 948028764516673925, guid: d82e5d1c807215a4da73435d79172766, type: 3}
       propertyPath: m_FillMethod
@@ -719,8 +719,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3249051583209464260, guid: d82e5d1c807215a4da73435d79172766, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5308384
+      objectReference: {fileID: 0}
+    - target: {fileID: 3249051583209464260, guid: d82e5d1c807215a4da73435d79172766, type: 3}
+      propertyPath: m_Color.g
+      value: 0.745283
+      objectReference: {fileID: 0}
+    - target: {fileID: 3249051583209464260, guid: d82e5d1c807215a4da73435d79172766, type: 3}
+      propertyPath: m_Color.r
+      value: 0.71464807
+      objectReference: {fileID: 0}
+    - target: {fileID: 3249051583209464260, guid: d82e5d1c807215a4da73435d79172766, type: 3}
       propertyPath: m_FillAmount
-      value: 0
+      value: 0.358
       objectReference: {fileID: 0}
     - target: {fileID: 3426655875951831912, guid: d82e5d1c807215a4da73435d79172766, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -882,6 +894,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Health slider
       objectReference: {fileID: 0}
+    - target: {fileID: 6606428618002221109, guid: d82e5d1c807215a4da73435d79172766, type: 3}
+      propertyPath: <FillAmount>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6606428618002221109, guid: d82e5d1c807215a4da73435d79172766, type: 3}
+      propertyPath: fillAreas.Array.data[0].speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6606428618002221109, guid: d82e5d1c807215a4da73435d79172766, type: 3}
+      propertyPath: fillAreas.Array.data[1].speed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6606428618002221109, guid: d82e5d1c807215a4da73435d79172766, type: 3}
+      propertyPath: fillAreas.Array.data[0].fillAmount
+      value: 0.0000072594185
+      objectReference: {fileID: 0}
+    - target: {fileID: 6606428618002221109, guid: d82e5d1c807215a4da73435d79172766, type: 3}
+      propertyPath: fillAreas.Array.data[1].fillAmount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7672708779422011319, guid: d82e5d1c807215a4da73435d79172766, type: 3}
       propertyPath: m_text
       value: XP
@@ -937,6 +969,18 @@ PrefabInstance:
     - target: {fileID: 8899076843964179781, guid: d82e5d1c807215a4da73435d79172766, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.029899597
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929125487115988522, guid: d82e5d1c807215a4da73435d79172766, type: 3}
+      propertyPath: <FillAmount>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929125487115988522, guid: d82e5d1c807215a4da73435d79172766, type: 3}
+      propertyPath: fillAreas.Array.data[0].fillAmount
+      value: 0.5285796
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929125487115988522, guid: d82e5d1c807215a4da73435d79172766, type: 3}
+      propertyPath: fillAreas.Array.data[1].fillAmount
+      value: 0.4750796
       objectReference: {fileID: 0}
     - target: {fileID: 9041191287741969922, guid: d82e5d1c807215a4da73435d79172766, type: 3}
       propertyPath: m_AnchorMax.x
@@ -8531,6 +8575,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3001057493141643324, guid: b68d2b976c85a184b87590630a600616, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 3001057493141643324, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: m_Name
       value: Player
