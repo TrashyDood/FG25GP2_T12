@@ -17,10 +17,12 @@ public class Entity : MonoBehaviour
     [SerializeField]
     UnityEvent onDeathEvent;
     [SerializeField]
-    UnityEvent<float, float> onHealthChangedEvent;
+    UnityEvent<float, float> onDamageEvent,
+        onHealedEvent;
 
-    public event Action<float, float> OnHealthChangedEvent;
     public event Action OnDeathEvent;
+    public event Action<float, float> OnDamagedEvent,
+        OnHealedEvent;
 
     public float MaxHealth => maxHealth;
     public float CurrentHealth
@@ -41,21 +43,38 @@ public class Entity : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         if (damageTimer > 0)
-            damageTimer -= Time.deltaTime;
+            damageTimer -= Time.fixedDeltaTime;
     }
 
     protected virtual bool OnHealthChanged(float newHealth)
     {
-        if (newHealth < currentHealth && damageTimer > 0) // I-Frames
-            return false;
+        if (newHealth < currentHealth && damageTimer <= 0) // I-Frames
+        {
+            OnDamaged(newHealth);
+            return true;
+        }
+        else if (newHealth > currentHealth)
+        {
+            OnHealed(newHealth);
+            return true;
+        }
 
-        onHealthChangedEvent.Invoke(newHealth, maxHealth);
-        OnHealthChangedEvent?.Invoke(newHealth, maxHealth);
+        return false;
+    }
+
+    protected virtual void OnDamaged(float newHealth)
+    {
+        onDamageEvent.Invoke(newHealth, maxHealth);
+        OnDamagedEvent?.Invoke(newHealth, maxHealth);
 
         if (Mathf.Round(newHealth) < 1)
             OnDeath();
+    }
 
-        return true;
+    protected virtual void OnHealed(float newHealth)
+    {
+        onHealedEvent.Invoke(newHealth, maxHealth);
+        OnHealedEvent?.Invoke(newHealth, maxHealth);
     }
 
     protected virtual void OnDeath()

@@ -15,9 +15,10 @@ MonoBehaviour:
   weaponName: Tentacles
   weaponId: 1345441
   icon: {fileID: 0}
+  fireClip: {fileID: 0}
   baseStats:
     damage: 0
     fireRate: 0
     range: 0
   weaponPrefab: {fileID: 4847483082424459837, guid: b229aea47cc37be42b594a243c0186a4, type: 3}
-  shootingBehaviour: {fileID: 0}
+  shootingBehaviour: {fileID: 11400000, guid: acb39232f7da777449bf1b68292c8198, type: 2}
