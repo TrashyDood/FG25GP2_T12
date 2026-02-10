@@ -59,7 +59,7 @@ public class Enemy : Entity
         Target = GameManager.Instance.Player.transform;
     }
 
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
         attackRay = new Ray(transform.position, target.position - transform.position);
 

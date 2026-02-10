@@ -37,10 +37,7 @@ public class XPManager : MonoBehaviour
 
         if (pickups != null)
             foreach (var pickup in pickups)
-            {
-                AddXP();
-                Destroy(pickup.gameObject);
-            }
+                pickup.GetComponent<XPPickup>().OnPickup(gameObject);
     }
 
     private void Awake()
