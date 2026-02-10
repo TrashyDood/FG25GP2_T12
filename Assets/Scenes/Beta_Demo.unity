@@ -3063,7 +3063,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2582018424560963497, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: onDamageEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -2582018424560963497, guid: b68d2b976c85a184b87590630a600616, type: 3}
       propertyPath: onHealedEvent.m_PersistentCalls.m_Calls.Array.size

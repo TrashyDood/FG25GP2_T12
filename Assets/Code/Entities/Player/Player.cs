@@ -30,6 +30,13 @@ public class Player : Entity
         build.stats.SetBaseStat(StatType.Speed, 10f);
     }
 
+    protected override void OnDamaged(float newHealth)
+    {
+        base.OnDamaged(newHealth);
+
+        GameManager.Instance.PlayerCamera.Shake();
+    }
+
     protected override void OnDeath()
     {
         base.OnDeath();
