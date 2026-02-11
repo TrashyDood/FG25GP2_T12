@@ -48,7 +48,11 @@ public class PlayerCamera : MonoBehaviour
             rotationAmplitude;
         public float frequency;
 
+<<<<<<< HEAD
         Vector3 defaultPosition,
+=======
+       public Vector3 defaultPosition,
+>>>>>>> parent of b66c3fd (Merge branch 'main' of https://github.com/TrashyDood/FG25GP2_T12)
             defaultRotation;
 
         public void Initialize()
