@@ -45,7 +45,6 @@ public class Body : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log(Center);
         player = GetComponent<Player>();
         CentralPart = AddPart(Center, centralPrefab);
     }

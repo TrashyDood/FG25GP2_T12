@@ -4,14 +4,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using static UnityEngine.Rendering.DebugUI;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Entity : MonoBehaviour
 {
     [SerializeField]
     float maxHealth,
         currentHealth,
         damageCooldown;
-
-    float damageTimer;
 
     [Header("Events")]
     [SerializeField]
@@ -20,11 +19,16 @@ public class Entity : MonoBehaviour
     UnityEvent<float, float> onDamageEvent,
         onHealedEvent;
 
+    float damageTimer;
+    Rigidbody rigidbody;
+
     public event Action OnDeathEvent;
     public event Action<float, float> OnDamagedEvent,
         OnHealedEvent;
 
     public float MaxHealth => maxHealth;
+    Rigidbody Rigidbody => rigidbody;
+
     public float CurrentHealth
     {
         get => currentHealth;
@@ -37,6 +41,8 @@ public class Entity : MonoBehaviour
 
     protected virtual void Awake()
     {
+        rigidbody = GetComponent<Rigidbody>();
+
         CurrentHealth = maxHealth; // Initialize health
     }
 
@@ -66,6 +72,7 @@ public class Entity : MonoBehaviour
     {
         onDamageEvent.Invoke(newHealth, maxHealth);
         OnDamagedEvent?.Invoke(newHealth, maxHealth);
+        damageTimer = damageCooldown;
 
         if (Mathf.Round(newHealth) < 1)
             OnDeath();

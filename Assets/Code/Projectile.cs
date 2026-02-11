@@ -7,7 +7,8 @@ public class Projectile : MonoBehaviour
 
     Ray ray;
     Vector3 direction;
-    int pierceRemaining;
+    uint pierceRemaining;
+    Enemy piercedEnemy;
     float speed,
         damage,
         width = 0.1f;
@@ -27,16 +28,18 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        transform.SetLocalPositionAndRotation(transform.position + direction * speed * Time.fixedDeltaTime, Quaternion.LookRotation(transform.position + direction * speed * Time.fixedDeltaTime));
+        transform.SetPositionAndRotation(transform.position + direction * speed * Time.fixedDeltaTime, Quaternion.LookRotation(direction));
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(ray);
     }
+#endif
 
-    public void Initialize(Vector3 direction, float speed, float damage = 10, int pierceCount = 1)
+    public void Initialize(Vector3 direction, float speed, float damage = 10, uint pierceCount = 1)
     {
         this.direction = direction.normalized;
         this.speed = speed;
@@ -48,11 +51,13 @@ public class Projectile : MonoBehaviour
     {
         Enemy enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();     
 
-        if (enemy != null)
+        if (enemy != null && enemy != piercedEnemy)
         {
             enemy.CurrentHealth -= damage;
+            piercedEnemy = enemy;
         }
 
-        Destroy(gameObject);
+        if (enemy == null || pierceRemaining < 1)
+            Destroy(gameObject);
     }
 }

@@ -19,18 +19,24 @@ public class GameManager : MonoBehaviour
     public float CurrentGameTime => currentGameTime;
     public float GameTimeProgress => currentGameTime / maxGameTime;
     public StateManager StateManager => stateManager;
+
     public static GameManager Instance { get; private set; }
     public Player Player { get; private set; }
     public PlayerCamera PlayerCamera { get; private set; }
+    public EnemyManager EnemyManager { get; private set; }
+    public HUD HUD { get; private set; }
 
     private void Awake()
     {
         if (Instance != this)
             Destroy(Instance);
 
+        Instance = this;
+
         PlayerCamera = FindFirstObjectByType<PlayerCamera>();
         Player = FindFirstObjectByType<Player>();
-        Instance = this;
+        EnemyManager = FindFirstObjectByType<EnemyManager>();
+        HUD = FindFirstObjectByType<HUD>();
 
         if (states == null || states.Length < 1)
         {

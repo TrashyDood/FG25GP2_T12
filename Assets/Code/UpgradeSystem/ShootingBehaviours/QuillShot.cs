@@ -5,7 +5,7 @@ public class QuillShot : ShootingBehaviour
 {
     public Projectile projectilePrefab;
     public float projectileSpeed = 5f;
-    public int basePierceCount = 3;
+    public uint basePierceCount = 3;
 
     public override void Shoot(WeaponInstance weapon)
     {

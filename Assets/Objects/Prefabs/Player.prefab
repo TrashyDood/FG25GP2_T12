@@ -20,7 +20,7 @@ GameObject:
   m_Layer: 15
   m_Name: Player
   m_TagString: Player
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -98,13 +98,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: SetState
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: FillbarUI, Assembly-CSharp
+        m_MethodName: SetFill
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -128,22 +140,10 @@ MonoBehaviour:
   deceleration: 80
   playerInput: {fileID: 0}
   player: {fileID: 0}
-  onMove:
+  onMoveEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onStill:
+      m_Calls: []
+  onStillEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &-2582018424560963497
@@ -160,7 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   maxHealth: 100
   currentHealth: 100
-  damageCooldown: 0
+  damageCooldown: 1
   onDeathEvent:
     m_PersistentCalls:
       m_Calls:
@@ -281,6 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Body
   size: {x: 7, y: 1, z: 7}
+  offset: {x: 0, y: 0.5, z: 0}
   defaultPrefab: {fileID: 4788076387273759160, guid: 6087e36347ef52c4ab142177b810b844, type: 3}
   centralPrefab: {fileID: 4847483082424459837, guid: 566a58d9279a6e74fb493e20fd70c5bc, type: 3}
   slotMaterial: {fileID: 2100000, guid: 8b44773059fde0d4791e148bd2d8df64, type: 2}
@@ -352,7 +353,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3001057493141643324}
   serializedVersion: 5
-  m_Mass: 100
+  m_Mass: 10
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -367,7 +368,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 2
   m_Constraints: 116
   m_CollisionDetection: 1

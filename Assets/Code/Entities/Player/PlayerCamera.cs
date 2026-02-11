@@ -14,6 +14,14 @@ public class PlayerCamera : MonoBehaviour
     Transform followTarget;
     Vector3 followOffset;
 
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        foreach (var info in shakeInfo)
+            info.Initialize();
+    }
+#endif
+
     private void Awake()
     {
         foreach (var info in shakeInfo)
@@ -41,20 +49,22 @@ public class PlayerCamera : MonoBehaviour
     }
 
     [Serializable]
-    struct ShakeData
+    class ShakeData
     {
         public Transform target;
         public Vector3 positionAmplitude,
             rotationAmplitude;
         public float frequency;
 
-        Vector3 defaultPosition,
+       public Vector3 defaultPosition,
             defaultRotation;
 
         public void Initialize()
         {
             defaultPosition = target.localPosition;
             defaultRotation = target.localEulerAngles;
+
+            Debug.Log(defaultPosition);
         }
 
         public IEnumerator ShakeCR(float duration, float freqDamp)
@@ -68,10 +78,11 @@ public class PlayerCamera : MonoBehaviour
                 {
                     shakeFactor = Utils.OscillateDamped(time, duration, frequency, freqDamp);
                     target.SetLocalPositionAndRotation(defaultPosition + positionAmplitude * shakeFactor,
-                    Quaternion.Euler(defaultRotation + rotationAmplitude * shakeFactor));
-                    time += Time.deltaTime;
+                        Quaternion.Euler(defaultRotation + rotationAmplitude * shakeFactor));
 
                     yield return null;
+
+                    time += Time.deltaTime;
                 }
             }
         }

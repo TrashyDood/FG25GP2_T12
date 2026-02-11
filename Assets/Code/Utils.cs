@@ -212,6 +212,14 @@ public static class Utils
         return hitSomething;
     }
 
+    public static string TimeFormat(float totalSeconds)
+    {
+        float minutes = totalSeconds / 60,
+        seconds = totalSeconds % 60;
+
+        return (minutes < 10 ? "0" : "") + (int)minutes + ":" + (seconds < 10 ? "0" : "") + (int)seconds;
+    }
+
     #region extensions
     public static Vector2 GetOrthoSize(this Camera camera)
     {

@@ -8,6 +8,9 @@ public class TargetedShotBehaviour : ShootingBehaviour
     public float projectileSpeed = 24f;  
     public float maxRange = 15f;
 
+    [Header("Targetting Settings"), Space, SerializeField]
+    LayerMask targetLayer;
+
     public BodyPart BodyPart;
 
     public override void Shoot(WeaponInstance weapon)
@@ -33,7 +36,7 @@ public class TargetedShotBehaviour : ShootingBehaviour
             coneAngleRadians,
             rayCount,
             out hit,
-            LayerMask.GetMask("Enemy")
+            targetLayer
         );
 
         if (!found)

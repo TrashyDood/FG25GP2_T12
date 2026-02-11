@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   targetLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1025
 --- !u!96 &2669199056068697170
 TrailRenderer:
   serializedVersion: 4

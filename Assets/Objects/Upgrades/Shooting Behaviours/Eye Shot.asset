@@ -16,4 +16,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 6863219242111869025, guid: 46c46fb050b364448b485da3d82379f2, type: 3}
   projectileSpeed: 24
   maxRange: 15
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 1025
   BodyPart: {fileID: 4847483082424459837, guid: 566a58d9279a6e74fb493e20fd70c5bc, type: 3}
