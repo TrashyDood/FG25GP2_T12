@@ -289,6 +289,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+<<<<<<< HEAD:Assets/Objects/Prefabs/UI/GUI.prefab
+=======
+--- !u!114 &3381516836376420151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674503001761031651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 607fbf0242d3e1c4e85c220f620dc120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HUD
+  hpBar: {fileID: 0}
+  xpBar: {fileID: 0}
+  timerText: {fileID: 0}
+>>>>>>> parent of b66c3fd (Merge branch 'main' of https://github.com/TrashyDood/FG25GP2_T12):Assets/Objects/Prefabs/UI/HUD.prefab
 --- !u!1 &1705297580447900650
 GameObject:
   m_ObjectHideFlags: 0

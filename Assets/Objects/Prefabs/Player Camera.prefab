@@ -200,6 +200,14 @@ MonoBehaviour:
   followSmoothing: 0.08
   shakeInfo:
   - target: {fileID: 7032120281675532731}
+<<<<<<< HEAD
     positionAmplitude: {x: 0, y: 0, z: 0}
     rotationAmplitude: {x: 0, y: 0, z: 10}
     frequency: 10
+=======
+    positionAmplitude: {x: 1, y: 0, z: 1}
+    rotationAmplitude: {x: 0, y: 0, z: 8}
+    frequency: 15
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultRotation: {x: 0, y: 0, z: 0}
+>>>>>>> parent of b66c3fd (Merge branch 'main' of https://github.com/TrashyDood/FG25GP2_T12)
