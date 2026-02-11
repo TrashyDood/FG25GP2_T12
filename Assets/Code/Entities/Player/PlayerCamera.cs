@@ -56,7 +56,7 @@ public class PlayerCamera : MonoBehaviour
             rotationAmplitude;
         public float frequency;
 
-       public Vector3 defaultPosition,
+       Vector3 defaultPosition,
             defaultRotation;
 
         public void Initialize()
