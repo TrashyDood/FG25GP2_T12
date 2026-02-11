@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f170025fc6c72d4583c27e43df38378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  maxHealth: 55
+  maxHealth: 60
   currentHealth: 0
   damageCooldown: 0
   onDeathEvent:
@@ -69,8 +69,8 @@ MonoBehaviour:
     - {fileID: 4721473660522759184, guid: 17d20f0fa7504704abe027b322e73355, type: 3}
     - {fileID: 4721473660522759184, guid: 17d20f0fa7504704abe027b322e73355, type: 3}
     - {fileID: 4721473660522759184, guid: 17d20f0fa7504704abe027b322e73355, type: 3}
-    speed: 3
-    attackDamage: 30
+    speed: 2
+    attackDamage: 50
     attackRange: 0.2
     attackCooldown: 3
   maxDistanceFromPlayer: 100
