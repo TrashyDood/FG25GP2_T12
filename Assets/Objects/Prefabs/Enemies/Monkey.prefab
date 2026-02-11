@@ -73,6 +73,7 @@ MonoBehaviour:
     attackDamage: 30
     attackRange: 0.2
     attackCooldown: 3
+  maxDistanceFromPlayer: 100
   onAttackEvent:
     m_PersistentCalls:
       m_Calls: []

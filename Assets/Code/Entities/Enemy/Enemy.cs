@@ -12,7 +12,7 @@ public class Enemy : Entity
     [SerializeField]
     EnemyData data;
     [SerializeField]
-    float maxDistanceFromPlayer;
+    float maxDistanceFromPlayer = 100;
 
     [Header("Events")]
     [SerializeField]
