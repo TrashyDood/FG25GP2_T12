@@ -2062,7 +2062,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
       propertyPath: followSmoothing
-      value: 0.36
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6957651717516656445, guid: d2cceb0549da9a842a96bd1b0338617f, type: 3}
       propertyPath: shakeInfo.Array.size
