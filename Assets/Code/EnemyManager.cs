@@ -19,7 +19,6 @@ public class EnemyManager : MonoBehaviour
     
     bool isSpawning;
     float spawnIntervalTimer;
-    HashSet<Enemy> enemies = new();
 
     public static EnemyManager Instance { get; private set; }
 
@@ -48,12 +47,12 @@ public class EnemyManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (spawnIntervalTimer <= 0 && !isSpawning && enemies.Count < spawnConfig.maxEnemyCount)
+        if (spawnIntervalTimer <= 0 && !isSpawning)
         {
             StartCoroutine(
                 SpawnEnemies(
                     spawnConfig.waveDuration.GetValue(GameTimeProgress),
-                    Mathf.CeilToInt(spawnConfig.spawnCount.GetValue(GameTimeProgress))));
+                    (uint)spawnConfig.spawnCount.GetValue(GameTimeProgress)));
 
             spawnIntervalTimer = spawnConfig.waveInterval.GetValue(GameTimeProgress);
         }
@@ -63,7 +62,7 @@ public class EnemyManager : MonoBehaviour
 
     void OnSpawnConfigChanged(SpawnConfig newConfig) { }
 
-    IEnumerator SpawnEnemies(float duration, int count)
+    IEnumerator SpawnEnemies(float duration, uint count)
     {
         isSpawning = true;
         float interval = duration / count;
@@ -77,19 +76,13 @@ public class EnemyManager : MonoBehaviour
         isSpawning = false;
     }
 
-    Vector3 DeterminePosition()
-    {
-        float angle = UnityEngine.Random.Range(0, Mathf.PI * 2);
-        return (new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * spawnConfig.spawnRadius) + spawnCenter.position;
-    }
+    Vector3 DeterminePosition() =>
+        Utils.RandomCircleEdge(spawnConfig.spawnRadius) + spawnCenter.position;
 
     Enemy SpawnEnemy(Vector3 position, Enemy prefab)
     {
         Enemy enemy = Instantiate(prefab, transform);
-        enemy.transform.position = position;
-
-        enemies.Add(enemy);
-        enemy.OnDeathEvent += () => { enemies.Remove(enemy); };
+        enemy.transform.localPosition = position;
 
         return enemy;
     }
@@ -102,7 +95,7 @@ public class EnemyManager : MonoBehaviour
 
         float[] weights;
 
-        public IEnumerable<Data> GetEnemies(float factor, int count)
+        public IEnumerable<Data> GetEnemies(float factor, uint count)
         {
             float totalWeight = 0;
 
@@ -148,8 +141,6 @@ public class EnemyManager : MonoBehaviour
             waveDuration,
             spawnCount;
         public float spawnRadius = 20;
-        public uint maxEnemyCount = 20;
-
 
         [Serializable]
         public struct Value
