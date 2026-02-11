@@ -63,8 +63,6 @@ public class PlayerCamera : MonoBehaviour
         {
             defaultPosition = target.localPosition;
             defaultRotation = target.localEulerAngles;
-
-            Debug.Log(defaultPosition);
         }
 
         public IEnumerator ShakeCR(float duration, float freqDamp)

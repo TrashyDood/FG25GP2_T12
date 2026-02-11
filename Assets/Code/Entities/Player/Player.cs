@@ -11,6 +11,7 @@ public class Player : Entity
     XPManager xpManager;
     PlayerInput input;
     Body body;
+    PlayerMovement playerMovement;
 
     [SerializeField]
     WeaponLibrary weaponLibrary;
@@ -18,6 +19,7 @@ public class Player : Entity
     [SerializeField]
     string startingWeaponId = "Eye_Weapon";
 
+    public PlayerMovement PlayerMovement => playerMovement;
     public XPManager XPManager => xpManager;
     public PlayerBuild Build => build;
     public PlayerInput Input => input;
@@ -30,6 +32,7 @@ public class Player : Entity
         body = GetComponent<Body>();
         input = GetComponent<PlayerInput>();
         xpManager = GetComponent<XPManager>();
+        playerMovement = GetComponent<PlayerMovement>();
 
         build = new PlayerBuild();
         build.stats = new StatCollection();
