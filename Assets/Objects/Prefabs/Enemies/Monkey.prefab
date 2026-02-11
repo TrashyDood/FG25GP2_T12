@@ -81,8 +81,8 @@ MonoBehaviour:
     - {fileID: 4721473660522759184, guid: 17d20f0fa7504704abe027b322e73355, type: 3}
     - {fileID: 4721473660522759184, guid: 17d20f0fa7504704abe027b322e73355, type: 3}
     - {fileID: 4721473660522759184, guid: 17d20f0fa7504704abe027b322e73355, type: 3}
-    speed: 3
-    attackDamage: 30
+    speed: 2
+    attackDamage: 50
     attackRange: 0.2
     attackCooldown: 3
   onAttackEvent:
