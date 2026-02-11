@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47b0d772914d1394799601605e3e2e00, type: 3}
+  m_Name: Shield_WeaponDef
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponDefinition
+  weaponName: Shield
+  weaponId: 554131345
+  icon: {fileID: 0}
+  baseStats:
+    damage: 0
+    fireRate: 0
+    range: 0
+  weaponPrefab: {fileID: -8952755331963687643, guid: 1f05fa0270717514ab05c96a8975e720, type: 3}
+  shootingBehaviour: {fileID: 0}

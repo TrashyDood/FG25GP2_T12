@@ -18,6 +18,7 @@ public class PlayerBuild
     public PlayerBuild() 
     {
         stats = new StatCollection();
+        stats.SetBaseStat(StatType.Speed, 10f);
         weapons = new List<WeaponInstance>();
     }
 
@@ -32,6 +33,7 @@ public class PlayerBuild
     // If the weapon already exists, level up weapon instead
     public void AddWeapon(WeaponDefinition def)
     {
+        /*
         // Check if player already has the weapon
         WeaponInstance existing = weapons.Find(w => w.definition == def);
         if (existing != null)
@@ -39,8 +41,15 @@ public class PlayerBuild
             existing.level++; // increase level if duplicate
             return;
         }
+        */
 
-        // Add new weapon
+        if (def == null)
+        {
+            Debug.LogError("PlayerBuild.AddWeapon called with null WeaponDef");
+        }
+
+
+        // Add new weapon (logical only, no prefab)
         weapons.Add(new WeaponInstance
         {
             definition = def,
@@ -51,45 +60,17 @@ public class PlayerBuild
                 fireRate = def.baseStats.fireRate,
                 range = def.baseStats.range
             }
+            // weaponObject stays null until placed in EditMode
         });
     }
 
-    public void AddWeaponById(string weaponId, WeaponLibrary library, Transform playerTransform)
+    public void AddWeaponById(string weaponId, WeaponLibrary library)
     {
         WeaponDefinition def = library.GetWeapon(weaponId);
 
         if (def == null)
             return;
 
-        AddWeapon(def, playerTransform);
-    }
-
-    public void AddWeapon(WeaponDefinition def, Transform playerTransform)
-    {
-        WeaponInstance existing = weapons.Find(w => w.definition == def);
-        if (existing != null)
-        {
-            existing.level++;
-            return;
-        }
-
-        GameObject weaponGO = Object.Instantiate(def.prefab, playerTransform);
-        Transform firePoint = weaponGO.transform.Find("FirePoint");
-
-        WeaponInstance instance = new WeaponInstance
-        {
-            definition = def,
-            level = 1,
-            weaponObject = weaponGO,
-            firePoint = firePoint,
-            currentStats = new WeaponStats
-            {
-                damage = def.baseStats.damage,
-                fireRate = def.baseStats.fireRate,
-                range = def.baseStats.range
-            }
-        };
-
-        weapons.Add(instance);
+        AddWeapon(def);
     }
 }

@@ -45,7 +45,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61ebb9cf40e7d634093a29973c76953f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  currentState: 0
+  stateManager:
+    onStateChanged:
+      m_PersistentCalls:
+        m_Calls: []
+    currentIndex: -1
+  states:
+  - onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
+  - onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
+  - onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
+  - onEnter:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
+  - onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
+  - onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
+  currentGameTime: 0
+  maxGameTime: 1500
 --- !u!114 &5315425019157074050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,15 +113,92 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92a47b16b1b1528478e4f1c0fcb85f30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
-  enemyPool:
-    _template: {fileID: 5368941952833580897, guid: f0476f4dec525d640840a3455291a0c7, type: 3}
-    parent: {fileID: 0}
   spawnCenter: {fileID: 0}
-  config:
+  spawnConfig:
     minInterval: 5
     maxInterval: 8
-    minCount: 1
-    maxCount: 3
     minDuration: 2.5
     maxDuration: 5
     spawnRadius: 10
+    minCount: 3
+    maxCount: 6
+  spawnParams:
+    data:
+    - spawnWeight:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 5
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      prefab: {fileID: 5368941952833580897, guid: f0476f4dec525d640840a3455291a0c7, type: 3}
+    - spawnWeight:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0.001499176
+          value: 2.6220665
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.99401855
+          value: 2.418518
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      prefab: {fileID: 5841816983743711238, guid: 9303e2c81e94e9e4d94ae8c821b39119, type: 3}
+    - spawnWeight:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0.07474136
+          value: 5.119896
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0.95640564
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      prefab: {fileID: 4156334697098136850, guid: fbddc859dafe6ea4d8518af49848f5ad, type: 3}
+  onConfigsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
