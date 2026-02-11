@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: Mouth
   weaponId: 4313451
   icon: {fileID: 0}
+  fireClip: {fileID: 0}
   baseStats:
     damage: 10
     fireRate: 2
