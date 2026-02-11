@@ -29,12 +29,6 @@ public static class Utils
     public static Vector3 RandomVector3(Rect bounds) =>
         RandomVector3(bounds.max.x, bounds.max.y, 0,
             bounds.min.x, bounds.min.y, 0);
-
-    public static Vector3 RandomCircleEdge(float radius)
-    {
-        float angle = Random.Range(0, Mathf.PI * 2);
-        return new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
-    }
     #endregion
 
     #region out of bounds
@@ -143,22 +137,7 @@ public static class Utils
         return values[index].Item1;
     }
 
-    public static float OscillateDamped(float time, float timeEnd, float frequency,
-        float freqDamp)
-    {
-        freqDamp = Mathf.Clamp01(freqDamp);
-        float dampFactor = Mathf.Min(time, timeEnd) / timeEnd;
-
-        return Mathf.Sin(Mathf.PI * time * frequency * (1 - dampFactor * freqDamp)) * (1 - dampFactor);
-    }
-
-    public static float Snap(float value, float size) =>
-        Mathf.Round(value / size) * size;
-
-    public static float SnapCeil(float value, float size) =>
-        Mathf.Ceil(value / size) * size;
-
-    public static int WeightedRandom(float[] weights)
+    public static int WeightedRandom(params float[] weights)
     {
         int count = weights.Length;
         float totalWeight = 0;
@@ -177,6 +156,68 @@ public static class Utils
         }
 
         return weights.Length - 1;
+    }
+
+    public static float OscillateDamped(float time, float timeEnd, float frequency,
+        float freqDamp)
+    {
+        freqDamp = Mathf.Clamp01(freqDamp);
+        float dampFactor = Mathf.Min(time, timeEnd) / timeEnd;
+
+        return Mathf.Sin(Mathf.PI * time * frequency * (1 - dampFactor * freqDamp)) * (1 - dampFactor);
+    }
+
+    public static float Snap(float value, float size) =>
+        Mathf.Round(value / size) * size;
+
+    public static float SnapCeil(float value, float size) =>
+        Mathf.Ceil(value / size) * size;
+
+    public static bool RadiusCast(Vector3 originPos, Vector3 direction, float maxDistance, float radians, uint rayCount, out RaycastHit hitInfo, LayerMask mask = default)
+    {
+        hitInfo = default;
+
+        if (rayCount == 0) return false;
+
+        direction.Normalize();
+
+        float closestDistSq = maxDistance * maxDistance;
+        bool hitSomething = false;
+
+        float halfAngleDeg = radians * Mathf.Rad2Deg * 0.5f;
+
+        for (uint i = 0; i < rayCount; i++)
+        {
+            float t = rayCount == 1 ? 0.5f : i / (float)(rayCount - 1);
+            float angle = Mathf.Lerp(-halfAngleDeg, halfAngleDeg, t);
+
+            Vector3 rayDir = Quaternion.AngleAxis(angle, Vector3.up) * direction;
+
+            if (Physics.Raycast(originPos, rayDir, out RaycastHit hit, maxDistance, mask))
+            {
+                float distSq = (hit.point - originPos).sqrMagnitude;
+                if (distSq < closestDistSq)
+                {
+                    closestDistSq = distSq;
+                    hitInfo = hit;
+                    hitSomething = true;
+                }
+            }
+
+#if UNITY_EDITOR
+            Debug.DrawRay(originPos, rayDir * maxDistance, Color.cyan, 0.05f);
+#endif
+        }
+
+        return hitSomething;
+    }
+
+    public static string TimeFormat(float totalSeconds)
+    {
+        float minutes = totalSeconds / 60,
+        seconds = totalSeconds % 60;
+
+        return (minutes < 10 ? "0" : "") + (int)minutes + ":" + (seconds < 10 ? "0" : "") + (int)seconds;
     }
 
     #region extensions

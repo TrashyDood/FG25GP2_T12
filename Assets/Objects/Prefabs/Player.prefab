@@ -11,16 +11,16 @@ GameObject:
   - component: {fileID: 2123195880003866622}
   - component: {fileID: 6825332668043674253}
   - component: {fileID: 7319833572454886761}
-  - component: {fileID: 6454924862363815314}
   - component: {fileID: -2582018424560963497}
   - component: {fileID: 6435731811321519823}
-  - component: {fileID: 5253724668774118500}
-  - component: {fileID: 3117290854059341669}
   - component: {fileID: 3985845377055536104}
+  - component: {fileID: 5253724668774118500}
+  - component: {fileID: 6454924862363815314}
+  - component: {fileID: 3117290854059341669}
   m_Layer: 15
   m_Name: Player
   m_TagString: Player
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -36,8 +36,7 @@ Transform:
   m_LocalPosition: {x: -0, y: -0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 639647836135373146}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6825332668043674253
@@ -52,13 +51,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db0a63d92c6725348a2d9eecae8b2576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::XPManager
-  xpBar: {fileID: 0}
-  _XPReqScaling:
+  XPReqScaling:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -66,7 +64,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 25
+      time: 50
       value: 25
       inSlope: 0
       outSlope: 0
@@ -81,13 +79,13 @@ MonoBehaviour:
   pickupLayer:
     serializedVersion: 2
     m_Bits: 1048576
-  _onXPGained:
+  onXPGainedEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6825332668043674253}
-        m_TargetAssemblyTypeName: XPManager, Assembly-CSharp
-        m_MethodName: UpdateHUD
-        m_Mode: 1
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: FillbarUI, Assembly-CSharp
+        m_MethodName: SetFill
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -96,13 +94,128 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _onLevelGained:
+  onLevelGainedEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: SetState
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: FillbarUI, Assembly-CSharp
+        m_MethodName: SetFill
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  currentXP: 0
+  currentLevel: 0
+  currentXPReq: 0
+--- !u!114 &7319833572454886761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3001057493141643324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97845e17bc4f6334d99605e44e43f8ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Movement
+  acceleration: 50
+  deceleration: 80
+  playerInput: {fileID: 0}
+  player: {fileID: 0}
+  onMoveEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onStillEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-2582018424560963497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3001057493141643324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2aacd1ad4dcc4349bd235e965b96d22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+  maxHealth: 100
+  currentHealth: 100
+  damageCooldown: 1
+  onDeathEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6825332668043674253}
         m_TargetAssemblyTypeName: XPManager, Assembly-CSharp
-        m_MethodName: UpdateHUD
-        m_Mode: 1
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7319833572454886761}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -2582018424560963497}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3985845377055536104}
+        m_TargetAssemblyTypeName: WeaponManager, Assembly-CSharp
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6454924862363815314}
+        m_TargetAssemblyTypeName: UnityEngine.InputSystem.PlayerInput, Unity.InputSystem
+        m_MethodName: set_enabled
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -118,27 +231,44 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3001057493141643324}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 3
+  onDamageEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: FillbarUI, Assembly-CSharp
+        m_MethodName: SetFill
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _currentXP: 0
-  _currentLevel: 1
-  _currentXPReq: 2
---- !u!114 &7319833572454886761
+  onHealedEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: FillbarUI, Assembly-CSharp
+        m_MethodName: SetFill
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  weaponLibrary: {fileID: 11400000, guid: 2075026625ded494eabb277b3ee5c201, type: 2}
+  startingWeaponId: Eye_Weapon
+--- !u!114 &6435731811321519823
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,13 +277,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 3001057493141643324}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97845e17bc4f6334d99605e44e43f8ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 78955d08711d82a4a967ca3a879ec536, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Movement
-  speed: 10
-  acceleration: 50
-  deceleration: 80
-  playerInput: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::Body
+  size: {x: 7, y: 1, z: 7}
+  offset: {x: 0, y: 0.5, z: 0}
+  defaultPrefab: {fileID: 4788076387273759160, guid: 6087e36347ef52c4ab142177b810b844, type: 3}
+  centralPrefab: {fileID: 4847483082424459837, guid: 566a58d9279a6e74fb493e20fd70c5bc, type: 3}
+  slotMaterial: {fileID: 2100000, guid: 8b44773059fde0d4791e148bd2d8df64, type: 2}
+  slotMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &3985845377055536104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3001057493141643324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3527af7b5a1dba14298d3a35debae1a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
+  weaponLibrary: {fileID: 11400000, guid: 89ad90d6d5a664c4cbe4a02bdab09110, type: 2}
+  player: {fileID: 0}
+  startingWeaponId: Quill
+--- !u!114 &5253724668774118500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3001057493141643324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e1f4e41b66db24e9b888c3bbe08f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MobileTouch
+  joyStickSize: {x: 300, y: 300}
+  joyStick: {fileID: 0}
 --- !u!114 &6454924862363815314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,55 +345,6 @@ MonoBehaviour:
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &-2582018424560963497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3001057493141643324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2aacd1ad4dcc4349bd235e965b96d22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player
-  currentHealth: 0
-  maxHealth: 100
-  healthBar: {fileID: 0}
---- !u!114 &6435731811321519823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3001057493141643324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78955d08711d82a4a967ca3a879ec536, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Body
-  size: {x: 7, y: 1, z: 7}
-  bodypartLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  defaultPrefab: {fileID: 4788076387273759160, guid: 6087e36347ef52c4ab142177b810b844, type: 3}
-  centralPrefab: {fileID: 4847483082424459837, guid: 566a58d9279a6e74fb493e20fd70c5bc, type: 3}
-  slotMaterial: {fileID: 2100000, guid: 8b44773059fde0d4791e148bd2d8df64, type: 2}
-  slotMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &5253724668774118500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3001057493141643324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9e1f4e41b66db24e9b888c3bbe08f78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MobileTouch
-  joyStickSize: {x: 300, y: 300}
-  joyStick: {fileID: 0}
 --- !u!54 &3117290854059341669
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -241,7 +353,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3001057493141643324}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -256,133 +368,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
+  m_IsKinematic: 1
+  m_Interpolate: 2
+  m_Constraints: 116
   m_CollisionDetection: 1
---- !u!114 &3985845377055536104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3001057493141643324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3527af7b5a1dba14298d3a35debae1a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
-  weaponLibrary: {fileID: 11400000, guid: 89ad90d6d5a664c4cbe4a02bdab09110, type: 2}
-  startingWeaponId: Quill
---- !u!1 &8705035447532630953
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 639647836135373146}
-  - component: {fileID: 7857524117394800254}
-  - component: {fileID: 5541767541785315353}
-  - component: {fileID: 763905530052820331}
-  m_Layer: 15
-  m_Name: Model
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &639647836135373146
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8705035447532630953}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2123195880003866622}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7857524117394800254
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8705035447532630953}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &5541767541785315353
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8705035447532630953}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 50a3259b74b0c954bb70715ff0cbc1f8, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &763905530052820331
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8705035447532630953}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}

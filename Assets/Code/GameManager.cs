@@ -1,68 +1,122 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    RectTransform buildingScreen,
-        upgradeScreen;
-    [SerializeField]
     StateManager stateManager;
+    [SerializeField]
+    CallbackState[] states;
+    [SerializeField]
+    float currentGameTime,
+        maxGameTime = 1500;
 
+    public float MaxGameTime => maxGameTime;
+    public float CurrentGameTime => currentGameTime;
+    public float GameTimeProgress => currentGameTime / maxGameTime;
     public StateManager StateManager => stateManager;
+
     public static GameManager Instance { get; private set; }
     public Player Player { get; private set; }
+    public PlayerCamera PlayerCamera { get; private set; }
+    public EnemyManager EnemyManager { get; private set; }
+    public HUD HUD { get; private set; }
 
     private void Awake()
     {
         if (Instance != this)
             Destroy(Instance);
 
-        Player = FindFirstObjectByType<Player>();
         Instance = this;
 
-        CallbackState[] states = new CallbackState[]
+        PlayerCamera = FindFirstObjectByType<PlayerCamera>();
+        Player = FindFirstObjectByType<Player>();
+        EnemyManager = FindFirstObjectByType<EnemyManager>();
+        HUD = FindFirstObjectByType<HUD>();
+
+        if (states == null || states.Length < 1)
         {
-            new(), // Playing
-            new(), // Paused
-            new() // Upgrading
-            {
-                onEnterCallback = (state) => { Time.timeScale = 0; },
-                onExitCallback = (state) => { Time.timeScale = 1; }
-            },
-            new(), // Dead
-            new(), // Victory
-            new() // Menu
+            states = new CallbackState[6];
+            for (int i = 0; i < states.Length; i++)
+                states[i] = new();
+        }
+
+        states[(int)GameState.Playing].onEnterCallback = (state) => { Time.timeScale = 1; };
+        states[(int)GameState.Upgrading].onEnterCallback = (state) => { Time.timeScale = 0; };
+        states[(int)GameState.Upgrading].onExitCallback = (state) => { Time.timeScale = 1; };
+        states[(int)GameState.Dead].onEnterCallback = (state) => 
+        {
+            StartTimer(() => { Time.timeScale = 0; }, 2);
         };
 
-        //var state = (CallbackState)GameManager.Instance.StateManager.GetState(GameState.Playing);
+        stateManager.AddStates(states);
+    }
 
-        stateManager = new(states);
+    private void Start()
+    {
         StateManager.SetState(GameState.Playing);
     }
 
-    private void FixedUpdate() =>
+    private void FixedUpdate()
+    {
         stateManager.Evaluate(Time.fixedDeltaTime);
+        currentGameTime += Time.fixedDeltaTime;
+    }
 
     public void SetState(int state) =>
         stateManager.SetState(state);
 
     public CallbackState GetCBState(GameState state) =>
         (CallbackState)stateManager.GetState(state);
+
+    #region UTILITIES
+    public void RestartCurrentLevel() =>
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+    public void SetLevel(string sceneName) =>
+        SceneManager.LoadScene(sceneName);
+
+    public void StartTimer(Action callback, float timer = 1) =>
+        StartCoroutine(Timer(callback, timer));
+
+    public void StartRuntimeCoroutine(Action<float, float> callback, float timer = 1) =>
+        StartCoroutine(RuntimeCoroutine(callback, timer));
+
+    public IEnumerator Timer(Action callback, float timer = 1)
+    {
+        while (timer >= 0)
+        {
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+
+        callback?.Invoke();
+    }
+
+    public IEnumerator RuntimeCoroutine(Action<float, float> callback, float timer = 1)
+    {
+        while (timer >= 0)
+        {
+            callback.Invoke(Time.fixedDeltaTime, timer);
+            yield return new WaitForFixedUpdate();
+            timer -= Time.fixedDeltaTime;
+        }
+    }
+    #endregion
 }
 
 public enum GameState
 {
-    Playing,
-    Paused,
-    Upgrading,
-    Dead,
-    Victory,
-    Menu
+    Playing = 0,
+    Paused = 1,
+    Upgrading = 2,
+    Dead = 3,
+    Victory = 4,
+    Menu = 5
 }
 
 [Serializable]
@@ -109,20 +163,12 @@ public class StateManager
     [SerializeField]
     int currentIndex = -1;
 
-    List<State> states;
+    List<State> states = new();
     State currentState;
 
     public int CurrentIndex => currentIndex;
 
     public event Action<State> OnStateChanged;
-
-    public StateManager(IEnumerable<State> states = null)
-    {
-        if (states != null)
-            this.states = states.ToList();
-    }
-
-    public StateManager() => states = new();
 
     public State CurrentState
     {
@@ -144,20 +190,11 @@ public class StateManager
             AddState(state);
     }
 
-    public void AddState(State state, int index = -1)
+    public void AddState(State state)
     {
         state.Initialize();
-
-        if (index < 0)
-            states.Add(state);
-        else if (index >= states.Count)
-            states.Insert(index, state);
-        else
-            states[index] = state;
+        states.Add(state);
     }
-
-    public void AddState<TEnum>(TEnum index, State state) where TEnum : Enum =>
-        AddState(state, Convert.ToInt32(index));
 
     public void SetState(int stateIndex)
     {

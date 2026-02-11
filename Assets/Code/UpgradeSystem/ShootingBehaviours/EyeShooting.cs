@@ -1,0 +1,87 @@
+using UnityEngine;
+
+[CreateAssetMenu(menuName = "Weapons/Shooting Behaviours/Eye Shot")]
+public class EyeShooting : ShootingBehaviour
+{
+    [Header("Projectile Settings")]
+    public Projectile projectilePrefab;
+    public float projectileSpeed = 24f;
+    public float maxRange = 15f;
+
+    [Header("Targetting Settings"), Space, SerializeField]
+    LayerMask targetLayer;
+
+    public BodyPart BodyPart;
+
+    public override void Shoot(WeaponInstance weapon)
+    {
+
+        BodyPart?.OnActivated();
+
+        if (weapon.FirePoint == null || projectilePrefab == null)
+        {
+            Debug.LogWarning($"{weapon.definition.weaponName} missing FirePoint or projectilePrefab");
+            return;
+        }
+
+
+        RaycastHit hit;
+        float coneAngleRadians = Mathf.Deg2Rad * 360f;
+        uint rayCount = 32;
+
+        bool found = Utils.RadiusCast(
+            weapon.FirePoint.position,
+            weapon.FirePoint.forward,
+            maxRange,
+            coneAngleRadians,
+            rayCount,
+            out hit,
+            targetLayer
+        );
+
+        if (!found) return;
+
+        Enemy target = hit.collider.GetComponentInParent<Enemy>();
+
+        if (target == null) return;
+
+        Vector3 direction = (target.transform.position - weapon.FirePoint.position).normalized;
+
+        Projectile proj = Instantiate(projectilePrefab, weapon.FirePoint.position, Quaternion.LookRotation(direction));
+
+        proj.Initialize(direction, projectileSpeed, weapon.currentStats.damage);
+
+
+
+        /*
+        Enemy target = FindClosestEnemy(weapon.FirePoint.position);
+        if (target == null) return;
+
+        Vector3 direction = (target.transform.position - weapon.FirePoint.position).normalized;
+
+        Projectile proj = Instantiate(projectilePrefab, weapon.FirePoint.position, Quaternion.LookRotation(direction));
+
+        proj.Initialize(direction, projectileSpeed, weapon.currentStats.damage);
+        */
+
+    }
+
+    private Enemy FindClosestEnemy(Vector3 origin)
+    {
+        Enemy[] enemies = Object.FindObjectsOfType<Enemy>();
+        Enemy closest = null;
+        float closestDistSq = maxRange * maxRange;
+
+        foreach (Enemy enemy in enemies)
+        {
+            float distSq = (enemy.transform.position - origin).sqrMagnitude;
+            if (distSq <= closestDistSq)
+            {
+                closestDistSq = distSq;
+                closest = enemy;
+            }
+        }
+
+        return closest;
+    }
+}

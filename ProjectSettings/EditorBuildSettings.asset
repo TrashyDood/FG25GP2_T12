@@ -11,9 +11,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/ProcBodyTesting.unity
     guid: a1725f00f23b7fe4cbf447adb57901de
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Alpha_Demo.unity
     guid: 8cc82df50c997604babeaec672ee6001
+  - enabled: 1
+    path: Assets/Scenes/Main_Menu.unity
+    guid: e0a55c8e5c0925f4aa47527f008eb779
+  - enabled: 1
+    path: Assets/Scenes/Beta_Demo.unity
+    guid: 6debcbd49bb18af469978e27e926d23a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

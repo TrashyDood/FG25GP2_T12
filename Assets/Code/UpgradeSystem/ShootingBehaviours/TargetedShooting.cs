@@ -3,59 +3,87 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Weapons/Shooting Behaviours/Targeted Shot")]
 public class TargetedShotBehaviour : ShootingBehaviour
 {
-    public GameObject projectilePrefab;
-    public float projectileSpeed = 10f;
+    [Header("Projectile Settings")]
+    public Projectile projectilePrefab;   
+    public float projectileSpeed = 24f;  
     public float maxRange = 15f;
+
+    [Header("Targetting Settings"), Space, SerializeField]
+    LayerMask targetLayer;
+
+    public BodyPart BodyPart;
 
     public override void Shoot(WeaponInstance weapon)
     {
 
-        Transform firePoint = weapon.FirePoint;
+        BodyPart?.OnActivated();
 
-        if (firePoint == null)
+        if (weapon.FirePoint == null || projectilePrefab == null)
         {
-            Debug.LogWarning("FirePoint missing for TargetedShot!");
+            Debug.LogWarning($"{weapon.definition.weaponName} missing FirePoint or projectilePrefab");
             return;
         }
 
-        Enemy target = FindClosestEnemy(firePoint.position);
+        
+        RaycastHit hit;
+        float coneAngleRadians = Mathf.Deg2Rad * 90f;
+        uint rayCount = 16;
 
-        if (target == null)
-            return;
-
-        Vector3 direction =
-            (target.transform.position - firePoint.position).normalized;
-
-        Quaternion rotation = Quaternion.LookRotation(direction);
-
-        GameObject projectile = Instantiate(
-            projectilePrefab,
-            firePoint.position,
-            rotation
+        bool found = Utils.RadiusCast(
+            weapon.FirePoint.position,
+            weapon.FirePoint.forward,
+            maxRange,
+            coneAngleRadians,
+            rayCount,
+            out hit,
+            targetLayer
         );
 
-        Rigidbody rb = projectile.GetComponent<Rigidbody>();
-        if (rb != null)
+        if (!found)
         {
-            rb.linearVelocity = direction * projectileSpeed;
+            //Debug.LogError("No enemies found");
+            return;
         }
+
+        Debug.Log("Enemies found");
+
+        Enemy target = hit.collider.GetComponentInParent<Enemy>();
+        
+        if (target == null) return;
+
+        Vector3 direction = (target.transform.position - weapon.FirePoint.position).normalized;
+
+        Projectile proj = Instantiate(projectilePrefab, weapon.FirePoint.position, Quaternion.LookRotation(direction));
+
+        proj.Initialize(direction, projectileSpeed, weapon.currentStats.damage);
+
+        
+
+        /*
+        Enemy target = FindClosestEnemy(weapon.FirePoint.position);
+        if (target == null) return;
+
+        Vector3 direction = (target.transform.position - weapon.FirePoint.position).normalized;
+
+        Projectile proj = Instantiate(projectilePrefab, weapon.FirePoint.position, Quaternion.LookRotation(direction));
+
+        proj.Initialize(direction, projectileSpeed, weapon.currentStats.damage);
+        */
+        
     }
 
     private Enemy FindClosestEnemy(Vector3 origin)
     {
         Enemy[] enemies = Object.FindObjectsOfType<Enemy>();
-
         Enemy closest = null;
-        float closestDist = maxRange * maxRange;
+        float closestDistSq = maxRange * maxRange;
 
         foreach (Enemy enemy in enemies)
         {
-            float dist =
-                (enemy.transform.position - origin).sqrMagnitude;
-
-            if (dist < closestDist)
+            float distSq = (enemy.transform.position - origin).sqrMagnitude;
+            if (distSq <= closestDistSq)
             {
-                closestDist = dist;
+                closestDistSq = distSq;
                 closest = enemy;
             }
         }
