@@ -100,6 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7830168294836939989}
   - component: {fileID: 5443814588831500340}
+  - component: {fileID: -8042720849514460192}
   m_Layer: 0
   m_Name: TearProjectile
   m_TagString: Untagged
@@ -243,6 +244,21 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &-8042720849514460192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2241300065553607831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a780f686abc66164da01d4334bc57546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Projectile
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 1025
 --- !u!1 &3727915617579341766
 GameObject:
   m_ObjectHideFlags: 0
