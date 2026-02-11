@@ -9,6 +9,8 @@ public class WeaponDefinition : ScriptableObject
     public string weaponId;
     public Sprite icon;
 
+    public AudioClip fireClip;
+
     public WeaponStats baseStats;
 
     public BodyPart weaponPrefab;

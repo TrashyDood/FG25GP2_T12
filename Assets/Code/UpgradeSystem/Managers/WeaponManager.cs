@@ -1,63 +1,48 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
     public WeaponLibrary weaponLibrary;
-
     public Player player;
-    public PlayerBuild build => player.build;
 
-    private List<WeaponInstance> activeWeapons => build.weapons;
+    public PlayerBuild Build => player.Build;
+
+    
+    private List<WeaponInstance> activeWeapons => Build?.weapons;
 
     public string startingWeaponId = "Quill";
 
-    private void Awake()
+    private void Start()
     {
         if (player == null)
-            player = FindObjectOfType<Player>();
-        //AddDefaultWeapon();
+            player = GameManager.Instance.Player;
+
+        if (player == null)
+        {
+            Debug.LogError("[WeaponManager] Player not found!");
+            return;
+        }
+
+        //Build = player.Build; 
+
+        if (Build == null)
+        {
+            Debug.LogError("[WeaponManager] Player.Build is null!");
+        }
     }
 
     private void Update()
     {
+        if (Build == null) return;
+
+
         UpdateCooldowns();
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log($"Active weapons: {activeWeapons.Count}");
-            TryFireWeapons();
-        }
+
+        TryFireWeapons();
+        
     }
-
-    /*
-    private void AddDefaultWeapon()
-    {
-        WeaponDefinition def = weaponLibrary.GetWeapon(startingWeaponId);
-        if (def == null)
-        {
-            Debug.LogError($"Starting weapon not found: {startingWeaponId}");
-            return;
-        }
-
-        BodyPart weaponGO = Instantiate(def.weaponPrefab, Vector3.zero, Quaternion.identity);
-
-        WeaponInstance instance = new WeaponInstance
-        {
-            definition = def,
-            level = 1,
-            weaponObject = weaponGO,
-            currentStats = new WeaponStats
-            {
-                damage = def.baseStats.damage,
-                fireRate = def.baseStats.fireRate,
-                range = def.baseStats.range
-            }
-        };
-
-        playerBuild.weapons.Add(instance);
-    }
-    */
 
     private void UpdateCooldowns()
     {
@@ -69,14 +54,21 @@ public class WeaponManager : MonoBehaviour
     {
         foreach (var weapon in activeWeapons)
         {
+            if (weapon.weaponObject == null)
+            {
+                Debug.Log($"[WeaponManager] {weapon.definition.weaponName} has no BodyPart assigned yet.");
+                continue;
+            }
+
             if (weapon.FirePoint == null)
             {
-                Debug.LogError($"{weapon.definition.name} has no FirePoint!");
+                Debug.LogError($"{weapon.definition.weaponName} has no FirePoint!");
                 continue;
             }
 
             if (weapon.cooldownTimer <= 0f)
             {
+                weapon.weaponObject?.OnActivated();
                 weapon.definition.shootingBehaviour.Shoot(weapon);
                 weapon.cooldownTimer = weapon.currentStats.fireRate > 0 ? 1f / weapon.currentStats.fireRate : 1f;
             }

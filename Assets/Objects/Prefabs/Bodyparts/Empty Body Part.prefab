@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5237398698951981692}
   - component: {fileID: 3179280213650352554}
   - component: {fileID: -8952755331963687643}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Empty Body Part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,4 +71,5 @@ MonoBehaviour:
       m_Calls: []
   attachTo: 0
   attachFrom: 0
+  canTakeDamage: 1
   size: {x: 1, y: 1, z: 1}

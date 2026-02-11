@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,8 +7,6 @@ using UnityEngine.Events;
 public class BodyPart : MonoBehaviour
 {
     [SerializeField]
-    UnityEvent onIntialized;
-    [SerializeField]
     Direction attachTo,
         attachFrom;
     [SerializeField]
@@ -15,36 +14,49 @@ public class BodyPart : MonoBehaviour
     [SerializeField]
     Vector3Int size = Vector3Int.one;
 
-    BodyPart[] neighbours = new BodyPart[6];
+    [Header("Events")]
+    [SerializeField]
+    UnityEvent onActivatedEvent;
+    [SerializeField]
+    UnityEvent onInitializedEvent;
+
+    public event Action OnActivatedEvent;
 
     public Direction AttachTo => attachTo;
     public Direction AttachFrom => attachFrom;
+    public AudioSource AudioSource { get; private set; }
     public Body Body { get; private set; }
     public Vector3Int Coords { get; private set; }
     public Vector3Int Size { get; private set; }
     public BoxCollider Collider { get; private set; }
+    public WeaponDefinition Weapon { get; private set; }
 
     protected virtual void Awake()
     {
         Collider = GetComponent<BoxCollider>();
+        AudioSource = GetComponent<AudioSource>();
     }
-
-    public virtual void Initialize(Body body, Vector3Int coords, Direction orientation)
+    
+    public void Initialize(Body body, WeaponDefinition weapon, Vector3Int coords, Direction direction)
     {
         Body = body;
         Coords = coords;
-        transform.rotation = GetRotation(orientation);
-        onIntialized.Invoke();
+        transform.rotation = GetRotation(direction);
+        onInitializedEvent.Invoke();
     }
 
-    public virtual void OnRemoved() { }
+    public virtual void OnActivated()
+    {
+        onActivatedEvent.Invoke();
+        OnActivatedEvent?.Invoke();
+    }
 
     public virtual void TakeDamage(float damage)
     {
         if (!canTakeDamage)
             return;
 
-        Body.Player.Health -= damage;
+        Body.Player.CurrentHealth -= damage;
     }
 
     static Quaternion GetRotation(Direction orientation)
@@ -61,9 +73,19 @@ public class BodyPart : MonoBehaviour
         };
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(transform.position, size);
     }
+#endif
+}
+
+public class BodyPartData
+{
+    public Body body;
+    public Vector3Int coords;
+    public Direction direction;
+    public WeaponDefinition weapon;
 }

@@ -2,10 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Rendering;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 [RequireComponent(typeof(Player))]
 public class Body : MonoBehaviour
@@ -13,7 +12,7 @@ public class Body : MonoBehaviour
     [SerializeField]
     Vector3Int size = Vector3Int.one;
     [SerializeField]
-    LayerMask bodypartLayer;
+    Vector3 offset;
     [SerializeField]
     BodyPart defaultPrefab,
         centralPrefab;
@@ -28,8 +27,11 @@ public class Body : MonoBehaviour
     Dictionary<Vector3Int, BodyPart> bodyParts = new();
     List<Slot> availableSlots = new();
 
+    public int Count => bodyParts.Count;
+
     public BodyPart CentralPart { get; private set; }
     public Player Player => player;
+    public Vector3Int Center => new((int)(size.x * 0.5f), (int)(size.y * 0.5f), (int)(size.z * 0.5f));
 
     static readonly Dictionary<Vector3Int, Direction> dirToOrientation = new()
     {
@@ -44,19 +46,43 @@ public class Body : MonoBehaviour
     private void Awake()
     {
         player = GetComponent<Player>();
-        CentralPart = AddPart(new(3, 0, 3), centralPrefab);
+        CentralPart = AddPart(Center, centralPrefab);
     }
 
-    public BodyPart AddPart(Vector3Int coords, BodyPart prefab, Direction orientation = Direction.Forward)
+    public IEnumerable<T> GetPartType<T>() where T : BodyPart
+    {
+        T currentPart;
+
+        foreach(var part in bodyParts.Values)
+            if ((currentPart = part as T) != null)
+                yield return currentPart;
+    }
+
+    public BodyPart AddPart(Vector3Int coords, BodyPart prefab, Direction direction = Direction.Forward, WeaponDefinition weapon = null)
     {
         if (bodyParts.ContainsKey(coords) || prefab == null)
             return null;
 
         BodyPart bodyPart = Instantiate(prefab, transform);
-        bodyPart.Initialize(this, coords, orientation);
         bodyPart.transform.localPosition = CoordsToWorld(coords);
+        bodyPart.Initialize(this, weapon, coords, direction);
 
         bodyParts[coords] = bodyPart;
+
+
+        // Milton added this, remove and let me know if this breaks something
+        if (player?.Build != null)
+        {
+            // Assign this new BodyPart to any matching WeaponInstances
+            foreach (var w in player.Build.weapons)
+            {
+                if (w.definition.weaponPrefab == prefab && w.weaponObject == null)
+                {
+                    w.weaponObject = bodyPart;
+                    Debug.Log($"[Body] Assigned {bodyPart.name} to {w.definition.weaponName}");
+                }
+            }
+        }
 
         UpdateAvailableSlots();
 
@@ -73,24 +99,25 @@ public class Body : MonoBehaviour
                 yield return slot;
     }
 
-    public bool EnterEditMode(Action returnCallback, BodyPart prefab = null)
+    public bool EnterEditMode(Action<BodyPart> returnCallback, WeaponDefinition weapon)
     {
-        prefab ??= defaultPrefab;
+        BodyPart prefab = weapon?.weaponPrefab ?? defaultPrefab;
         Slot[] validSlots = availableSlots.Where((slot) => (slot.directions & prefab.AttachTo) != 0).ToArray();
 
         if (validSlots.Length > 0)
         {
-            StartCoroutine(EditModeCR(returnCallback, prefab, validSlots));
+            StartCoroutine(EditModeCR(returnCallback, weapon, prefab, validSlots));
             return true;
         }
 
         return false;
     }
 
-    IEnumerator EditModeCR(Action returnCallback, BodyPart prefab, Slot[] slots)
+    IEnumerator EditModeCR(Action<BodyPart> returnCallback, WeaponDefinition weapon, BodyPart prefab, Slot[] slots)
     {
         Slot targetSlot;
         Direction targetDirection;
+        Touch touch;
 
         while (true) // EWWWWWWWW
         {
@@ -115,18 +142,28 @@ public class Body : MonoBehaviour
             }
             #endregion
 
-            if (TryGetSlotAndOrientation(Camera.main, slots, out Slot slot, out Direction direction) && Input.GetMouseButtonDown(0))
+            if (Touch.activeTouches.Count > 0)
             {
-                targetSlot = slot;
-                targetDirection = direction;
-                break;
+                touch = Touch.activeTouches[0]; // First touch
+
+                Vector2 touchPosition = touch.screenPosition;
+
+                // Check touch phase
+                if (touch.phase == UnityEngine.InputSystem.TouchPhase.Began)
+                {
+                    if (TryGetSlotAndOrientation(Camera.main, slots, out Slot slot, out Direction direction, touch.screenPosition))
+                    {
+                        targetSlot = slot;
+                        targetDirection = direction;
+                        break;
+                    }
+                }
             }
 
             yield return null;
         }
 
-        AddPart(targetSlot.coords, prefab, targetDirection);
-        returnCallback();
+        returnCallback(AddPart(targetSlot.coords, prefab, targetDirection, weapon));
     }
 
     void UpdateAvailableSlots()
@@ -163,7 +200,7 @@ public class Body : MonoBehaviour
         availableSlots.AddRange(slotMap.Values);
     }
 
-    bool TryGetSlotAndOrientation(Camera camera, Slot[] slots, out Slot slot, out Direction orientation)
+    bool TryGetSlotAndOrientation(Camera camera, Slot[] slots, out Slot slot, out Direction orientation, Vector2 cursorPos)
     {
         slot = default;
         orientation = Direction.None;
@@ -171,7 +208,7 @@ public class Body : MonoBehaviour
         if (slots == null || slots.Length == 0)
             return false;
 
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = camera.ScreenPointToRay(cursorPos);
 
         float closestDistance = float.MaxValue;
         Slot closestSlot = default;
@@ -229,7 +266,7 @@ public class Body : MonoBehaviour
     }
 
     Vector3 CoordsToWorld(Vector3Int coords) =>
-        coords - (Vector3)size * 0.5f + Vector3.one * 0.5f;
+        coords - (Vector3)size * 0.5f + Vector3.one * 0.5f + offset;
 
     [Serializable]
     public struct Slot
@@ -261,6 +298,14 @@ public class Body : MonoBehaviour
             directions ^= dir;
         }
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(CoordsToWorld(Center), Vector3.one);
+    }
+#endif
 }
 
 [Flags]

@@ -145,7 +145,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0
+  m_FillAmount: 0.015990913
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -213,11 +213,11 @@ MonoBehaviour:
   fillAreas:
   - image: {fileID: 8989047962272941767}
     speed: 5
-    fillAmount: 0
+    fillAmount: 0.016
   - image: {fileID: 4979413968902493345}
     speed: 2
-    fillAmount: 0
-  <FillAmount>k__BackingField: 0
+    fillAmount: 0.015990913
+  <FillAmount>k__BackingField: 0.016
 --- !u!1 &4064406610476810514
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +288,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0
+  m_FillAmount: 0.016
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0

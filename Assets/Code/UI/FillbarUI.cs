@@ -11,6 +11,8 @@ public class FillbarUI : MonoBehaviour
     [field: SerializeField, Range(0, 1)]
     public float FillAmount { get; set; }
 
+    public void SetFill(float value, float maxValue) => FillAmount = value / maxValue;
+
     private void Update()
     {
         if (fillAreas == null)

@@ -16,8 +16,8 @@ MonoBehaviour:
   weaponId: 13454331
   icon: {fileID: 0}
   baseStats:
-    damage: 0
-    fireRate: 0
-    range: 0
+    damage: 25
+    fireRate: 1
+    range: 10
   weaponPrefab: {fileID: 4847483082424459837, guid: 6fae8e1e272260d47b5b264e52977383, type: 3}
-  shootingBehaviour: {fileID: 0}
+  shootingBehaviour: {fileID: 11400000, guid: 278f391e63070874985e92828d48dcbd, type: 2}

@@ -1,24 +1,39 @@
 using System;
 using System.Collections;
-using Unity.Mathematics;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField]
     Transform spawnCenter;
     [SerializeField]
-    EnemySpawnConfig config;
+    SpawnConfig spawnConfig;
     [SerializeField]
-    EnemyPool enemyPool;
-    [SerializeField]
-    EnemyData[] enemyData;
+    SpawnParams spawnParams;
 
-    float spawnIntervalTimer;
+    [Header("Events")]
+    [SerializeField]
+    UnityEvent<SpawnConfig, SpawnConfig> onConfigsChangedEvent;
+    
     bool isSpawning;
+    float spawnIntervalTimer;
+    HashSet<Enemy> enemies = new();
 
     public static EnemyManager Instance { get; private set; }
-    public EnemySpawnConfig Config => config;
+
+    public float GameTimeProgress => GameManager.Instance.GameTimeProgress;
+
+    public SpawnConfig Config
+    {
+        get => spawnConfig;
+        set
+        {
+            OnSpawnConfigChanged(value);
+            spawnConfig = value;
+        }
+    }
 
     private void Awake()
     {
@@ -26,89 +41,124 @@ public class EnemyManager : MonoBehaviour
             Destroy(Instance);
 
         Instance = this;
-        enemyPool.parent = transform;
     }
 
-    private void Start()
-    {
-        spawnCenter = GameObject.FindGameObjectWithTag("Player")?.transform;
-    }
+    private void Start() =>
+        spawnCenter = GameManager.Instance.Player.transform;
 
     private void FixedUpdate()
     {
-        if (spawnIntervalTimer <= 0 && !isSpawning)
+        if (spawnIntervalTimer <= 0 && !isSpawning && enemies.Count < spawnConfig.maxEnemyCount)
         {
-            spawnIntervalTimer = UnityEngine.Random.Range(config.minInterval, config.maxInterval);
             StartCoroutine(
                 SpawnEnemies(
-                    UnityEngine.Random.Range(config.minDuration, config.maxDuration),
-                    (int)UnityEngine.Random.Range(config.minCount, config.maxCount)));
+                    spawnConfig.waveDuration.GetValue(GameTimeProgress),
+                    Mathf.CeilToInt(spawnConfig.spawnCount.GetValue(GameTimeProgress))));
+
+            spawnIntervalTimer = spawnConfig.waveInterval.GetValue(GameTimeProgress);
         }
         else
             spawnIntervalTimer -= Time.fixedDeltaTime;
     }
 
-    Vector3 DeterminePosition() =>
-        Utils.RandomCircleEdge(config.spawnRadius) + spawnCenter.position;
-
-    Enemy SpawnEnemy(Vector3 position)
-    {
-        Enemy enemy = enemyPool.FetchEnemy(DetermineData());
-        enemy.transform.position = position;
-
-        return enemy;
-    }
-
-    EnemyData DetermineData()
-    {
-        int index = UnityEngine.Random.Range(0, enemyData.Length);
-
-        return enemyData[index];
-    }
+    void OnSpawnConfigChanged(SpawnConfig newConfig) { }
 
     IEnumerator SpawnEnemies(float duration, int count)
     {
         isSpawning = true;
         float interval = duration / count;
 
-        for (int i = 0; i < count; i++)
+        foreach (var enemy in spawnParams.GetEnemies(GameManager.Instance.GameTimeProgress, count))
         {
-            SpawnEnemy(DeterminePosition());
+            SpawnEnemy(DeterminePosition(), enemy.prefab);
             yield return new WaitForSeconds(interval);
         }
 
         isSpawning = false;
     }
-}
 
-[Serializable]
-public class EnemyPool : ComponentPool<Enemy>
-{
-    public Transform parent;
-
-    public Enemy FetchEnemy(EnemyData data)
+    Vector3 DeterminePosition()
     {
-        Enemy enemy = FetchObject();
-        enemy.Data = data;
+        float angle = UnityEngine.Random.Range(0, Mathf.PI * 2);
+        return (new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * spawnConfig.spawnRadius) + spawnCenter.position;
+    }
+
+    Enemy SpawnEnemy(Vector3 position, Enemy prefab)
+    {
+        Enemy enemy = Instantiate(prefab, transform);
+        enemy.transform.position = position;
+
+        enemies.Add(enemy);
+        enemy.OnDeathEvent += () => { enemies.Remove(enemy); };
 
         return enemy;
     }
 
-    protected override void OnFetched(Enemy obj)
+    [Serializable]
+    public class SpawnParams
     {
-        base.OnFetched(obj);
-        obj.transform.parent = parent;
-    }
-}
+        [SerializeField]
+        Data[] data;
 
-[Serializable]
-public class EnemySpawnConfig
-{
-    public float minInterval = 5,
-        maxInterval = 8,
-        minCount = 1,
-        maxCount = 3,
-        minDuration = 2.5f,
-        maxDuration = 5,
-        spawnRadius = 10;
+        float[] weights;
+
+        public IEnumerable<Data> GetEnemies(float factor, int count)
+        {
+            float totalWeight = 0;
+
+            weights ??= new float[data.Length];
+
+            for (int i = 0; i < data.Length; i++)
+                totalWeight += (weights[i] = data[i].CurrentWeight(factor));
+
+            float rand = 0;
+
+            for (uint i = 0; i < count; i++)
+            {
+                rand = UnityEngine.Random.Range(0, totalWeight);
+
+                for (int j = 0; j < weights.Length; j++)
+                {
+                    if (rand < weights[j])
+                    {
+                        yield return data[j];
+                        break;
+                    }
+
+                    rand -= weights[j];
+                }
+            }
+        }
+
+        [Serializable]
+        public struct Data
+        {
+            public AnimationCurve spawnWeight;
+            public Enemy prefab;
+
+            public float CurrentWeight(float factor) =>
+                spawnWeight.Evaluate(factor);
+        }
+    }
+
+    [Serializable]
+    public class SpawnConfig
+    {
+        public Value waveInterval,
+            waveDuration,
+            spawnCount;
+        public float spawnRadius = 20;
+        public uint maxEnemyCount = 20;
+
+
+        [Serializable]
+        public struct Value
+        {
+            public AnimationCurve scaling;
+            public float min, max;
+
+            public float GetValue(float factor) =>
+                UnityEngine.Random.Range(min, max) * scaling.Evaluate(factor);
+        }
+    }
 }

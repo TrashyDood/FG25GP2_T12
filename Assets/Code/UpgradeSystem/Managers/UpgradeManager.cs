@@ -15,6 +15,8 @@ public class UpgradeManager : MonoBehaviour
     public UpgradeLibrary upgradeLibrary;
     public WeaponManager weaponManager;
 
+    public UpgradeDefinition fixedChoiceUpgradeDefinition;
+
     public object fixedChoice;
     public string fixedChoiceName = "Fixed Choice";
     public string fixedChoiceDescription = "";
@@ -29,16 +31,8 @@ public class UpgradeManager : MonoBehaviour
         {
             upgradePool.Add(upgrade);
         }
-    }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            EnterUpgradeState();
-        }
-
-        ((CallbackState)GameManager.Instance.StateManager.GetState(GameState.Upgrading)).onEnterCallback += (s) => { EnterUpgradeState(); };
+        GameManager.Instance.GetCBState(GameState.Upgrading).onEnterCallback += (s) => { EnterUpgradeState(); };
     }
 
     public class ChoiceBundle
@@ -232,27 +226,39 @@ public class UpgradeManager : MonoBehaviour
         return text;
     }
 
-   
-
     private void OnChoiceClicked(ChoiceCard card)
     {
-        if (weaponManager == null || weaponManager.build == null)
+        if (weaponManager == null || weaponManager.Build == null)
         {
             Debug.LogError("WeaponManager or PlayerBuild missing!");
             return;
         }
 
+        if (card.payload == fixedChoice)
+        {
+
+            weaponManager.Build.ApplyUpgrade(fixedChoiceUpgradeDefinition);
+
+            float newSpeed = weaponManager.Build.stats.GetStat(StatType.Speed);
+            Debug.Log($"[UpgradeManager] Fixed choice selected. New speed: {newSpeed}");
+        }
+
         if (card.payload is UpgradeDefinition upgrade)
         {
-            weaponManager.build.ApplyUpgrade(upgrade);
+            weaponManager.Build.ApplyUpgrade(upgrade);
 
-            float newSpeed = weaponManager.build.stats.GetStat(StatType.Speed);
+            float newSpeed = weaponManager.Build.stats.GetStat(StatType.Speed);
 
             Debug.Log($"[UpgradeManager] new player speed: {newSpeed}");
         }
 
 
-        player.Body.EnterEditMode(() => { GameManager.Instance.StateManager.SetState(GameState.Playing); }, GetPrefab(card.payload as UpgradeDefinition));
+        player.Body.EnterEditMode((bodyPart) => 
+        {
+            GameManager.Instance.StateManager.SetState(GameState.Playing);
+            
+        }, 
+        GetWeaponDefinition(card.payload as UpgradeDefinition));
 
         choicesRoot.SetActive(false);
     }
@@ -282,7 +288,7 @@ public class UpgradeManager : MonoBehaviour
     }
     */
 
-    public BodyPart GetPrefab(UpgradeDefinition upgrade)
+    public WeaponDefinition GetWeaponDefinition(UpgradeDefinition upgrade)
     {
         if (upgrade == null) return null;
         
@@ -290,8 +296,7 @@ public class UpgradeManager : MonoBehaviour
         {
             if (effect is AddWeaponEffect addWeapon)
             {
-                BodyPart prefab = addWeapon.weapon.weaponPrefab;
-                return prefab;
+                return addWeapon.weapon;
             }
         }
         
@@ -300,6 +305,7 @@ public class UpgradeManager : MonoBehaviour
 
     public void EnterUpgradeState()
     {
+        Debug.Log("Enter upgrade state");
         ShowChoices(GetChoices());
     }
 }
