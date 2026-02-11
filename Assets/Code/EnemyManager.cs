@@ -91,6 +91,9 @@ public class EnemyManager : MonoBehaviour
         enemies.Add(enemy);
         enemy.OnDeathEvent += () => { enemies.Remove(enemy); };
 
+        enemies.Add(enemy);
+        enemy.OnDeathEvent += () => { enemies.Remove(enemy); };
+
         return enemy;
     }
 
