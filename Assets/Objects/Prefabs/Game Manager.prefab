@@ -115,27 +115,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
   spawnCenter: {fileID: 0}
   spawnConfig:
-    minInterval: 5
-    maxInterval: 8
-    minDuration: 2.5
-    maxDuration: 5
+    waveInterval:
+      scaling:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      min: 0
+      max: 0
+    waveDuration:
+      scaling:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      min: 0
+      max: 0
+    spawnCount:
+      scaling:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      min: 0
+      max: 0
     spawnRadius: 10
-    minCount: 3
-    maxCount: 6
+    maxEnemyCount: 20
   spawnParams:
     data:
     - spawnWeight:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0
-          value: 1
+          time: 0.0083351135
+          value: 0
           inSlope: 0
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
+        - serializedVersion: 3
+          time: 0.5
+          value: 3
+          inSlope: 6.322798
+          outSlope: 6.322798
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.15357699
         - serializedVersion: 3
           time: 1
           value: 5
@@ -153,8 +184,8 @@ MonoBehaviour:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0.001499176
-          value: 2.6220665
+          time: 0
+          value: 1
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -162,8 +193,17 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.99401855
-          value: 2.418518
+          time: 0.5
+          value: 5
+          inSlope: 2.9998271
+          outSlope: 2.9998271
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 3
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -178,8 +218,8 @@ MonoBehaviour:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0.07474136
-          value: 5.119896
+          time: 0.047756195
+          value: 5.0901566
           inSlope: 0
           outSlope: 0
           tangentMode: 0
