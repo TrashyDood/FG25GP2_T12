@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ff5278bd0d5bc4ca8170641d0d9a29, type: 3}
   m_Name: Mouth Shot
   m_EditorClassIdentifier: Assembly-CSharp::TargetedShotBehaviour
-  ownerBodyPart: {fileID: 0}
-  projectilePrefab: {fileID: 6863219242111869025, guid: 46c46fb050b364448b485da3d82379f2, type: 3}
+  ownerBodyPart: {fileID: 4847483082424459837, guid: a7f17ba815382c2448ee46e54a055721, type: 3}
+  projectilePrefab: {fileID: 624870694025749137, guid: ddefab09ae3ab2c4fa919d9068f3840f, type: 3}
   projectileSpeed: 24
   maxRange: 15
   targetLayer:
     serializedVersion: 2
     m_Bits: 1025
-  BodyPart: {fileID: 0}
+  BodyPart: {fileID: 4847483082424459837, guid: a7f17ba815382c2448ee46e54a055721, type: 3}
