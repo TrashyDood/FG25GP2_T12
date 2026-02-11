@@ -58,15 +58,6 @@ public class Body : MonoBehaviour
                 yield return currentPart;
     }
 
-    public IEnumerable<T> GetPartType<T>() where T : BodyPart
-    {
-        T currentPart;
-
-        foreach(var part in bodyParts.Values)
-            if ((currentPart = part as T) != null)
-                yield return currentPart;
-    }
-
     public BodyPart AddPart(Vector3Int coords, BodyPart prefab, Direction direction = Direction.Forward, WeaponDefinition weapon = null)
     {
         if (bodyParts.ContainsKey(coords) || prefab == null)

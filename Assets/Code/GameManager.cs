@@ -40,14 +40,19 @@ public class GameManager : MonoBehaviour
 
         if (states == null || states.Length < 1)
         {
-            states = new CallbackState[6];
+            states = new CallbackState[7];
             for (int i = 0; i < states.Length; i++)
                 states[i] = new();
         }
 
         states[(int)GameState.Playing].onEnterCallback = (state) => { Time.timeScale = 1; };
+
         states[(int)GameState.Upgrading].onEnterCallback = (state) => { Time.timeScale = 0; };
         states[(int)GameState.Upgrading].onExitCallback = (state) => { Time.timeScale = 1; };
+
+        states[(int)GameState.Building].onEnterCallback = (state) => { Time.timeScale = 0; };
+        states[(int)GameState.Upgrading].onExitCallback = (state) => { Time.timeScale = 1; };
+
         states[(int)GameState.Dead].onEnterCallback = (state) => 
         {
             StartTimer(() => { Time.timeScale = 0; }, 2);
@@ -114,9 +119,10 @@ public enum GameState
     Playing = 0,
     Paused = 1,
     Upgrading = 2,
-    Dead = 3,
-    Victory = 4,
-    Menu = 5
+    Building = 3,
+    Dead = 4,
+    Victory = 5,
+    Menu = 6
 }
 
 [Serializable]
