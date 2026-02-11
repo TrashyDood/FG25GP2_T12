@@ -17,7 +17,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   fireClip: {fileID: 0}
   baseStats:
-    damage: 5
+    damage: 20
     fireRate: 1
     range: 10
   weaponPrefab: {fileID: 4847483082424459837, guid: 566a58d9279a6e74fb493e20fd70c5bc, type: 3}
