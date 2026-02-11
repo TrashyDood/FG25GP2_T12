@@ -11,6 +11,8 @@ public class Enemy : Entity
     LayerMask targetLayer;
     [SerializeField]
     EnemyData data;
+    [SerializeField]
+    float maxDistanceFromPlayer;
 
     [Header("Events")]
     [SerializeField]
@@ -70,6 +72,9 @@ public class Enemy : Entity
         }
         else
             attackTimer -= Time.fixedDeltaTime;
+
+        if ((transform.position - GameManager.Instance.Player.transform.position).sqrMagnitude > maxDistanceFromPlayer * maxDistanceFromPlayer)
+            CurrentHealth -= 999999;
     }
 
     void Attack(RaycastHit hitInfo)

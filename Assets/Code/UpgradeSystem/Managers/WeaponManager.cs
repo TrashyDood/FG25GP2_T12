@@ -13,10 +13,10 @@ public class WeaponManager : MonoBehaviour
 
     public string startingWeaponId = "Quill";
 
-    private void Awake()
+    private void Start()
     {
         if (player == null)
-            player = FindObjectOfType<Player>();
+            player = GameManager.Instance.Player;
 
         if (player == null)
         {
