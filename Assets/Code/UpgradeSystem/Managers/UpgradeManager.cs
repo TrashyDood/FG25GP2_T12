@@ -22,6 +22,8 @@ public class UpgradeManager : MonoBehaviour
     public string fixedChoiceDescription = "";
     public Sprite fixedChoiceIcon;
 
+    public GameObject levelUpPanel;
+
     public List<UpgradeDefinition> upgradePool = new List<UpgradeDefinition>();
 
 
@@ -82,6 +84,16 @@ public class UpgradeManager : MonoBehaviour
         return bundle;
     }
 
+    private void DisableUi()
+    {
+        levelUpPanel.SetActive(false);
+    }
+
+    private void EnableUi() 
+    {
+        levelUpPanel.SetActive(true);
+    }
+
     void ShowChoices(ChoiceBundle choices)
     {
         if (choices == null)
@@ -93,6 +105,8 @@ public class UpgradeManager : MonoBehaviour
         {
             throw new InvalidOperationException("ShowChoices expects exactly 2 random upgrades.");
         }
+        
+        //EnableUi();
 
         EnsureChoicesUi();
 
@@ -261,6 +275,7 @@ public class UpgradeManager : MonoBehaviour
         GetWeaponDefinition(card.payload as UpgradeDefinition));
 
         choicesRoot.SetActive(false);
+        //DisableUi();
     }
 
     /*
