@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeDefinition
   upgradeName: Mouth
   upgradeId: 456234256
-  icon: {fileID: 0}
+  icon: {fileID: -1635090982, guid: 37efb7c5c78167845aa8bf7c7191979c, type: 3}
   effects:
   - {fileID: 11400000, guid: f54f491a6e6516547856253239972237, type: 2}
