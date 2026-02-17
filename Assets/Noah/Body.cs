@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
@@ -17,11 +18,14 @@ public class Body : MonoBehaviour
     BodyPart defaultPrefab,
         centralPrefab;
 
-    [Header("Rendering")]
+    [Header("Rendering"), Space]
     [SerializeField]
     Material slotMaterial;
     [SerializeField]
     Mesh slotMesh;
+
+    [SerializeField]
+    UnityEvent onBodyPartPlacedEvent;
 
     Player player;
     Dictionary<Vector3Int, BodyPart> bodyParts = new();
@@ -164,6 +168,7 @@ public class Body : MonoBehaviour
         }
 
         returnCallback(AddPart(targetSlot.coords, prefab, targetDirection, weapon));
+        onBodyPartPlacedEvent.Invoke();
     }
 
     void UpdateAvailableSlots()
