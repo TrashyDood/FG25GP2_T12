@@ -16,8 +16,9 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Events")]
     [SerializeField]
-    UnityEvent onMoveEvent,
-    onStillEvent;
+    UnityEvent onMoveEvent;
+    [SerializeField]
+    UnityEvent onStillEvent;
 
     bool isMoving;
     Rigidbody rigidBody;

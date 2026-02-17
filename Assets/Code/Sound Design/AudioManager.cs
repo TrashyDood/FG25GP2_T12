@@ -6,6 +6,8 @@ using System.Dynamic;
 
 public class AudioManager : MonoBehaviour
 {
+    public bool inGamePlayScene;
+
     [Header("Volume")]
     [Range(0, 1)]
     public float masterVolume = 1;
@@ -26,34 +28,39 @@ public class AudioManager : MonoBehaviour
     private List<StudioEventEmitter> eventEmitters;
     private EventInstance ambienceEventInstance;
     private EventInstance musicEventInstance;
+    private EventInstance musicMenuEventInstance;
     public static AudioManager instance { get; private set; }
 
+    private float healthPercentage;
 
     //Singleton setup
     private void Awake()
     {
         if (instance != null)
         {
-            Debug.LogError("Found more than one Audio Manager in the scene");
+            Destroy(gameObject);
+            return;
         }
+
         instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        inGamePlayScene = true;
 
         eventInstances = new List<EventInstance>();
         eventEmitters = new List<StudioEventEmitter>();
 
         masterBus = RuntimeManager.GetBus("bus:/");
-        masterBus = RuntimeManager.GetBus("bus:/Music");
-        masterBus = RuntimeManager.GetBus("bus:/Ambiance");
-        masterBus = RuntimeManager.GetBus("bus:/SFX");
+        musicBus = RuntimeManager.GetBus("bus:/Music");
+        ambianceBus = RuntimeManager.GetBus("bus:/Ambiance");
+        sfxBus = RuntimeManager.GetBus("bus:/SFX");
     }
 
     private void Start()
     {
         InitializeAmbiance(FModEvents.instance.playerMovingAcrossSurface);
         InitializeMusic(FModEvents.instance.gameplayMusic);
-        
     }
-
 
     private void Update()
     {
@@ -61,7 +68,20 @@ public class AudioManager : MonoBehaviour
         musicBus.setVolume(musicVolume);
         ambianceBus.setVolume(ambianceVolume);
         sfxBus.setVolume(SFXvolume);
+
+        healthPercentage = GameManager.Instance.Player.CurrentHealth / GameManager.Instance.Player.MaxHealth;
+
+        if (inGamePlayScene)
+        {
+            SetAmbienceParameter("healthPercentage", healthPercentage);
+            SetAmbienceParameter("speed", 10);
+
+            musicEventInstance.setParameterByName("DAMAGE", 1 - healthPercentage);
+            musicEventInstance.setParameterByName("intensity", GameManager.Instance.GameTimeProgress*4 + 1);
+            musicEventInstance.setParameterByName("PAUSE", 0); //what is reference?
+        }
     }
+
 
     //This is a function for starting an ambiance track
     public void InitializeAmbiance(EventReference ambienceEventReference)
@@ -71,11 +91,25 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    //This is a function for starting a music track
+    //This is a function for starting the music track
     public void InitializeMusic(EventReference musicEventReference)
     {
         musicEventInstance = CreateEventInstance(musicEventReference);
         musicEventInstance.start();
+    }
+
+    //This is a function for starting the menu music track
+    public void InitializeMenuMusic(EventReference musicEventReference)
+    {
+        musicEventInstance = CreateEventInstance(musicEventReference);
+        musicEventInstance.start();
+    }
+
+    public void InitializeAndPlayDeathSound()
+    {
+        EventInstance deathS = CreateEventInstance(FModEvents.instance.playerDeath);
+        deathS.setParameterByName("playerSize", 30);
+        deathS.start();
     }
 
     //This is a function for changing the parameters of the constantly playing sound
@@ -86,7 +120,7 @@ public class AudioManager : MonoBehaviour
 
     public void SetWalkParameter(float parameterValue)
     {
-        ambienceEventInstance.setParameterByName("hasWings", parameterValue);
+        ambienceEventInstance.setParameterByName("isWalking", parameterValue);
     }
 
     //This is a function for setting the area sounds of the gameplay music
@@ -99,12 +133,26 @@ public class AudioManager : MonoBehaviour
         musicEventInstance.setParameterByName("Desert", 0);
 
         musicEventInstance.setParameterByName(parameterName, (float) parameterValue);
-
     }
 
+    public void SetMusicPause(float parameterValue)
+    {
+         musicEventInstance.setParameterByName("PAUSE", (float) parameterValue);
+    }
 
+    public void SwitchScene()
+    {
+        inGamePlayScene = !inGamePlayScene;
 
-
+        if (inGamePlayScene) 
+        { 
+            InitializeMusic(FModEvents.instance.gameplayMusic);
+        }
+        else
+        {
+            InitializeMenuMusic(FModEvents.instance.menuMusic);
+        }
+    }
 
     //A function for spawning a sound that is played and is then destroyed. Called from anywhere.
     public void PlayOneShot(EventReference sound, Vector3 worldPos) //Plays a sound once
@@ -112,9 +160,17 @@ public class AudioManager : MonoBehaviour
         RuntimeManager.PlayOneShot(sound, worldPos);
     }
 
-    public void PlayOneShotSterio(EventReference sound) //Plays a sound once without world coords
+    public void PlayOneShotSterio(string soundName) //Plays a sound once without world coords
     {
+        EventReference sound = FModEvents.instance.GetSound(soundName);
         RuntimeManager.PlayOneShot(sound);
+    }
+
+    public void PlayDeathSound() //Plays a sound once without world coords
+    {
+        int playerSize = GameManager.Instance.Player.Body.Count;
+
+        RuntimeManager.PlayOneShot(FModEvents.instance.playerDeath);
     }
 
     

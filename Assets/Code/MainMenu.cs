@@ -40,7 +40,7 @@ public class MainMenu : MonoBehaviour
     }
     public void PlayGame()
     {
-        SceneManager.LoadScene("Beta_Demo");
+        SceneManager.LoadScene("MainScene");
     }
     public void QuitGame()
     {

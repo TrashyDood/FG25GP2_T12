@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: -2582018424560963497}
   - component: {fileID: 6435731811321519823}
   - component: {fileID: 3985845377055536104}
-  - component: {fileID: 5253724668774118500}
   - component: {fileID: 6454924862363815314}
   - component: {fileID: 3117290854059341669}
   m_Layer: 15
@@ -301,20 +300,6 @@ MonoBehaviour:
   weaponLibrary: {fileID: 11400000, guid: 89ad90d6d5a664c4cbe4a02bdab09110, type: 2}
   player: {fileID: 0}
   startingWeaponId: Quill
---- !u!114 &5253724668774118500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3001057493141643324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9e1f4e41b66db24e9b888c3bbe08f78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MobileTouch
-  joyStickSize: {x: 300, y: 300}
-  joyStick: {fileID: 0}
 --- !u!114 &6454924862363815314
 MonoBehaviour:
   m_ObjectHideFlags: 0

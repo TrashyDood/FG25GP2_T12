@@ -317,10 +317,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: ../../../Users/Noah.Jorgensen/OneDrive - Change Maker Education/Documents/FMOD
-    Projects/Gp2/Gp2.fspro
-  sourceBankPath: ../../../Users/Noah.Jorgensen/OneDrive - Change Maker Education/Documents/FMOD
-    Projects/Gp2/Build
+  sourceProjectPath: Assets/Gp2 Audio/Gp2.fspro
+  sourceBankPath: Assets/Gp2 Audio/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1

@@ -1,0 +1,284 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &769009566855490131
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6553352573562192176}
+  - component: {fileID: 2433693534899331065}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6553352573562192176
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769009566855490131}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 358.76175, y: 0.00001, z: 384.03653}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3972789879226636114}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2433693534899331065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769009566855490131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ea3e51fb9f85c142bcec30edd776630, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  masterVolume: 1
+  musicVolume: 1
+  ambianceVolume: 1
+  SFXvolume: 1
+--- !u!1 &7211658099651731942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3972789879226636114}
+  - component: {fileID: 7918432094085181442}
+  m_Layer: 0
+  m_Name: FModEvents
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3972789879226636114
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7211658099651731942}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6553352573562192176}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7918432094085181442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7211658099651731942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25180c8db91dde549951f7a08e5b8f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FModEvents
+  <soundEventA>k__BackingField:
+    Guid:
+      Data1: -2033131497
+      Data2: 1292172243
+      Data3: 1559069089
+      Data4: 184998524
+    Path: event:/SFX/Glass Break
+  <soundEventB>k__BackingField:
+    Guid:
+      Data1: 755269606
+      Data2: 1148800174
+      Data3: -736363891
+      Data4: -1505829534
+    Path: event:/Music/Main menu
+  <buttonClick>k__BackingField:
+    Guid:
+      Data1: 1185668538
+      Data2: 1195136010
+      Data3: 2144596110
+      Data4: -733288680
+    Path: event:/SFX/UI/Menu button
+  <levelUpFanfare>k__BackingField:
+    Guid:
+      Data1: 1961811971
+      Data2: 1292504321
+      Data3: 1486634127
+      Data4: -2034088036
+    Path: event:/SFX/UI/Level up
+  <placeBodyPart>k__BackingField:
+    Guid:
+      Data1: -1789089747
+      Data2: 1338537909
+      Data3: 163161751
+      Data4: 1369636213
+    Path: event:/SFX/UI/Place Bodypart
+  <menuSplash>k__BackingField:
+    Guid:
+      Data1: -1191831131
+      Data2: 1337214459
+      Data3: -1471346002
+      Data4: -701534892
+    Path: event:/SFX/UI/Menu splash card
+  <playerConsumeExp>k__BackingField:
+    Guid:
+      Data1: -219762011
+      Data2: 1304432303
+      Data3: -883481694
+      Data4: 194032085
+    Path: event:/SFX/Pickups/Consume Exp (wip)
+  <playerConsumeHp>k__BackingField:
+    Guid:
+      Data1: -426851728
+      Data2: 1276155408
+      Data3: 2075242674
+      Data4: 828239475
+    Path: event:/SFX/Pickups/Health pickup
+  <playerPickupPickup>k__BackingField:
+    Guid:
+      Data1: 137354594
+      Data2: 1255985062
+      Data3: -1863898485
+      Data4: -157577716
+    Path: event:/SFX/Pickups/Pickup
+  <playerPickupKey>k__BackingField:
+    Guid:
+      Data1: 1255020345
+      Data2: 1336974132
+      Data3: -961084275
+      Data4: 1386652284
+    Path: event:/SFX/Pickups/Key
+  <playerSuckTrunk>k__BackingField:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  <playerMovingAcrossSurface>k__BackingField:
+    Guid:
+      Data1: -2144687939
+      Data2: 1120435143
+      Data3: 400680368
+      Data4: 385414870
+    Path: event:/SFX/Player Related sounds/Player walk and passive sounds
+  <playerIsHitMass>k__BackingField:
+    Guid:
+      Data1: 463131286
+      Data2: 1263529920
+      Data3: -1085931081
+      Data4: -198472104
+    Path: event:/SFX/Player Related sounds/Get hit/Take Damage
+  <playerIsHitShell>k__BackingField:
+    Guid:
+      Data1: -1003119378
+      Data2: 1248264655
+      Data3: -1846969971
+      Data4: 1071380913
+    Path: event:/SFX/Player Related sounds/Get hit/Block Damage
+  <playerBreakShell>k__BackingField:
+    Guid:
+      Data1: -391555961
+      Data2: 1079395204
+      Data3: 1596098724
+      Data4: -689090346
+    Path: event:/SFX/Player Related sounds/Get hit/Shield Break
+  <playerRegenShell>k__BackingField:
+    Guid:
+      Data1: 486573001
+      Data2: 1132972381
+      Data3: 1349014975
+      Data4: 301675136
+    Path: event:/SFX/Player Related sounds/Get hit/Shield Regenerate
+  <playerDeath>k__BackingField:
+    Guid:
+      Data1: 1266996545
+      Data2: 1325354827
+      Data3: 1729726389
+      Data4: 1906201851
+    Path: event:/SFX/Player Related sounds/Get hit/Death
+  <playerShootMouth>k__BackingField:
+    Guid:
+      Data1: 2140643540
+      Data2: 1188816411
+      Data3: 1823409575
+      Data4: 1818710863
+    Path: event:/SFX/Player Related sounds/Body Parts/Mouth (wip)
+  <playerShotQuill>k__BackingField:
+    Guid:
+      Data1: 246953693
+      Data2: 1159260744
+      Data3: -482754422
+      Data4: -813566499
+    Path: event:/SFX/Player Related sounds/Body Parts/Quills (WIP)
+  <playerShootSnake>k__BackingField:
+    Guid:
+      Data1: 760635883
+      Data2: 1171578623
+      Data3: 1147959938
+      Data4: 1998424997
+    Path: event:/SFX/Player Related sounds/Body Parts/Snake head (wip)
+  <playerShootGiraffe>k__BackingField:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  <enemyWalk>k__BackingField:
+    Guid:
+      Data1: 1865112968
+      Data2: 1101887620
+      Data3: -1463595850
+      Data4: -134038265
+    Path: event:/SFX/Enemy Related sounds/Walking/Enemy walking
+  <enemyAttack>k__BackingField:
+    Guid:
+      Data1: -297679140
+      Data2: 1318354823
+      Data3: -769338997
+      Data4: 1427418853
+    Path: event:/SFX/Enemy Related sounds/Damgage/Dealing Damage Monkeys
+  <enemyIsHit>k__BackingField:
+    Guid:
+      Data1: -2046156879
+      Data2: 1190485818
+      Data3: 234735499
+      Data4: -118429526
+    Path: event:/SFX/Enemy Related sounds/Damgage/Dealing Damage Rat
+  <enemyDeath>k__BackingField:
+    Guid:
+      Data1: 651036539
+      Data2: 1077056726
+      Data3: -976554050
+      Data4: -1477097323
+    Path: event:/SFX/Enemy Related sounds/Damgage/Dealing Damage Penguins
+  <menuMusic>k__BackingField:
+    Guid:
+      Data1: 755269606
+      Data2: 1148800174
+      Data3: -736363891
+      Data4: -1505829534
+    Path: event:/Music/Main menu
+  <gameplayMusic>k__BackingField:
+    Guid:
+      Data1: -1220804368
+      Data2: 1333414912
+      Data3: 16936889
+      Data4: 1530968853
+    Path: event:/Music/Gameplay
