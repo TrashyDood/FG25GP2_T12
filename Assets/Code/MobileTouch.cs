@@ -8,7 +8,9 @@ public class MobileTouch : MonoBehaviour
     [SerializeField]
     Vector2 joyStickSize = new Vector2(300, 300);
     [SerializeField]
-    Image joyStick;
+    FloatingJoystick joyStick;
+    [SerializeField]
+    Player player;
 
     Finger movementFinger;
     Vector2 movementAmount;
@@ -19,7 +21,6 @@ public class MobileTouch : MonoBehaviour
         ETouch.Touch.onFingerDown += HandleFingerDown;
         ETouch.Touch.onFingerUp += HandleLoseFinger;
         ETouch.Touch.onFingerMove += HandleFingerMove;
-
     }
     private void OnDisable()
     {
@@ -32,20 +33,26 @@ public class MobileTouch : MonoBehaviour
     {
         if (movedFinger == movementFinger)
         {
-            Vector2 joyStickPosition;
+            Vector2 knobPosition;
             float maxMovement = joyStickSize.x / 2;
             ETouch.Touch currentTouch = movedFinger.currentTouch;
 
-            if (Vector2.Distance(currentTouch.screenPosition, joyStick.rectTransform.anchoredPosition) < maxMovement)
+            if (Vector2.Distance(
+                    currentTouch.screenPosition, 
+                    joyStick.rectTransform.anchoredPosition
+                    ) > maxMovement)
             {
-                joyStickPosition = (currentTouch.screenPosition - joyStick.rectTransform.anchoredPosition).normalized * maxMovement;
+                knobPosition = (
+                    currentTouch.screenPosition - joyStick.rectTransform.anchoredPosition
+                    ).normalized * maxMovement;
             }
             else
             {
-                joyStickPosition = currentTouch.screenPosition - joyStick.rectTransform.anchoredPosition;
+                knobPosition = currentTouch.screenPosition - joyStick.rectTransform.anchoredPosition;
             }
 
-            movementAmount = joyStickPosition / maxMovement;
+            joyStick.knob.anchoredPosition = knobPosition;
+            movementAmount = knobPosition / maxMovement;
         }
     }
     private void HandleLoseFinger(Finger lostFinger)
@@ -53,6 +60,7 @@ public class MobileTouch : MonoBehaviour
         if (lostFinger == movementFinger)
         {
             movementFinger = null;
+            joyStick.knob.anchoredPosition = Vector2.zero;
             joyStick.gameObject.SetActive(false);
             movementAmount = Vector2.zero;
         }
@@ -87,4 +95,8 @@ public class MobileTouch : MonoBehaviour
 
         return startPosition;
     }
+    //private void Update()
+    //{
+    //    Vector3 scaledMovement = player.
+    //}
 }

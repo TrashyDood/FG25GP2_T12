@@ -11,8 +11,7 @@ public class MainMenu : MonoBehaviour
     public enum MenuState
     {
         MainMenu = 0,
-        Settings = 1,
-        //Credits = 2
+        Settings = 1
     }
     private void Update()
     {
@@ -22,8 +21,6 @@ public class MainMenu : MonoBehaviour
                 break;
             case MenuState.Settings:
                 break;
-            //case MenuState.Credits:
-            //    break;
         }
     }
     public void SwitchState(int aState)
@@ -34,7 +31,6 @@ public class MainMenu : MonoBehaviour
     {
         menuUI.SetActive(aState == MenuState.MainMenu);
         settingUI.SetActive(aState == MenuState.Settings);
-        //creditsUI.SetActive(aState == MenuState.Credits);
 
         state = aState;
     }
