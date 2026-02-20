@@ -1,17 +1,65 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
 using ETouch = UnityEngine.InputSystem.EnhancedTouch;
-using UnityEngine.UI;
 
 public class MobileTouch : MonoBehaviour
 {
+    [Header("Joystick")]
     [SerializeField]
     Vector2 joyStickSize = new Vector2(300, 300);
     [SerializeField]
-    Image joyStick;
+    FloatingJoystick joyStick;
 
     Finger movementFinger;
     Vector2 movementAmount;
+
+    [Header("Player movement")]
+    [SerializeField]
+    float acceleration = 50;
+    [SerializeField]
+    float deceleration = 80;
+    [SerializeField]
+    PlayerInput playerInput;
+    [SerializeField]
+    Player player;
+
+    [Header("Events")]
+    [SerializeField]
+    UnityEvent onMoveEvent;
+    [SerializeField]
+    UnityEvent onStillEvent;
+
+    bool isMoving;
+    Rigidbody rigidBody;
+    Vector2 input;
+    Vector3 currentVelocity,
+            targetVelocity;
+
+    public event Action OnMoveEvent,
+        OnStillEvent;
+
+    public float Speed => player.Build?.stats.GetStat(StatType.Speed) ?? 10f;
+
+    public float Acceleration
+    {
+        get => acceleration;
+        set => acceleration = value;
+    }
+
+    public float Deceleration
+    {
+        get => deceleration;
+        set => deceleration = value;
+    }
+    private void Awake()
+    {
+        player = GetComponent<Player>();
+        rigidBody = GetComponent<Rigidbody>();
+        playerInput = GetComponent<PlayerInput>();
+    }
 
     private void OnEnable()
     {
@@ -19,7 +67,6 @@ public class MobileTouch : MonoBehaviour
         ETouch.Touch.onFingerDown += HandleFingerDown;
         ETouch.Touch.onFingerUp += HandleLoseFinger;
         ETouch.Touch.onFingerMove += HandleFingerMove;
-
     }
     private void OnDisable()
     {
@@ -32,20 +79,26 @@ public class MobileTouch : MonoBehaviour
     {
         if (movedFinger == movementFinger)
         {
-            Vector2 joyStickPosition;
+            Vector3 knobPosition;
             float maxMovement = joyStickSize.x / 2;
             ETouch.Touch currentTouch = movedFinger.currentTouch;
 
-            if (Vector2.Distance(currentTouch.screenPosition, joyStick.rectTransform.anchoredPosition) < maxMovement)
+            if (Vector2.Distance(
+                    currentTouch.screenPosition, 
+                    joyStick.rectTransform.anchoredPosition
+                    ) > maxMovement)
             {
-                joyStickPosition = (currentTouch.screenPosition - joyStick.rectTransform.anchoredPosition).normalized * maxMovement;
+                knobPosition = (
+                    currentTouch.screenPosition - joyStick.rectTransform.anchoredPosition
+                    ).normalized * maxMovement;
             }
             else
             {
-                joyStickPosition = currentTouch.screenPosition - joyStick.rectTransform.anchoredPosition;
+                knobPosition = currentTouch.screenPosition - joyStick.rectTransform.anchoredPosition;
             }
 
-            movementAmount = joyStickPosition / maxMovement;
+            joyStick.knob.anchoredPosition = knobPosition;
+            movementAmount = knobPosition / maxMovement;
         }
     }
     private void HandleLoseFinger(Finger lostFinger)
@@ -53,6 +106,7 @@ public class MobileTouch : MonoBehaviour
         if (lostFinger == movementFinger)
         {
             movementFinger = null;
+            joyStick.knob.anchoredPosition = Vector2.zero;
             joyStick.gameObject.SetActive(false);
             movementAmount = Vector2.zero;
         }
@@ -86,5 +140,44 @@ public class MobileTouch : MonoBehaviour
         }
 
         return startPosition;
+    }
+    private void FixedUpdate()
+    {
+        if (!isMoving && currentVelocity.sqrMagnitude > 0)
+        {
+            isMoving = true;
+            onMoveEvent.Invoke();
+            OnMoveEvent?.Invoke();
+        }
+        else if (isMoving && currentVelocity.sqrMagnitude == 0)
+        {
+            isMoving = false;
+            onStillEvent.Invoke();
+            OnStillEvent?.Invoke();
+        }
+
+        if (movementAmount.sqrMagnitude > 0.001f)
+        {
+            Vector3 scaledMovement = 10f * Time.fixedDeltaTime * new Vector3(
+                movementAmount.x,
+                0,
+                movementAmount.y
+            );
+
+            rigidBody.MovePosition(rigidBody.position + scaledMovement);
+        }
+
+        // change the 10f in scaledMovement with a float player movespeed :) (pray that is works man, otherwise im ending it all)
+        /*    
+        currentVelocity = Vector3.MoveTowards(currentVelocity,
+            targetVelocity,
+            ((currentVelocity.sqrMagnitude > targetVelocity.sqrMagnitude) ? deceleration : acceleration) * Time.fixedDeltaTime);
+        rigidBody.Move(transform.position + currentVelocity * Time.fixedDeltaTime, Quaternion.identity);
+        */
+    }
+    public void OnMove(InputValue value)
+    {
+        input = value.Get<Vector2>();
+        targetVelocity = new Vector3(input.x, 0, input.y) * Speed;
     }
 }

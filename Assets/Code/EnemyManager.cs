@@ -87,9 +87,7 @@ public class EnemyManager : MonoBehaviour
     {
         Enemy enemy = Instantiate(prefab, transform);
         enemy.transform.position = position;
-
-        enemies.Add(enemy);
-        enemy.OnDeathEvent += () => { enemies.Remove(enemy); };
+        enemy.gameObject.SetActive(true);
 
         enemies.Add(enemy);
         enemy.OnDeathEvent += () => { enemies.Remove(enemy); };

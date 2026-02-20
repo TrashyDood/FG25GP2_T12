@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeDefinition
   upgradeName: Tentacle
   upgradeId: 234234234
-  icon: {fileID: 0}
+  icon: {fileID: -249576823, guid: 26d2ba97a00c8524d8260864d9a9b2c2, type: 3}
   effects:
   - {fileID: 11400000, guid: 3c643873efb389e408e6ff4f97818c61, type: 2}
   - {fileID: 11400000, guid: 4bce2994438ea444a9d7cfa940274298, type: 2}
