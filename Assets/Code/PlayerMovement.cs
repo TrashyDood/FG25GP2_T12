@@ -73,10 +73,4 @@ public class PlayerMovement : MonoBehaviour
 
         rigidBody.Move(transform.position + currentVelocity * Time.fixedDeltaTime, Quaternion.identity);
     }
-
-    public void OnMove(InputValue value)
-    {
-        input = value.Get<Vector2>();
-        targetVelocity = new Vector3(input.x, 0, input.y) * Speed;
-    }
 }
