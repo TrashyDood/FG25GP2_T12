@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.Rendering;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
@@ -46,6 +47,14 @@ public class Body : MonoBehaviour
          { Vector3Int.forward, Direction.Forward },
          { Vector3Int.back, Direction.Back },
     };
+
+    private void OnEnable()
+    {
+        EnhancedTouchSupport.Enable();
+    }
+
+    private void OnDisable() =>
+        EnhancedTouchSupport.Disable();
 
     private void Awake()
     {
