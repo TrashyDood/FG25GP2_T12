@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47b0d772914d1394799601605e3e2e00, type: 3}
+  m_Name: Quills_WeaponDef
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponDefinition
+  weaponName: Quills
+  weaponId: 13454331
+  icon: {fileID: 0}
+  fireClip: {fileID: 0}
+  baseStats:
+    damage: 5
+    fireRate: 2
+    range: 10
+  weaponPrefab: {fileID: 4847483082424459837, guid: 6fae8e1e272260d47b5b264e52977383, type: 3}
+  shootingBehaviour: {fileID: 11400000, guid: 278f391e63070874985e92828d48dcbd, type: 2}
