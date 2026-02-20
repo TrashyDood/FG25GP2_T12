@@ -14,7 +14,7 @@ public class MobileTouch : MonoBehaviour
     FloatingJoystick joyStick;
 
     Finger movementFinger;
-    Vector2 movementAmount;
+    public Vector2 movementAmount;
 
     [Header("Player movement")]
     [SerializeField]
@@ -141,43 +141,47 @@ public class MobileTouch : MonoBehaviour
 
         return startPosition;
     }
-    private void FixedUpdate()
+    private void Update()
     {
-        if (!isMoving && currentVelocity.sqrMagnitude > 0)
-        {
-            isMoving = true;
-            onMoveEvent.Invoke();
-            OnMoveEvent?.Invoke();
-        }
-        else if (isMoving && currentVelocity.sqrMagnitude == 0)
-        {
-            isMoving = false;
-            onStillEvent.Invoke();
-            OnStillEvent?.Invoke();
-        }
-
-        if (movementAmount.sqrMagnitude > 0.001f)
-        {
-            Vector3 scaledMovement = 10f * Time.fixedDeltaTime * new Vector3(
-                movementAmount.x,
-                0,
-                movementAmount.y
-            );
-
-            rigidBody.MovePosition(rigidBody.position + scaledMovement);
-        }
-
-        // change the 10f in scaledMovement with a float player movespeed :) (pray that is works man, otherwise im ending it all)
-        /*    
-        currentVelocity = Vector3.MoveTowards(currentVelocity,
-            targetVelocity,
-            ((currentVelocity.sqrMagnitude > targetVelocity.sqrMagnitude) ? deceleration : acceleration) * Time.fixedDeltaTime);
-        rigidBody.Move(transform.position + currentVelocity * Time.fixedDeltaTime, Quaternion.identity);
-        */
+        player.PlayerMovement.InputVector = movementAmount;
     }
-    public void OnMove(InputValue value)
-    {
-        input = value.Get<Vector2>();
-        targetVelocity = new Vector3(input.x, 0, input.y) * Speed;
-    }
+    //private void FixedUpdate()
+    //{
+    //    if (!isMoving && currentVelocity.sqrMagnitude > 0)
+    //    {
+    //        isMoving = true;
+    //        onMoveEvent.Invoke();
+    //        OnMoveEvent?.Invoke();
+    //    }
+    //    else if (isMoving && currentVelocity.sqrMagnitude == 0)
+    //    {
+    //        isMoving = false;
+    //        onStillEvent.Invoke();
+    //        OnStillEvent?.Invoke();
+    //    }
+
+    //    if (movementAmount.sqrMagnitude > 0.001f)
+    //    {
+    //        Vector3 scaledMovement = 10f * Time.fixedDeltaTime * new Vector3(
+    //            movementAmount.x,
+    //            0,
+    //            movementAmount.y
+    //        );
+
+    //        rigidBody.MovePosition(rigidBody.position + scaledMovement);
+    //    }
+
+    //    // change the 10f in scaledMovement with a float player movespeed :) (pray that is works man, otherwise im ending it all)
+    //    /*    
+    //    currentVelocity = Vector3.MoveTowards(currentVelocity,
+    //        targetVelocity,
+    //        ((currentVelocity.sqrMagnitude > targetVelocity.sqrMagnitude) ? deceleration : acceleration) * Time.fixedDeltaTime);
+    //    rigidBody.Move(transform.position + currentVelocity * Time.fixedDeltaTime, Quaternion.identity);
+    //    */
+    //}
+    //public void OnMove(InputValue value)
+    //{
+    //    input = value.Get<Vector2>();
+    //    targetVelocity = new Vector3(input.x, 0, input.y) * Speed;
+    //}
 }

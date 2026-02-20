@@ -2335,7 +2335,7 @@ PrefabInstance:
       objectReference: {fileID: 1166332439}
     - target: {fileID: 8819311495593594047, guid: 087e8edd562eb2a4eac787bc1d15fd85, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8819311495593594047, guid: 087e8edd562eb2a4eac787bc1d15fd85, type: 3}
       propertyPath: onMoveEvent.m_PersistentCalls.m_Calls.Array.size
@@ -4878,6 +4878,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1778351722325822548, guid: a5557a36e9bc2794e96d9a561872e8d2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -7.8188477
+      objectReference: {fileID: 0}
     - target: {fileID: 2609153070029518069, guid: a5557a36e9bc2794e96d9a561872e8d2, type: 3}
       propertyPath: m_Name
       value: LevelUpPanel
@@ -4913,6 +4917,14 @@ PrefabInstance:
     - target: {fileID: 6710056081287614249, guid: a5557a36e9bc2794e96d9a561872e8d2, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7172512104206609122, guid: a5557a36e9bc2794e96d9a561872e8d2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -3.3217773
+      objectReference: {fileID: 0}
+    - target: {fileID: 8120187801718660030, guid: a5557a36e9bc2794e96d9a561872e8d2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -7.8188477
       objectReference: {fileID: 0}
     - target: {fileID: 8930563973579516418, guid: a5557a36e9bc2794e96d9a561872e8d2, type: 3}
       propertyPath: m_IsActive
@@ -5512,6 +5524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MobileTouch
   joyStickSize: {x: 300, y: 300}
   joyStick: {fileID: 144986451}
+  movementAmount: {x: 0, y: 0}
   acceleration: 50
   deceleration: 80
   playerInput: {fileID: 0}
