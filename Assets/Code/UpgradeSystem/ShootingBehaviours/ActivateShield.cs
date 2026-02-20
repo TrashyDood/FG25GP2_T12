@@ -8,7 +8,7 @@ public class ActivateShield : ShootingBehaviour
         Shield shield = weapon.weaponObject.GetComponent<Shield>();
         if (shield == null)
         {
-            Debug.LogError("Shield component missing on weaponObject");
+            //Debug.LogError("Shield component missing on weaponObject");
             return;
         }
 

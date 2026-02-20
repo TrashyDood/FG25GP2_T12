@@ -45,7 +45,7 @@ public class TargetedShotBehaviour : ShootingBehaviour
             return;
         }
 
-        Debug.Log("Enemies found");
+        //Debug.Log("Enemies found");
 
         Enemy target = hit.collider.GetComponentInParent<Enemy>();
         
