@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     public event Action OnMoveEvent,
         OnStillEvent;
 
+    public Vector2 InputVector { get => input; set => input = value; }
+
     public float Speed => player.Build?.stats.GetStat(StatType.Speed) ?? 10f;
 
     public float Acceleration
