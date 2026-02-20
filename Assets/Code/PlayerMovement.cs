@@ -29,7 +29,15 @@ public class PlayerMovement : MonoBehaviour
     public event Action OnMoveEvent,
         OnStillEvent;
 
-    public Vector2 InputVector { get => input; set => input = value; }
+    public Vector2 InputVector
+    {
+        get => input;
+        set
+        {
+            input = value;
+            targetVelocity = new Vector3(input.x, 0, input.y) * Speed;
+        }
+    }
 
     public float Speed => player.Build?.stats.GetStat(StatType.Speed) ?? 10f;
 
